@@ -1,34 +1,69 @@
 package com.company;
 
-import java.awt.Dimension;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.Element;
+import javax.swing.text.html.ImageView;
 
-public class ControlFrame {
+public class ControlFrame extends JFrame{
 
-    private JButton button1;
-    private JPanel rootPanel;
+    Image solder = new ImageIcon("ant.png").getImage();//записываем изображение муравья солдата в переменную
+    Image builder = new ImageIcon("ant.png").getImage();//записываем изображение муравья строителя в переменную
 
-    /*public static void createGUI() {
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        JFrame frame = new JFrame("Test frame");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JLabel label = new JLabel("Test label");
-        frame.getContentPane().add(label);
-
-        frame.setPreferredSize(new Dimension(200, 100));
-
-        frame.pack();
-        frame.setVisible(true);
-    }*/
 
     public void CreateGui(){
+        // создаем окно
        JFrame Window = new JFrame("ANT-HOME");
        Window.setVisible(true);
        Window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        Window.setSize(1280,1024);
 
+        JPanel panel = new JPanel();
+        Window.add(panel);
+
+       //создаем кнопку START
+        JButton START = new JButton("START");
+        START.setBackground(Color.ORANGE);
+        panel.add(START);
+
+        // логика полсе нажатия на кнопку
+        START.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //показывает картинку
+                ControlPanel Cpanel = new ControlPanel();
+                Window.getContentPane().add(Cpanel);
+                Window.show();
+                System.out.println("Действие проходит");
+
+
+
+            }
+        });
+
+
+
+        Window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Window.setVisible(true);
+
+    }
+
+
+
+    private void drowImgSolder(){
+        Graphics g = builder.getGraphics();
+        g.drawImage(solder, 0,0, 1280,1024,null);
+    }
+    private void drowImgBuilder(){
+        Graphics g = builder.getGraphics();
+        g.drawImage(builder, 0,0, 1280,1024,null);
     }
 
 
