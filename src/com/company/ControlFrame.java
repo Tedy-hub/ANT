@@ -24,17 +24,11 @@ public class ControlFrame {
     }*/
 
     public void CreateGui(){
-        // Создаем инстанцию класса MainWindow
-        MainWindow mainWindow = new MainWindow();
+       JFrame Window = new JFrame("ANT-HOME");
+       Window.setVisible(true);
+       Window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       Window.setSize(1280,1024);
 
-        // Упаковываем все элементы с нашей формы
-        mainWindow.pack();
-
-        // Изменяем размеры окна
-        mainWindow.setSize(new Dimension(800, 800));
-
-        // Отображаем созданное окно
-        mainWindow.setVisible(true);
     }
 
 
