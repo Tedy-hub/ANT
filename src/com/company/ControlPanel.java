@@ -1,11 +1,14 @@
 package com.company;
 
+import com.company.ant.ant;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.*;
+import java.util.ArrayList;
 import javax.imageio.*;
 
 
@@ -19,10 +22,11 @@ public class ControlPanel extends JPanel {
         }catch (IOException e) { System.out.println("нет");}
 
     }
-    //метод для отрисовки и расположения изображения
-    public void paintComponent(Graphics g){
 
+    //метод для отрисовки и расположения изображения
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(im,22,22,1280,1024,null);
+        g.drawImage(im,22,22, 20, 20, null);
     }
+
 }

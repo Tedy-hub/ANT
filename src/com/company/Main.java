@@ -4,6 +4,8 @@ package com.company;
 import com.company.ControlFrame;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 public class Main {
@@ -11,8 +13,13 @@ public class Main {
     public static void main(String[] args) {
         JFrame window = new AntExample("Hello ant");
         window.setVisible(true);
+
+        // Спавнит муравья по таймеру
+        ControlFrame Controller = new ControlFrame(window);
+        Controller.spawnAnt();
        //ControlFrame Controller = new ControlFrame();
        //Controller.CreateGui();
+
        
     }
 }
