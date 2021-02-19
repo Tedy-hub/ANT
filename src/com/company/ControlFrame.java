@@ -14,8 +14,7 @@ import javax.swing.text.html.ImageView;
 
 public class ControlFrame extends JFrame{
 
-    Image solder = new ImageIcon("ant.png").getImage();//записываем изображение муравья солдата в переменную
-    Image builder = new ImageIcon("ant.png").getImage();//записываем изображение муравья строителя в переменную
+
 
 
     public void CreateGui(){
@@ -43,28 +42,12 @@ public class ControlFrame extends JFrame{
                 Window.show();
                 System.out.println("Действие проходит");
 
-
-
             }
         });
-
-
 
         Window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Window.setVisible(true);
 
     }
-
-
-
-    private void drowImgSolder(){
-        Graphics g = builder.getGraphics();
-        g.drawImage(solder, 0,0, 1280,1024,null);
-    }
-    private void drowImgBuilder(){
-        Graphics g = builder.getGraphics();
-        g.drawImage(builder, 0,0, 1280,1024,null);
-    }
-
 
 }

@@ -14,11 +14,9 @@ public class ControlPanel extends JPanel {
     private Image im;
     public ControlPanel()  {
         try {//тип обязательная проверка на правильность пути
-            im = ImageIO.read(new File("D:\\REP_JAVA\\ANT-Project\\src\\com\\company\\Picture\\ant.png"));
+            im = ImageIO.read(new File("src/com/company/Picture/ant.png"));
             System.out.println("Изображение считалось");
         }catch (IOException e) { System.out.println("нет");}
-
-
 
     }
     //метод для отрисовки и расположения изображения
