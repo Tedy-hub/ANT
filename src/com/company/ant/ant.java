@@ -1,9 +1,9 @@
 package com.company.ant;
 
 public abstract class ant implements run{
-    private String name;
-    private int Size;
-
+    protected String name;
+    protected int Size;
+//
     public int getSize() {
         return Size;
     }
