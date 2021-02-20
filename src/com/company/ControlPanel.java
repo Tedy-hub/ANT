@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.imageio.*;
 
 
@@ -25,8 +26,12 @@ public class ControlPanel extends JPanel {
 
     //метод для отрисовки и расположения изображения
     protected void paintComponent(Graphics g) {
+
+        int x = ThreadLocalRandom.current().nextInt(0, 1000 + 1);
+        int y = ThreadLocalRandom.current().nextInt(0, 1000 + 1);
+
         super.paintComponent(g);
-        g.drawImage(im,22,22, 20, 20, null);
+        g.drawImage(im,x,y,100,100,null);
     }
 
 }
