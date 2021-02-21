@@ -43,7 +43,7 @@ public class ControlPanel extends JPanel {
             int y = ThreadLocalRandom.current().nextInt(0, 1000 + 1);
 
             super.paintComponent(g);
-            g.drawImage(builder_ant,x,y,100,100,null);
+            g.drawImage(builder_ant,x,y,200,200,null);
 
         }
         else{
@@ -52,7 +52,7 @@ public class ControlPanel extends JPanel {
             int y = ThreadLocalRandom.current().nextInt(0, 1000 + 1);
 
             super.paintComponent(g);
-            g.drawImage(solder_ant,x,y,100,100,null);
+            g.drawImage(solder_ant,x,y,200,200,null);
         }
 
     }

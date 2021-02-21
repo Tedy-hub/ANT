@@ -11,7 +11,7 @@ public class AntExample extends JFrame {
 
         super(title);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1000,1000);
+        this.setSize(5000,5000);
         this.setContentPane(mainPanel);
         this.pack();
     }
