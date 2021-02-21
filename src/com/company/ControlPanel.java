@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.ant.WarriorAnt;
+import com.company.ant.WorkerAnt;
 import com.company.ant.ant;
 
 import javax.imageio.ImageIO;
@@ -38,21 +40,28 @@ public class ControlPanel extends JPanel {
 
         //вероятность 70/30
         if(random_Kod > 3){
+            WorkerAnt workerAnt = new WorkerAnt();
 
             int x = ThreadLocalRandom.current().nextInt(0, 1000 + 1);
             int y = ThreadLocalRandom.current().nextInt(0, 1000 + 1);
 
             super.paintComponent(g);
-            g.drawImage(builder_ant,x,y,200,200,null);
+            g.drawImage(builder_ant,x,y,workerAnt.getSize()*100,workerAnt.getSize()*100,null);
+
+            System.out.println("Рабочие: " + workerAnt.GetQuantityAntThisGroup());
 
         }
         else{
+            WarriorAnt warriorAnt = new WarriorAnt();
 
             int x = ThreadLocalRandom.current().nextInt(0, 1000 + 1);
             int y = ThreadLocalRandom.current().nextInt(0, 1000 + 1);
 
             super.paintComponent(g);
-            g.drawImage(solder_ant,x,y,200,200,null);
+            g.drawImage(solder_ant,x,y,warriorAnt.getSize()*100,warriorAnt.getSize()*100,null);
+
+            System.out.println("Солдаты: " + warriorAnt.GetQuantityAntThisGroup());
+
         }
 
     }
