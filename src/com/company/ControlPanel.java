@@ -17,10 +17,13 @@ import javax.imageio.*;
 
 public class ControlPanel extends JPanel {
 
-    private Image solder_ant;
+    private Image soldier_ant;
     private Image builder_ant;
+    private final Window window;
 
-    public ControlPanel()  {
+    public ControlPanel(Window _window)
+    {
+        window = _window;
         try {//тип обязательная проверка на правильность пути
             builder_ant = ImageIO.read(new File("src/com/company/Picture/builder.png"));
             System.out.println("Изображение считалось");
@@ -28,7 +31,7 @@ public class ControlPanel extends JPanel {
 
 
         try {//тип обязательная проверка на правильность пути
-            solder_ant = ImageIO.read(new File("src/com/company/Picture/solder.png"));
+            soldier_ant = ImageIO.read(new File("src/com/company/Picture/soldier.png"));
             System.out.println("Изображение считалось");
         }catch (IOException e) { System.out.println("нет");}
 
@@ -36,17 +39,18 @@ public class ControlPanel extends JPanel {
 
     //метод для отрисовки и расположения изображения
     protected void paintComponent(Graphics g) {
-        int random_Kod = ThreadLocalRandom.current().nextInt(0, 10+1);
+            int random_Kod = ThreadLocalRandom.current().nextInt(0, 10);
 
         //вероятность 70/30
         if(random_Kod > 3){
             WorkerAnt workerAnt = new WorkerAnt();
 
-            int x = ThreadLocalRandom.current().nextInt(0, 1000 + 1);
-            int y = ThreadLocalRandom.current().nextInt(0, 1000 + 1);
+            int x = ThreadLocalRandom.current().nextInt(workerAnt.getSize()*65, window.getWidth() - workerAnt.getSize()*65);
+            int y = ThreadLocalRandom.current().nextInt(workerAnt.getSize()*100, window.getHeight() - workerAnt.getSize()*100);
 
             super.paintComponent(g);
-            g.drawImage(builder_ant,x,y,workerAnt.getSize()*100,workerAnt.getSize()*100,null);
+            // *65 т.к. муравей-рабочий является прямоугольной картинкой
+            g.drawImage(builder_ant,x,y,workerAnt.getSize()*65,workerAnt.getSize()*100,null);
 
             System.out.println("Рабочие: " + workerAnt.GetQuantityAntThisGroup());
 
@@ -54,11 +58,11 @@ public class ControlPanel extends JPanel {
         else{
             WarriorAnt warriorAnt = new WarriorAnt();
 
-            int x = ThreadLocalRandom.current().nextInt(0, 1000 + 1);
-            int y = ThreadLocalRandom.current().nextInt(0, 1000 + 1);
+            int x = ThreadLocalRandom.current().nextInt(warriorAnt.getSize()*100, window.getWidth() - warriorAnt.getSize()*100);
+            int y = ThreadLocalRandom.current().nextInt(warriorAnt.getSize()*100, window.getHeight() - warriorAnt.getSize()*100);
 
             super.paintComponent(g);
-            g.drawImage(solder_ant,x,y,warriorAnt.getSize()*100,warriorAnt.getSize()*100,null);
+            g.drawImage(soldier_ant,x,y,warriorAnt.getSize()*100,warriorAnt.getSize()*100,null);
 
             System.out.println("Солдаты: " + warriorAnt.GetQuantityAntThisGroup());
 

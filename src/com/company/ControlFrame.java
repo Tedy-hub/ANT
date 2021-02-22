@@ -25,7 +25,7 @@ public class ControlFrame extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //показывает картинку
-                    ControlPanel Cpanel = new ControlPanel();
+                    ControlPanel Cpanel = new ControlPanel(window);
 
                     // Вот эта дичь рисует не на панели, а на graphics окна
                     Cpanel.paintComponent(window.getGraphics());

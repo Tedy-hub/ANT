@@ -1,6 +1,6 @@
 package com.company.ant;
 
-public abstract class ant implements run{
+public abstract class ant implements IBehaviour {
     private int spawnTime;
     private String name;
     private int Size;

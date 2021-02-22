@@ -9,8 +9,8 @@ public class WarriorAnt extends ant{
    public WarriorAnt(){
        Random rand = new Random();
        setName("Warrior Ant");
-       // случайный размер от 2 до 5 ед.
-       int size = rand.nextInt(3);
+       // случайный размер от 2 до 4 ед.
+       int size = rand.nextInt(2);
        setSize(size + 2);
        setSpawnTime(1000);
        quantity_ant++;

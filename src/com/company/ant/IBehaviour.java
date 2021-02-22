@@ -1,6 +1,6 @@
 package com.company.ant;
 
-public interface run {
+public interface IBehaviour {
     int getSize();
 
     String getName();
