@@ -1,11 +1,8 @@
 package com.company;
 
 //import static com.company.ControlFrame.createGUI;
-import com.company.ControlFrame;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 public class Main {
@@ -13,11 +10,10 @@ public class Main {
     public static void main(String[] args) {
         JFrame window = new AntExample("Hello ant");
         window.setVisible(true);
-        window.setSize(1280,1024);
-
         // Спавнит муравья по таймеру
-        ControlFrame Controller = new ControlFrame(window);
-        Controller.spawnAnt();
+        Habitat habitat = new Habitat(window, 1280, 1024);
+        habitat.spawnAnt();
+
        //ControlFrame Controller = new ControlFrame();
        //Controller.CreateGui();
 
