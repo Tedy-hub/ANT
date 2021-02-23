@@ -15,16 +15,17 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Habitat extends JFrame{
-    private final JFrame window;
+    private JFrame window;
     static private ArrayList<WarriorAnt> warriorAnts = new ArrayList<>();
     static private ArrayList<WorkerAnt> workerAnts = new ArrayList<>();
+
 
     public Habitat(JFrame _window, int width, int height){
         _window.setSize(width, height);
         window = _window;
         int i = 1;
         try {//тип обязательная проверка на правильность пути
-            while(i < 18) {
+            while(i < 17) {
                 Image img = ImageIO.read(new File("src/com/company/Picture/SpawnWorcker/B (" + i + ").png"));
                 WorkerAnt.worker_ant.add(img);
                 i++;
@@ -33,18 +34,19 @@ public class Habitat extends JFrame{
         }catch (IOException e) { System.out.println("нет");}
         i=1;
         try {//тип обязательная проверка на правильность пути
-            while(i < 18) {
+            while(i < 17) {
                 Image img = ImageIO.read(new File("src/com/company/Picture/SpawnWarrior/W (" + i + ").png"));
                 WarriorAnt.warrior_ant.add(img);
                 i++;
             }
             System.out.println("Изображение считалось");
         }catch (IOException e) { System.out.println("нет");}
+
     }
 
 
     private static int seconds = 0;
-        public void spawnAnt(){
+    public void spawnAnt(){
             // логика полсе нажатия на кнопку
             Timer timer = new Timer(1000, new ActionListener() {
                 @Override
@@ -76,5 +78,23 @@ public class Habitat extends JFrame{
         window.setVisible(true);
 
     }
+    // перерисовка всех кадров займет больше времени
+    public void RespownAllAnts(){
+        window.getContentPane().repaint();
+        int i = 0;
+        while(i < warriorAnts.size() || i < workerAnts.size()){
+            warriorAnts.get(i).Respawn(window);
+            workerAnts.get(i).Respawn(window);
+            i++;
+
+
+        }
+
+
+    }
+
+
+
+
 
 }

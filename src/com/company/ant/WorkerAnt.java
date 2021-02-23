@@ -47,7 +47,7 @@ public class WorkerAnt extends ant {
             @Override
             public void actionPerformed(ActionEvent e) {
         // *65 т.к. муравей-рабочий является прямоугольной картинкой
-        if(NumberPicture<17)
+        if(NumberPicture<16)
             window.getGraphics().drawImage(worker_ant.get(NumberPicture), x, y, getSize() * 65, getSize() * 100, null);
         else return;
 
@@ -57,5 +57,10 @@ public class WorkerAnt extends ant {
         timer.start();
 
         System.out.println("Worker X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
+    }
+    public void Respawn(Window window){
+
+        window.getGraphics().drawImage(worker_ant.get(15), this.getPosX(), this.getPosY(), getSize() * 65, getSize() * 100, null);
+
     }
 }

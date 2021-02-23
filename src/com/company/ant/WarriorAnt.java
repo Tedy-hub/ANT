@@ -46,7 +46,7 @@ public class WarriorAnt extends ant{
         Timer timer = new Timer(58, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(NumberPicture<17)
+                if(NumberPicture<16)
                     window.getGraphics().drawImage(warrior_ant.get(NumberPicture), x, y, getSize() * 65, getSize() * 100, null);
                 else return;
 
@@ -56,5 +56,10 @@ public class WarriorAnt extends ant{
         });
         timer.start();
         System.out.println("Warrior X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
+    }
+    public void Respawn(Window window){
+
+        window.getGraphics().drawImage(warrior_ant.get(15), this.getPosX(), this.getPosY(), getSize() * 65, getSize() * 100, null);
+
     }
 }
