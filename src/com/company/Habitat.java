@@ -3,6 +3,7 @@ package com.company;
 import com.company.ant.WarriorAnt;
 import com.company.ant.WorkerAnt;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -21,14 +22,22 @@ public class Habitat extends JFrame{
     public Habitat(JFrame _window, int width, int height){
         _window.setSize(width, height);
         window = _window;
-
+        int i = 1;
         try {//тип обязательная проверка на правильность пути
-            WorkerAnt.worker_ant = ImageIO.read(new File("src/com/company/Picture/builder.png"));
+            while(i < 18) {
+                Image img = ImageIO.read(new File("src/com/company/Picture/SpawnWorcker/B (" + i + ").png"));
+                WorkerAnt.worker_ant.add(img);
+                i++;
+            }
             System.out.println("Изображение считалось");
         }catch (IOException e) { System.out.println("нет");}
-
+        i=1;
         try {//тип обязательная проверка на правильность пути
-            WarriorAnt.warrior_ant = ImageIO.read(new File("src/com/company/Picture/soldier.png"));
+            while(i < 18) {
+                Image img = ImageIO.read(new File("src/com/company/Picture/SpawnWarrior/W (" + i + ").png"));
+                WarriorAnt.warrior_ant.add(img);
+                i++;
+            }
             System.out.println("Изображение считалось");
         }catch (IOException e) { System.out.println("нет");}
     }

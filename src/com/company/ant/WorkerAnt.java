@@ -1,16 +1,22 @@
 package com.company.ant;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class WorkerAnt extends ant {
 
     static private int quantity_ant = 0;//для отслеживания кол-ва объектов
-    static public Image worker_ant;
+    static public ArrayList<Image> worker_ant = new ArrayList<>();
+    public int NumberPicture = 1;
+    //static public Image worker_ant;
 
     public WorkerAnt(){
         setName("Worker Ant");
@@ -37,8 +43,19 @@ public class WorkerAnt extends ant {
         this.setPosX(x);
         this.setPosY(y);
 
+        Timer timer = new Timer(58, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
         // *65 т.к. муравей-рабочий является прямоугольной картинкой
-        window.getGraphics().drawImage(worker_ant, x, y, this.getSize() * 65, this.getSize() * 100, null);
+        if(NumberPicture<17)
+            window.getGraphics().drawImage(worker_ant.get(NumberPicture), x, y, getSize() * 65, getSize() * 100, null);
+        else return;
+
+        NumberPicture++;
+            }
+        });
+        timer.start();
+
         System.out.println("Worker X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
     }
 }

@@ -1,16 +1,22 @@
 package com.company.ant;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class WarriorAnt extends ant{
 
    static private int quantity_ant = 0;//для отслеживания кол-ва объектов
-   static public Image warrior_ant;
+   //static public Image warrior_ant;
+    static public ArrayList<Image> warrior_ant = new ArrayList<>();
+    public int NumberPicture = 1;
 
    public WarriorAnt(){
        setName("Warrior Ant");
@@ -37,7 +43,18 @@ public class WarriorAnt extends ant{
         this.setPosX(x);
         this.setPosY(y);
 
-        window.getGraphics().drawImage(warrior_ant, x, y, this.getSize() * 100, this.getSize() * 100, null);
+        Timer timer = new Timer(58, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(NumberPicture<17)
+                    window.getGraphics().drawImage(warrior_ant.get(NumberPicture), x, y, getSize() * 65, getSize() * 100, null);
+                else return;
+
+                NumberPicture++;
+
+            }
+        });
+        timer.start();
         System.out.println("Warrior X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
     }
 }
