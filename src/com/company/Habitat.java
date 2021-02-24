@@ -75,12 +75,12 @@ public class Habitat {
         } catch (IOException e) {
             System.out.println("нет");
         }
-        //thread1 = new GenerateThread(window, 1, 1000,workerAnt,workerAnts);
-        //thread2= new GenerateThread(window, 1, 1000,warriorAnt,workerAnts);
-        //thread1.start();
-        //thread2.start();
+        thread1 = new GenerateThread(window, 1, 1000,workerAnt,workerAnts);
+        thread2= new GenerateThread(window, 1, 1000,warriorAnt,workerAnts);
+        thread1.start();
+        thread2.start();
 
-        Timer timer = new Timer(1000, new ActionListener() {
+        /*Timer timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("есть");
@@ -92,7 +92,7 @@ public class Habitat {
                 warriorAnts.add(warriorAnt);
             }
         });
-        timer.start();
+        timer.start();*/
 
 
     }

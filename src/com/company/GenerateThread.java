@@ -43,11 +43,27 @@ public class GenerateThread extends Thread {
 
     public void run() {
         //рисуем муравьев
-
-                //}
+        while (!this.isInterrupted()){
+            try {
+                this.sleep(N);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("есть");
+            if(Math.random()<P) {
+                if (ant.getName() == "Warrior Ant") {
+                    ant = new WarriorAnt();
+                } else {
+                    ant = new WorkerAnt();
+                }
+                ant.draw(window);
+            }
+            //если мы его рисуем
+            //то добавляем
+            antlist.add(ant);
+        }
         }
     }
-
 
     // перерисовка всех кадров займет больше времени
     /*public void RespownAllAnts() {
@@ -59,10 +75,10 @@ public class GenerateThread extends Thread {
             i++;
 
 
-        }
+        }*/
 
 
-    }*/
+
 
 
 

@@ -43,19 +43,40 @@ public class WarriorAnt extends ant{
         this.setPosX(x);
         this.setPosY(y);
 
-        Timer timer = new Timer(58, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(NumberPicture<16)
-                    window.getGraphics().drawImage(warrior_ant.get(NumberPicture), x, y, getSize() * 65, getSize() * 100, null);
-                else return;
+        JPanel panel = new JPanel();
 
-                NumberPicture++;
 
-            }
-        });
-        timer.start();
+        Frame frame = new JFrame();
+        frame.setSize(8, 4);
+
+        JLabel jLabel = new JLabel();
+        jLabel.setSize(40,40);
+        jLabel.setBounds(x,y,30,30);
+        Image image = Toolkit.getDefaultToolkit().createImage("src/com/company/Picture/cat.gif");
+
+        ImageIcon imageIcon = new ImageIcon(image);
+
+        imageIcon.setImageObserver(jLabel);
+        jLabel.setIcon(imageIcon);
+
+        window.add(jLabel);
+        window.setVisible(true);
+
+
+        //Timer timer = new Timer(58, new ActionListener() {
+         //   @Override
+         //   public void actionPerformed(ActionEvent e) {
+          //      if(NumberPicture<16)
+          //          window.getGraphics().drawImage(warrior_ant.get(NumberPicture), x, y, getSize() * 65, getSize() * 100, null);
+          //      else return;
+
+           //     NumberPicture++;
+
+            //}
+        //});
+        //timer.start();
         //System.out.println("Warrior X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
+        //window.getGraphics().drawImage(, x, y, getSize() * 65, getSize() * 100, null);
     }
     public void Respawn(Window window){
 
