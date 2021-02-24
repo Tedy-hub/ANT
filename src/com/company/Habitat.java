@@ -2,29 +2,57 @@ package com.company;
 
 import com.company.ant.WarriorAnt;
 import com.company.ant.WorkerAnt;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
+import com.company.ant.ant;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Habitat extends Thread {
-    private JFrame window;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class Habitat {
+
     static private ArrayList<WarriorAnt> warriorAnts = new ArrayList<>();
-    static private ArrayList<WorkerAnt> workerAnts = new ArrayList<>();
+    static private ArrayList<ant> workerAnts = new ArrayList<>();
+    static JFrame window;
+    static private int N1 = 100;
+    static private int N2 = 100;
+    static private int P1 = 1;
+    static private int P2 = 1;
+    static WarriorAnt warriorAnt = new WarriorAnt();
+    static WorkerAnt workerAnt = new WorkerAnt();
+    static GenerateThread thread1;
+    static GenerateThread thread2;
 
 
-    public Habitat(JFrame _window, int width, int height) {
-        _window.setSize(width, height);
-        window = _window;
+    Habitat(AntExample window, int width, int height){
+        this.window = window;
+        //window.setSize(width, height);
+        //window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //window.setVisible(true);
+   }
+
+    public static ArrayList<WarriorAnt> getWarriorAnts() {
+        return warriorAnts;
+    }
+
+    public static void setWarriorAnts(ArrayList<WarriorAnt> warriorAnts) {
+        Habitat.warriorAnts = warriorAnts;
+    }
+
+    /*public static ArrayList<WorkerAnt> getWorkerAnts() {
+        return workerAnts;
+    }*/
+
+    /*public static void setWorkerAnts(ArrayList<WorkerAnt> workerAnts) {
+        Habitat.workerAnts = workerAnts;
+    }*/
+
+    public static void start() {
         int i = 1;
         try {//тип обязательная проверка на правильность пути
             while (i < 17) {
@@ -47,69 +75,61 @@ public class Habitat extends Thread {
         } catch (IOException e) {
             System.out.println("нет");
         }
+        //thread1 = new GenerateThread(window, 1, 1000,workerAnt,workerAnts);
+        //thread2= new GenerateThread(window, 1, 1000,warriorAnt,workerAnts);
+        //thread1.start();
+        //thread2.start();
+
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("есть");
+                //if(Math.random()<P) {
+                warriorAnt = new WarriorAnt();
+                warriorAnt.draw(window);
+                //если мы его рисуем
+                //то добавляем
+                warriorAnts.add(warriorAnt);
+            }
+        });
+        timer.start();
+
 
     }
 
+    public static void stop(){
+        //thread1.interrupt();
+        //thread2.interrupt();
+    }
 
-    private static int seconds = 0;
+    /*@Override
+    public void loadAnts() {
 
-    public void run() {
-        // логика полсе нажатия на кнопку
-        //показывает картинку
+        //рисуем воина
+
+
+
+        //рисуем работягу
 
         try {
-            while (!isInterrupted()) {
-                Thread.sleep(1000);
-                seconds++;
-                WarriorAnt warriorAnt = new WarriorAnt();
-                if (seconds % (warriorAnt.getSpawnTime() / 1000) == 0) {
-                    int shouldSpawn = ThreadLocalRandom.current().nextInt(1, 101);
-                    if (shouldSpawn < warriorAnt.getSpawnChance()) {
-                        warriorAnts.add(warriorAnt);
-                        warriorAnt.draw(window);
-                    }
-                    seconds = 0;
-                }
-
-                int shouldSpawn = ThreadLocalRandom.current().nextInt(1, 101);
-                WorkerAnt workerAnt = new WorkerAnt();
-                if (shouldSpawn < workerAnt.getSpawnChance()) {
-                    workerAnts.add(workerAnt);
-                    workerAnt.draw(window);
-                    System.out.println("Действие проходит");
+            TimeUnit.SECONDS.sleep(1);
+            System.out.println("есть");
+            if(Math.random()<P1) {
+                warriorAnt.draw(window);
+                //если мы его рисуем
+                //то добавляем
+                warriorAnts.add(warriorAnt);
+            if(Math.random()<P2){
+                workerAnt.draw(window);
+                //если мы его рисуем
+                //то добавляем
+                workerAnts.add(workerAnt);
                 }
             }
 
-
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-
-
-
-
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setVisible(true);
-
-
-    }
-
-
-    // перерисовка всех кадров займет больше времени
-    public void RespownAllAnts() {
-        window.getContentPane().repaint();
-        int i = 0;
-        while (i < warriorAnts.size() || i < workerAnts.size()) {
-            warriorAnts.get(i).Respawn(window);
-            workerAnts.get(i).Respawn(window);
-            i++;
-
-
-        }
-
-
-    }
+    }*/
 }
-
-
