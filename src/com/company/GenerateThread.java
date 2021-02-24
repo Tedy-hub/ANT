@@ -46,18 +46,20 @@ public class GenerateThread extends Thread {
         while (!this.isInterrupted()){
             try {
                 this.sleep(N);
+                System.out.println("есть");
+                if(Math.random()<P) {
+                    if (ant.getName() == "Warrior Ant") {
+                        ant = new WarriorAnt();
+                    } else {
+                        ant = new WorkerAnt();
+                    }
+                    ant.draw(window);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                this.interrupt();
             }
-            System.out.println("есть");
-            if(Math.random()<P) {
-                if (ant.getName() == "Warrior Ant") {
-                    ant = new WarriorAnt();
-                } else {
-                    ant = new WorkerAnt();
-                }
-                ant.draw(window);
-            }
+
             //если мы его рисуем
             //то добавляем
             antlist.add(ant);

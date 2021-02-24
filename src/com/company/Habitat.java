@@ -98,8 +98,8 @@ public class Habitat {
     }
 
     public static void stop(){
-        //thread1.interrupt();
-        //thread2.interrupt();
+        thread1.interrupt();
+        thread2.interrupt();
     }
 
     /*@Override
