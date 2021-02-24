@@ -55,7 +55,7 @@ public class WarriorAnt extends ant{
             }
         });
         timer.start();
-        System.out.println("Warrior X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
+        //System.out.println("Warrior X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
     }
     public void Respawn(Window window){
 

@@ -8,13 +8,6 @@
       <background color="-1458910"/>
     </properties>
     <border type="none"/>
-    <children>
-      <component id="22032" class="javax.swing.JTextField" binding="ANTTextField" default-binding="true">
-        <constraints/>
-        <properties>
-          <text value="ANT"/>
-        </properties>
-      </component>
-    </children>
+    <children/>
   </grid>
 </form>

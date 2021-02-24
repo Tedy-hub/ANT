@@ -56,7 +56,7 @@ public class WorkerAnt extends ant {
         });
         timer.start();
 
-        System.out.println("Worker X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
+        //System.out.println("Worker X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
     }
     public void Respawn(Window window){
 
