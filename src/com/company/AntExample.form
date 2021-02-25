@@ -9,6 +9,13 @@
       <minimumSize width="500" height="500"/>
     </properties>
     <border type="none"/>
-    <children/>
+    <children>
+      <component id="de37c" class="javax.swing.JLabel" binding="timerLabel">
+        <constraints/>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+    </children>
   </grid>
 </form>

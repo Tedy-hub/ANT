@@ -25,21 +25,16 @@ public class GenerateThread extends Thread {
     private int heidght;
     private int width;
     ant ant;
-    private int P;
+    private double P;
     private int N;
 
-    public GenerateThread(JFrame window,int P,int N, ant ant,ArrayList<ant> antlist) {
+    public GenerateThread(JFrame window,double P,int N, ant ant,ArrayList<ant> antlist) {
         this.window = window;
         this.P = P;
         this.N = N;
         this.antlist = antlist;
         this.ant = ant;
-        //window.setSize(h,w);
-        //habitat = new Habitat(window,width,heidght);
     }
-
-
-    private static int seconds = 0;
 
     public void run() {
         //рисуем муравьев
@@ -59,25 +54,10 @@ public class GenerateThread extends Thread {
                 e.printStackTrace();
                 this.interrupt();
             }
-
-            //если мы его рисуем
-            //то добавляем
             antlist.add(ant);
         }
         }
     }
-
-    // перерисовка всех кадров займет больше времени
-    /*public void RespownAllAnts() {
-        window.getContentPane().repaint();
-        int i = 0;
-        while (i < warriorAnts.size() || i < workerAnts.size()) {
-            warriorAnts.get(i).Respawn(window);
-            workerAnts.get(i).Respawn(window);
-            i++;
-
-
-        }*/
 
 
 

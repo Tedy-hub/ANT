@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class WorkerAnt extends ant {
 
     static private int quantity_ant = 0;//для отслеживания кол-ва объектов
-    static public ArrayList<Image> worker_ant = new ArrayList<>();
+    static public Image worker_ant;
     public int NumberPicture = 1;
     //static public Image worker_ant;
 
@@ -48,7 +48,7 @@ public class WorkerAnt extends ant {
             public void actionPerformed(ActionEvent e) {
         // *65 т.к. муравей-рабочий является прямоугольной картинкой
         if(NumberPicture<16)
-            window.getGraphics().drawImage(worker_ant.get(NumberPicture), x, y, getSize() * 65, getSize() * 100, null);
+            window.getGraphics().drawImage(worker_ant, x, y, getSize() * 65, getSize() * 100, null);
         else return;
 
         NumberPicture++;
@@ -60,7 +60,7 @@ public class WorkerAnt extends ant {
     }
     public void Respawn(Window window){
 
-        window.getGraphics().drawImage(worker_ant.get(15), this.getPosX(), this.getPosY(), getSize() * 65, getSize() * 100, null);
+        window.getGraphics().drawImage(worker_ant, this.getPosX(), this.getPosY(), getSize() * 65, getSize() * 100, null);
 
     }
 }

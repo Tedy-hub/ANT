@@ -12,7 +12,8 @@ public class Main {
     public static void main(String[] args) {
         AntExample window = new AntExample("Hello ant");
         window.setVisible(true);
-        // Спавнит муравья по таймеру
+        window.setSize(1000,1000);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.run();
         //Habitat habitat = new Habitat(window, 1280, 1024);
         //habitat.spawnAnt();
