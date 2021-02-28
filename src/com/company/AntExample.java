@@ -1,17 +1,23 @@
 package com.company;
 
-import com.company.ant.WarriorAnt;
+import com.company.ant.ant;
 
 import javax.swing.*;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class AntExample extends JFrame implements KeyListener {
     private JPanel mainPanel;
     private JLabel timerLabel;
+    private JLabel info;
+    private ArrayList<ant> list;
     Habitat habitat = new Habitat(this,1000,1000);
     int cekonds = 0;
     ActionListener taskPerformer = new ActionListener() {
@@ -23,12 +29,31 @@ public class AntExample extends JFrame implements KeyListener {
     Timer timer = new Timer(1000,taskPerformer);
 
 
+
+
+
     public AntExample(String title){
         super(title);
         this.addKeyListener(this);
         this.setContentPane(mainPanel);
         timerLabel.setVisible(false);
+        Toolkit.getDefaultToolkit().setDynamicLayout(true);
+        this.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent evt){
+                //habitat.respawn();
+                //update(getGraphics());
+                repaint();
+            }
+        });
     }
+
+
+
+
+    /*@Override
+    public void repaint() {
+        super.repaint();
+    }*/
 
     public void run(){
     }
@@ -48,7 +73,7 @@ public class AntExample extends JFrame implements KeyListener {
                 timerLabel.setVisible(true);
             }
         }
-        //B      ttTTEEBBBt
+        //B
         if(e.getKeyCode()==KeyEvent.VK_B){
             habitat.start();
             timer.start();
@@ -59,9 +84,34 @@ public class AntExample extends JFrame implements KeyListener {
             habitat.stop();
             timer.stop();
         }
+
+        if(e.getKeyCode()==KeyEvent.VK_I){
+            System.out.println("нажали R");
+            getinfo();
+        }
+
     }
     //клавиша отпущена
     @Override
     public void keyReleased(KeyEvent e) {
     }
+
+    public void update(Graphics g){
+        super.update(g);
+    }
+    public void getinfo(){
+        list = habitat.getList();
+        int quantityWorkers=0;
+        int quantityWarriors=0;
+        for (int i = 0;i<list.size();i++){
+            if (list.get(i).getName()=="Warrior Ant"){
+                quantityWarriors++;
+            } else {
+                quantityWorkers++;
+            }
+        }
+        info.setForeground( new java.awt.Color(220, 20, 60));
+        info.setText("количество воинов: " + Integer.toString(quantityWarriors) + "количество рабочих: " + Integer.toString(quantityWorkers) );
+    }
+
 }

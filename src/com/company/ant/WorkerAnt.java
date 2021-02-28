@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,9 +58,12 @@ public class WorkerAnt extends ant {
         });
         timer.start();
 
-        //System.out.println("Worker X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
+
+        System.out.println("Worker X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
     }
-    public void Respawn(Window window){
+
+    @Override
+    public void RespawnAnt(Window window){
 
         window.getGraphics().drawImage(worker_ant, this.getPosX(), this.getPosY(), getSize() * 65, getSize() * 100, null);
 

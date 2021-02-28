@@ -55,10 +55,11 @@ public class WarriorAnt extends ant{
             }
         });
         timer.start();
-        //System.out.println("Warrior X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
+        System.out.println("Warrior X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
 
     }
-    public void Respawn(Window window){
+    @Override
+    public void RespawnAnt(Window window){
 
         window.getGraphics().drawImage(warrior_ant, this.getPosX(), this.getPosY(), getSize() * 65, getSize() * 100, null);
 

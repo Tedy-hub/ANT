@@ -17,10 +17,10 @@ public class Habitat {
     //static private ArrayList<WarriorAnt> warriorAnts = new ArrayList<>();
     static private ArrayList<ant> list = new ArrayList<>();
     static JFrame window;
-    static private int N1 = 700;
+    static private int N1 = 1000;
     static private int N2 = 1000;
-    static private int P1 = 1;
-    static private double P2 = 0.3;
+    static private double P1 = 1;
+    static private double P2 = 0.1;
     static WarriorAnt warriorAnt = new WarriorAnt();
     static WorkerAnt workerAnt = new WorkerAnt();
     static GenerateThread thread1;
@@ -38,6 +38,8 @@ public class Habitat {
     public static void setList(ArrayList<ant> list) {
         Habitat.list = list;
     }
+
+
 
     public static void start() {
         int i = 1;
@@ -57,7 +59,7 @@ public class Habitat {
             System.out.println("нет");
         }
         thread1 = new GenerateThread(window, P1, N1, workerAnt, list);
-        thread2= new GenerateThread(window, P1, N2,warriorAnt, list);
+        thread2= new GenerateThread(window, P2, N2,warriorAnt, list);
         thread1.start();
         thread2.start();
     }
@@ -65,5 +67,16 @@ public class Habitat {
     public static void stop(){
         thread1.interrupt();
         thread2.interrupt();
+    }
+    public void respawn(){
+        try {
+            thread1.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        int i = 0;
+        while (i<list.size()){
+            list.get(i).RespawnAnt(window);
+        }
     }
 }

@@ -29,4 +29,6 @@ public interface IBehaviour {
 
     void draw(Window window);
 
+    void RespawnAnt(Window window);
+
 }
