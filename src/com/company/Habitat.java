@@ -2,20 +2,18 @@ package com.company;
 
 import com.company.ant.WarriorAnt;
 import com.company.ant.WorkerAnt;
-import com.company.ant.ant;
+import com.company.ant.Ant;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Habitat {
 
-    static private ArrayList<ant> list = new ArrayList<>();
-    static JFrame window;
+    static private ArrayList<Ant> list = new ArrayList<>();
+    static AntExample window;
     static private int N1 = 1000;
     static private int N2 = 1000;
     static private double P1 = 1;
@@ -25,15 +23,15 @@ public class Habitat {
     static GenerateThread thread1;
     static GenerateThread thread2;
 
-    Habitat(AntExample window, int width, int height){
+    Habitat(AntExample window){
         this.window = window;
    }
 
-    public static ArrayList<ant> getList() {
+    public static ArrayList<Ant> getList() {
         return list;
     }
 
-    public static void setList(ArrayList<ant> list) {
+    public static void setList(ArrayList<Ant> list) {
         Habitat.list = list;
     }
 
@@ -53,14 +51,14 @@ public class Habitat {
             System.out.println("нет");
         }
         thread1 = new GenerateThread(window, P1, N1, workerAnt, list);
-        thread2= new GenerateThread(window, P2, N2,warriorAnt, list);
+        thread2= new GenerateThread(window, P2, N2, warriorAnt, list);
         thread1.start();
         thread2.start();
     }
 
     public static void stop(){
-        thread1.interrupt();
-        thread2.interrupt();
+        if(thread1 != null) thread1.interrupt();
+        if(thread2 != null) thread2.interrupt();
     }
     public void respawn(){
         try {

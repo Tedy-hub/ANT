@@ -1,14 +1,12 @@
 package com.company;
 
-import com.company.ant.ant;
+import com.company.ant.Ant;
 
 import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -17,19 +15,16 @@ public class AntExample extends JFrame implements KeyListener {
     private JPanel mainPanel;
     private JLabel timerLabel;
     private JLabel info;
-    private ArrayList<ant> list;
-    Habitat habitat = new Habitat(this,1000,1000);
-    int cekonds = 0;
+    private ArrayList<Ant> list;
+    Habitat habitat = new Habitat(this);
+    int seconds = 0;
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-            timerLabel.setText(Integer.toString(cekonds));
-            cekonds++;
+            timerLabel.setText("Секундомер: " + seconds);
+            seconds++;
         }
     };
     Timer timer = new Timer(1000,taskPerformer);
-
-
-
 
 
     public AntExample(String title){
@@ -37,31 +32,26 @@ public class AntExample extends JFrame implements KeyListener {
         this.addKeyListener(this);
         this.setContentPane(mainPanel);
         timerLabel.setVisible(false);
-        Toolkit.getDefaultToolkit().setDynamicLayout(true);
-        this.addComponentListener(new ComponentAdapter() {
-            public void componentResized(ComponentEvent evt){
-                //habitat.respawn();
-                //update(getGraphics());
-                repaint();
-            }
-        });
+        timerLabel.setFont(new Font("Comic Sans", Font.PLAIN, 20));
+        Toolkit.getDefaultToolkit().setDynamicLayout(false);
     }
 
 
-
-
-    /*@Override
-    public void repaint() {
-        super.repaint();
-    }*/
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        habitat.respawn();
+    }
 
     public void run(){
     }
     //клавиша нажата и отпущена
+
     @Override
     public void keyTyped(KeyEvent e) {
     }
     //клавиша нажата, но не отпущена
+
     @Override
     public void keyPressed(KeyEvent e) {
         //T
@@ -91,14 +81,13 @@ public class AntExample extends JFrame implements KeyListener {
         }
 
     }
+
     //клавиша отпущена
     @Override
     public void keyReleased(KeyEvent e) {
     }
 
-    public void update(Graphics g){
-        super.update(g);
-    }
+
     public void getinfo(){
         list = habitat.getList();
         int quantityWorkers=0;

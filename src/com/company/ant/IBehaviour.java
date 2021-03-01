@@ -1,5 +1,7 @@
 package com.company.ant;
 
+import com.company.AntExample;
+
 import java.awt.*;
 
 public interface IBehaviour {
@@ -19,8 +21,8 @@ public interface IBehaviour {
 
     void setPosY(int y);
 
-    void draw(Window window);
+    void draw(AntExample window);
 
-    void RespawnAnt(Window window);
+    void RespawnAnt(AntExample window);
 
 }

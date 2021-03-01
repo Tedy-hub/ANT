@@ -27,14 +27,15 @@
           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="72097" class="javax.swing.JLabel">
+      <component id="72097" class="javax.swing.JLabel" binding="timerLabel">
         <constraints>
-          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <background color="-14844025"/>
-          <font name="JetBrains Mono" size="20" style="0"/>
-          <foreground color="-15394373"/>
+          <background color="-517"/>
+          <enabled value="true"/>
+          <font name="Comic Sans MS" size="20" style="0"/>
+          <foreground color="-16739863"/>
           <opaque value="true"/>
           <text value="Секундомер:"/>
         </properties>
@@ -46,27 +47,6 @@
         <properties>
           <text value=""/>
         </properties>
-      </component>
-      <component id="de37c" class="javax.swing.JLabel" binding="timerLabel">
-        <constraints>
-          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="5" fill="0" indent="5" use-parent-layout="false">
-            <minimum-size width="20" height="20"/>
-            <preferred-size width="20" height="20"/>
-            <maximum-size width="50" height="50"/>
-          </grid>
-        </constraints>
-        <properties>
-          <alignmentX value="0.5"/>
-          <background color="-14844025"/>
-          <font name="JetBrains Mono" size="20" style="0"/>
-          <foreground color="-15394373"/>
-          <horizontalAlignment value="11"/>
-          <text value=""/>
-          <verticalAlignment value="1"/>
-        </properties>
-        <clientProperties>
-          <html.disable class="java.lang.Boolean" value="false"/>
-        </clientProperties>
       </component>
       <hspacer id="379b1">
         <constraints>
