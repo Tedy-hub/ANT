@@ -15,18 +15,5 @@ public class Main {
         window.setSize(1000,1000);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.run();
-        //Habitat habitat = new Habitat(window, 1280, 1024);
-        //habitat.spawnAnt();
-
-        /*window.addComponentListener(new ComponentAdapter() {
-            public void componentResized(ComponentEvent evt) {
-                habitat.RespownAllAnts();
-            }
-        });*/
-
-       //ControlFrame Controller = new ControlFrame();
-       //Controller.CreateGui();
-
-       
     }
 }

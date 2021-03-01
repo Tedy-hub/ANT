@@ -7,10 +7,6 @@ public interface IBehaviour {
 
     String getName();
 
-    int getSpawnTime();
-
-    int getSpawnChance();
-
     int getPosX();
 
     int getPosY();
@@ -18,10 +14,6 @@ public interface IBehaviour {
     void setName(String name);
 
     void setSize(int size);
-
-    void setSpawnTime(int time);
-
-    void setSpawnChance(int chance);
 
     void setPosX(int x);
 

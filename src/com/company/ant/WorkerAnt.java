@@ -17,8 +17,6 @@ public class WorkerAnt extends ant {
 
     static private int quantity_ant = 0;//для отслеживания кол-ва объектов
     static public Image worker_ant;
-    public int NumberPicture = 1;
-    //static public Image worker_ant;
 
     public WorkerAnt(){
         setName("Worker Ant");
@@ -28,8 +26,6 @@ public class WorkerAnt extends ant {
         int size = rand.nextInt(2);
         setSize(size + 1);
 
-        setSpawnTime(1000);
-        setSpawnChance(100); //80
         quantity_ant++;
     }
 
@@ -49,11 +45,7 @@ public class WorkerAnt extends ant {
             @Override
             public void actionPerformed(ActionEvent e) {
         // *65 т.к. муравей-рабочий является прямоугольной картинкой
-        if(NumberPicture<16)
             window.getGraphics().drawImage(worker_ant, x, y, getSize() * 65, getSize() * 100, null);
-        else return;
-
-        NumberPicture++;
             }
         });
         timer.start();

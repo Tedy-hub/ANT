@@ -14,9 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class WarriorAnt extends ant{
 
    static private int quantity_ant = 0;//для отслеживания кол-ва объектов
-   //static public Image warrior_ant;
     static public Image warrior_ant;
-    public int NumberPicture = 1;
 
    public WarriorAnt(){
        setName("Warrior Ant");
@@ -26,8 +24,6 @@ public class WarriorAnt extends ant{
        int size = rand.nextInt(2);
        setSize(size + 2);
 
-       setSpawnTime(1000);
-       setSpawnChance(100); // 70
        quantity_ant++;
    }
 
@@ -46,11 +42,7 @@ public class WarriorAnt extends ant{
         Timer timer = new Timer(58, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(NumberPicture<16)
-                    window.getGraphics().drawImage(warrior_ant, x, y, getSize() * 65, getSize() * 100, null);
-                else return;
-
-                NumberPicture++;
+                window.getGraphics().drawImage(warrior_ant, x, y, getSize() * 65, getSize() * 100, null);
 
             }
         });

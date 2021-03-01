@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 public class Habitat {
 
-    //static private ArrayList<WarriorAnt> warriorAnts = new ArrayList<>();
     static private ArrayList<ant> list = new ArrayList<>();
     static JFrame window;
     static private int N1 = 1000;
@@ -25,7 +24,6 @@ public class Habitat {
     static WorkerAnt workerAnt = new WorkerAnt();
     static GenerateThread thread1;
     static GenerateThread thread2;
-
 
     Habitat(AntExample window, int width, int height){
         this.window = window;
@@ -39,10 +37,7 @@ public class Habitat {
         Habitat.list = list;
     }
 
-
-
     public static void start() {
-        int i = 1;
         try {//тип обязательная проверка на правильность пути
             WorkerAnt.worker_ant = ImageIO.read(new File("src/com/company/Picture/SpawnWorcker/B (16).png"));
 
@@ -50,7 +45,6 @@ public class Habitat {
         } catch (IOException e) {
             System.out.println("нет");
         }
-        i = 1;
         try {//тип обязательная проверка на правильность пути
             WarriorAnt.warrior_ant =ImageIO.read(new File("src/com/company/Picture/SpawnWarrior/W (16).png"));
 
@@ -77,6 +71,7 @@ public class Habitat {
         int i = 0;
         while (i<list.size()){
             list.get(i).RespawnAnt(window);
+            i++;
         }
     }
 }

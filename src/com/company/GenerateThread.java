@@ -20,10 +20,7 @@ import javax.swing.*;
 
 public class GenerateThread extends Thread {
     private JFrame window;
-    Habitat habitat;
     private ArrayList<ant> antlist;
-    private int heidght;
-    private int width;
     ant ant;
     private double P;
     private int N;
@@ -53,12 +50,17 @@ public class GenerateThread extends Thread {
                 } else {
                     ant = new WorkerAnt();
                 }
-                ant.draw(window);
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        ant.draw(window);
+                    }
+                });
                 antlist.add(ant);
             }
         }
-        }
     }
+}
 
 
 

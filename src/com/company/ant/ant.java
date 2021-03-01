@@ -3,10 +3,8 @@ package com.company.ant;
 import java.awt.*;
 
 public abstract class ant implements IBehaviour {
-    private int spawnTime;
     private String name;
     private int Size;
-    private int spawnChance;
     private int posX;
     private int posY;
 
@@ -19,16 +17,6 @@ public abstract class ant implements IBehaviour {
     @Override
     public String getName() {
         return name;
-    }
-
-    @Override
-    public int getSpawnTime() {
-        return spawnTime;
-    }
-
-    @Override
-    public int getSpawnChance() {
-        return spawnChance;
     }
 
     @Override
@@ -49,16 +37,6 @@ public abstract class ant implements IBehaviour {
     @Override
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public void setSpawnTime(int spawnTime) {
-        this.spawnTime = spawnTime;
-    }
-
-    @Override
-    public void setSpawnChance(int chance) {
-        spawnChance = chance;
     }
 
     @Override
