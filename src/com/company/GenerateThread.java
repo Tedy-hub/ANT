@@ -32,12 +32,6 @@ public class GenerateThread extends Thread {
     public void run() {
         //рисуем муравьев
         while (!this.isInterrupted()){
-            try {
-                this.sleep(N);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                this.interrupt();
-            }
             System.out.println("есть");
             if(Math.random()<P) {
                 System.out.println(Math.random());
@@ -51,6 +45,13 @@ public class GenerateThread extends Thread {
                     ant.draw(window);
                     antlist.add(ant);
                 }
+
+            }
+            try {
+                this.sleep(N);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                this.interrupt();
             }
         }
     }

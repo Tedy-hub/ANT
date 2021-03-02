@@ -54,6 +54,7 @@ public class AntExample extends JFrame implements KeyListener {
     }
     //клавиша нажата, но не отпущена
 
+    boolean isRunning = false;
     @Override
     public void keyPressed(KeyEvent e) {
         //T
@@ -67,29 +68,33 @@ public class AntExample extends JFrame implements KeyListener {
         }
         //B
         if(e.getKeyCode()==KeyEvent.VK_B){
-            habitat.start();
-            timer.start();
+            if(!isRunning) {
+                habitat.start();
+                timer.start();
+                isRunning = true;
+            }
         }
         //E
         if(e.getKeyCode()==KeyEvent.VK_E){
             System.out.println("нажали E");
 
-            //getinfo(quantityWarriors, quantityWorkers);
             int quantityWorkers = WorkerAnt.quantity_ant;
             int quantityWarriors = WarriorAnt.quantity_ant;
+
             habitat.stop();
             timer.stop();
+            isRunning = false;
 
             JOptionPane.showMessageDialog(this, "Warrior ants quantity: " + quantityWarriors  +
                     "\nWorker ants quantity: " + quantityWorkers +
                     "\nTime passed: " + seconds);
+            repaint();
         }
 
         if(e.getKeyCode()==KeyEvent.VK_I){
             System.out.println("нажали I");
             int quantityWorkers = WorkerAnt.quantity_ant;
             int quantityWarriors = WarriorAnt.quantity_ant;
-           // getinfo(quantityWarriors, quantityWorkers);
             JOptionPane.showMessageDialog(this, "Warrior ants quantity: " + quantityWarriors  +
                     "\nWorker ants quantity" + quantityWorkers +
                     "\nTime passed: " + seconds);
@@ -102,17 +107,5 @@ public class AntExample extends JFrame implements KeyListener {
     public void keyReleased(KeyEvent e) {
     }
 
-
-    public void getinfo(int quantityWarriors, int quantityWorkers){
-        list = (ArrayList<Ant>) habitat.getList().clone();
-        for (int i = 0;i<list.size();i++){
-            if (list.get(i).getName()=="Warrior Ant"){
-                quantityWarriors++;
-            } else {
-                quantityWorkers++;
-            }
-        }
-
-    }
 
 }

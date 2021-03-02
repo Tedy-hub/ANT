@@ -69,8 +69,6 @@ public class Habitat {
 
         }
         list.clear();
-        window.repaint();
-
     }
     public void respawn(){
         try {
