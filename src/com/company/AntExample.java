@@ -37,6 +37,8 @@ public class AntExample extends JFrame implements KeyListener {
         timerLabel.setVisible(false);
         timerLabel.setFont(new Font("Comic Sans", Font.PLAIN, 20));
         timerLabel.setText("Секундомер: " + seconds);
+        seconds++;
+
         Toolkit.getDefaultToolkit().setDynamicLayout(false);
 
     }
