@@ -19,8 +19,6 @@ public class Habitat {
     static private int N2 = 1000;
     static private double P1 = 1;
     static private double P2 = 0.1;
- //   static WarriorAnt warriorAnt = new WarriorAnt();
-   // static WorkerAnt workerAnt = new WorkerAnt();
     static GenerateThread thread1;
     static GenerateThread thread2;
 

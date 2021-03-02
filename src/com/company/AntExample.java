@@ -18,13 +18,14 @@ public class AntExample extends JFrame implements KeyListener {
     private JLabel timerLabel;
     private JLabel info;
     private ArrayList<Ant> list;
+
     Habitat habitat = new Habitat(this);
     int seconds = 0;
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             timerLabel.setText("Секундомер: " + seconds);
             seconds++;
-        }
+            }
     };
     Timer timer = new Timer(1000,taskPerformer);
 
@@ -35,9 +36,10 @@ public class AntExample extends JFrame implements KeyListener {
         this.setContentPane(mainPanel);
         timerLabel.setVisible(false);
         timerLabel.setFont(new Font("Comic Sans", Font.PLAIN, 20));
+        timerLabel.setText("Секундомер: " + seconds);
         Toolkit.getDefaultToolkit().setDynamicLayout(false);
-    }
 
+    }
 
     @Override
     public void paint(Graphics g) {
@@ -69,8 +71,8 @@ public class AntExample extends JFrame implements KeyListener {
         //B
         if(e.getKeyCode()==KeyEvent.VK_B){
             if(!isRunning) {
-                habitat.start();
                 timer.start();
+                habitat.start();
                 isRunning = true;
             }
         }
@@ -96,7 +98,7 @@ public class AntExample extends JFrame implements KeyListener {
             int quantityWorkers = WorkerAnt.quantity_ant;
             int quantityWarriors = WarriorAnt.quantity_ant;
             JOptionPane.showMessageDialog(this, "Warrior ants quantity: " + quantityWarriors  +
-                    "\nWorker ants quantity" + quantityWorkers +
+                    "\nWorker ants quantity: " + quantityWorkers +
                     "\nTime passed: " + seconds);
         }
 

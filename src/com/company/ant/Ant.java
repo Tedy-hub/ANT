@@ -10,7 +10,6 @@ public abstract class Ant implements IBehaviour {
     private int posX;
     private int posY;
 
-
     @Override
     public int getSize() {
         return Size;

@@ -45,8 +45,8 @@ public class GenerateThread extends Thread {
                     ant.draw(window);
                     antlist.add(ant);
                 }
-
             }
+
             try {
                 this.sleep(N);
             } catch (InterruptedException e) {

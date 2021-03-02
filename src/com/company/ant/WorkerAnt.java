@@ -31,9 +31,18 @@ public class WorkerAnt extends Ant {
 
     @Override
     public void draw(AntExample window) {
-
-        int x = ThreadLocalRandom.current().nextInt(0, window.getWidth() - this.getSize() * 65);
-        int y = ThreadLocalRandom.current().nextInt(0, window.getHeight() - this.getSize() * 105);
+        // Рисует в 0, 0 если окно недостаточно большого размера
+        int x = 0, y = 0;
+        try {
+            x = ThreadLocalRandom.current().nextInt(0, window.getWidth() - this.getSize() * 65);
+            y = ThreadLocalRandom.current().nextInt(window.getHeight() - window.getContentPane().getHeight(),
+                    window.getHeight() - this.getSize() * 100);
+        }
+        catch(IllegalArgumentException ia){
+         //   ia.printStackTrace();
+            x = 0;
+            y = window.getHeight() - window.getContentPane().getHeight();
+        }
         this.setPosX(x);
         this.setPosY(y);
 

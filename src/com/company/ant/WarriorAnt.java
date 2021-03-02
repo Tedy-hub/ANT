@@ -30,13 +30,23 @@ public class WarriorAnt extends Ant {
 
     @Override
     public void draw(AntExample window) {
+        // Рисует в 0, 0 если окно недостаточно большого размера
 
-        int x = ThreadLocalRandom.current().nextInt(0, window.getWidth() - this.getSize() * 100);
-        int y = ThreadLocalRandom.current().nextInt(0, window.getHeight() - this.getSize() * 100);
+        int x = 0, y = 0;
+        try {
+            x = ThreadLocalRandom.current().nextInt(0, window.getWidth() - this.getSize() * 100);
+            y = ThreadLocalRandom.current().nextInt(window.getHeight() - window.getContentPane().getHeight(),
+                    window.getHeight() - this.getSize() * 100);
+        }
+        catch(IllegalArgumentException ia){
+           // ia.printStackTrace();
+            x = 0;
+            y = window.getHeight() - window.getContentPane().getHeight();;
+        }
         this.setPosX(x);
         this.setPosY(y);
 
-        window.getGraphics().drawImage(warrior_ant, x, y, getSize() * 65, getSize() * 100, null);
+        window.getGraphics().drawImage(warrior_ant, x, y, getSize() * 100, getSize() * 100, null);
 
         System.out.println("Warrior X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
 
@@ -45,7 +55,7 @@ public class WarriorAnt extends Ant {
     @Override
     public void RespawnAnt(AntExample window){
 
-        window.getGraphics().drawImage(warrior_ant, this.getPosX(), this.getPosY(), getSize() * 65, getSize() * 100, null);
+        window.getGraphics().drawImage(warrior_ant, this.getPosX(), this.getPosY(), getSize() * 100, getSize() * 100, null);
 
     }
 }
