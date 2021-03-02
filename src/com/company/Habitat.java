@@ -14,6 +14,12 @@ public class Habitat {
 
     static private ArrayList<Ant> list = new ArrayList<>();
     static AntExample window;
+
+    static private int height = 1000;
+    static private int width = 1024;
+
+    static public int seconds = 0;
+
     static private int N1 = 1000;
     static private int N2 = 1000;
     static private double P1 = 1;
@@ -23,9 +29,11 @@ public class Habitat {
     static GenerateThread thread1;
     static GenerateThread thread2;
 
-    Habitat(AntExample window){
+
+    Habitat(AntExample window) {
         this.window = window;
-   }
+        this.window.setSize(width, height);
+    }
 
     public static ArrayList<Ant> getList() {
         return list;
@@ -44,32 +52,36 @@ public class Habitat {
             System.out.println("нет");
         }
         try {//тип обязательная проверка на правильность пути
-            WarriorAnt.warrior_ant =ImageIO.read(new File("src/com/company/Picture/SpawnWarrior/W (16).png"));
+            WarriorAnt.warrior_ant = ImageIO.read(new File("src/com/company/Picture/SpawnWarrior/W (16).png"));
 
             System.out.println("Изображение считалось");
         } catch (IOException e) {
             System.out.println("нет");
         }
         thread1 = new GenerateThread(window, P1, N1, workerAnt, list);
-        thread2= new GenerateThread(window, P2, N2, warriorAnt, list);
+        thread2 = new GenerateThread(window, P2, N2, warriorAnt, list);
         thread1.start();
         thread2.start();
     }
 
-    public static void stop(){
-        if(thread1 != null) thread1.interrupt();
-        if(thread2 != null) thread2.interrupt();
+    public static void stop() {
+        if (thread1 != null) thread1.interrupt();
+        if (thread2 != null) thread2.interrupt();
     }
-    public void respawn(){
+
+    public void respawn() {
         try {
             thread1.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         int i = 0;
-        while (i<list.size()){
+        while (i < list.size()) {
             list.get(i).RespawnAnt(window);
             i++;
         }
+    }
+    public int update(){
+        return seconds++;
     }
 }

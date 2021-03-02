@@ -13,7 +13,6 @@ public class Main {
     public static void main(String[] args) {
         AntExample window = new AntExample("Hello ant");
         window.setVisible(true);
-        window.setSize(1000,1000);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.run();
 

@@ -15,13 +15,14 @@ public class AntExample extends JFrame implements KeyListener {
     private JPanel mainPanel;
     private JLabel timerLabel;
     private JLabel info;
+    private JLabel quantityAnt;
     private ArrayList<Ant> list;
     Habitat habitat = new Habitat(this);
-    int seconds = 0;
+
+
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-            timerLabel.setText("Секундомер: " + seconds);
-            seconds++;
+            timerLabel.setText("Секундомер: " + habitat.update());;
         }
     };
     Timer timer = new Timer(1000,taskPerformer);
@@ -31,6 +32,8 @@ public class AntExample extends JFrame implements KeyListener {
         super(title);
         this.addKeyListener(this);
         this.setContentPane(mainPanel);
+        quantityAnt.setVisible(false);
+        info.setVisible(false);
         timerLabel.setVisible(false);
         timerLabel.setFont(new Font("Comic Sans", Font.PLAIN, 20));
         Toolkit.getDefaultToolkit().setDynamicLayout(false);
@@ -73,11 +76,11 @@ public class AntExample extends JFrame implements KeyListener {
             System.out.println("нажали E");
             habitat.stop();
             timer.stop();
+            getinfo();
         }
 
         if(e.getKeyCode()==KeyEvent.VK_I){
-            System.out.println("нажали R");
-            getinfo();
+            System.out.println("нажали I");
         }
 
     }
@@ -99,8 +102,12 @@ public class AntExample extends JFrame implements KeyListener {
                 quantityWorkers++;
             }
         }
+
+        info.setVisible(true);
         info.setForeground( new java.awt.Color(220, 20, 60));
+        info.setFont(new Font("Comic Sans", Font.PLAIN, 20));
         info.setText("количество воинов: " + Integer.toString(quantityWarriors) + "количество рабочих: " + Integer.toString(quantityWorkers) );
+
     }
 
 }
