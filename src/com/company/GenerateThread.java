@@ -11,16 +11,22 @@ import javax.swing.*;
 public class GenerateThread extends Thread {
     private AntExample window;
     private ArrayList<Ant> antlist;
+    String antName;
     Ant ant;
     private double P;
     private int N;
 
-    public GenerateThread(AntExample window, double P, int N, Ant ant, ArrayList<Ant> antlist) {
+    public GenerateThread(AntExample window, double P, int N, String ant, ArrayList<Ant> antlist) {
         this.window = window;
         this.P = P;
         this.N = N;
         this.antlist = antlist;
-        this.ant = ant;
+        antName = ant;
+    }
+
+    @Override
+    public void interrupt() {
+        super.interrupt();
     }
 
     public void run() {
@@ -35,18 +41,16 @@ public class GenerateThread extends Thread {
             System.out.println("есть");
             if(Math.random()<P) {
                 System.out.println(Math.random());
-                if (ant.getName() == "Warrior Ant") {
+                if (antName == WarriorAnt.getStaticName()) {
                     ant = new WarriorAnt();
                 } else {
                     ant = new WorkerAnt();
                 }
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        ant.draw(window);
-                    }
-                });
-                antlist.add(ant);
+                // вроде работает но какой-то костыль, чтобы при нажатии E не продолжжалась отрисовка
+                if(!this.isInterrupted()) {
+                    ant.draw(window);
+                    antlist.add(ant);
+                }
             }
         }
     }

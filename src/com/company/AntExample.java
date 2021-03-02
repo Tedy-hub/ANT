@@ -1,6 +1,8 @@
 package com.company;
 
 import com.company.ant.Ant;
+import com.company.ant.WarriorAnt;
+import com.company.ant.WorkerAnt;
 
 import javax.swing.*;
 
@@ -71,13 +73,26 @@ public class AntExample extends JFrame implements KeyListener {
         //E
         if(e.getKeyCode()==KeyEvent.VK_E){
             System.out.println("нажали E");
+
+            //getinfo(quantityWarriors, quantityWorkers);
+            int quantityWorkers = WorkerAnt.quantity_ant;
+            int quantityWarriors = WarriorAnt.quantity_ant;
             habitat.stop();
             timer.stop();
+
+            JOptionPane.showMessageDialog(this, "Warrior ants quantity: " + quantityWarriors  +
+                    "\nWorker ants quantity: " + quantityWorkers +
+                    "\nTime passed: " + seconds);
         }
 
         if(e.getKeyCode()==KeyEvent.VK_I){
-            System.out.println("нажали R");
-            getinfo();
+            System.out.println("нажали I");
+            int quantityWorkers = WorkerAnt.quantity_ant;
+            int quantityWarriors = WarriorAnt.quantity_ant;
+           // getinfo(quantityWarriors, quantityWorkers);
+            JOptionPane.showMessageDialog(this, "Warrior ants quantity: " + quantityWarriors  +
+                    "\nWorker ants quantity" + quantityWorkers +
+                    "\nTime passed: " + seconds);
         }
 
     }
@@ -88,10 +103,8 @@ public class AntExample extends JFrame implements KeyListener {
     }
 
 
-    public void getinfo(){
-        list = habitat.getList();
-        int quantityWorkers=0;
-        int quantityWarriors=0;
+    public void getinfo(int quantityWarriors, int quantityWorkers){
+        list = (ArrayList<Ant>) habitat.getList().clone();
         for (int i = 0;i<list.size();i++){
             if (list.get(i).getName()=="Warrior Ant"){
                 quantityWarriors++;
@@ -99,8 +112,7 @@ public class AntExample extends JFrame implements KeyListener {
                 quantityWorkers++;
             }
         }
-        info.setForeground( new java.awt.Color(220, 20, 60));
-        info.setText("количество воинов: " + Integer.toString(quantityWarriors) + "количество рабочих: " + Integer.toString(quantityWorkers) );
+
     }
 
 }

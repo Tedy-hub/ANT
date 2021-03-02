@@ -6,6 +6,7 @@ import com.company.ant.Ant;
 
 import javax.imageio.ImageIO;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,8 +19,8 @@ public class Habitat {
     static private int N2 = 1000;
     static private double P1 = 1;
     static private double P2 = 0.1;
-    static WarriorAnt warriorAnt = new WarriorAnt();
-    static WorkerAnt workerAnt = new WorkerAnt();
+ //   static WarriorAnt warriorAnt = new WarriorAnt();
+   // static WorkerAnt workerAnt = new WorkerAnt();
     static GenerateThread thread1;
     static GenerateThread thread2;
 
@@ -50,8 +51,8 @@ public class Habitat {
         } catch (IOException e) {
             System.out.println("нет");
         }
-        thread1 = new GenerateThread(window, P1, N1, workerAnt, list);
-        thread2= new GenerateThread(window, P2, N2, warriorAnt, list);
+        thread1 = new GenerateThread(window, P1, N1, WorkerAnt.getStaticName(), list);
+        thread2= new GenerateThread(window, P2, N2, WarriorAnt.getStaticName(), list);
         thread1.start();
         thread2.start();
     }
@@ -59,6 +60,17 @@ public class Habitat {
     public static void stop(){
         if(thread1 != null) thread1.interrupt();
         if(thread2 != null) thread2.interrupt();
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).getName() == "Warrior Ant")
+                WarriorAnt.quantity_ant--;
+            else{
+                WorkerAnt.quantity_ant--;
+            }
+
+        }
+        list.clear();
+        window.repaint();
+
     }
     public void respawn(){
         try {

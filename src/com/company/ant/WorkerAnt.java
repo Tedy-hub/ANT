@@ -8,7 +8,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class WorkerAnt extends Ant {
 
-    static private int quantity_ant = 0;//для отслеживания кол-ва объектов
+    public static String staticName = "Worker Ant";
+    static public int quantity_ant = 0;//для отслеживания кол-ва объектов
     static public Image worker_ant;
 
     public WorkerAnt(){
@@ -25,6 +26,8 @@ public class WorkerAnt extends Ant {
     public int GetQuantityAntThisGroup(){
         return quantity_ant;
     }
+
+    public static String getStaticName() { return staticName; }
 
     @Override
     public void draw(AntExample window) {
