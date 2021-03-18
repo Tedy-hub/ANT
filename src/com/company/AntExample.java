@@ -23,6 +23,7 @@ public class AntExample extends JFrame implements KeyListener {
     private JPanel ControlPanel;
     private JCheckBox IsVisiable;
     private JRadioButton timeVisible;
+    private JRadioButton timeHidden;
     private ArrayList<Ant> list;
     boolean isRunning = false;
     Habitat habitat = new Habitat(this.SecondPanel);
@@ -35,14 +36,6 @@ public class AntExample extends JFrame implements KeyListener {
             }
     };
     Timer timer = new Timer(1000,taskPerformer);
-
-    void timerToggle(){
-        if(timerLabel.isVisible()){
-            timerLabel.setVisible(false);
-        }else {
-            timerLabel.setVisible(true);
-        }
-    }
 
     public AntExample(String title){
         super(title);
@@ -57,13 +50,19 @@ public class AntExample extends JFrame implements KeyListener {
         this.Start.addActionListener(this::actionStart);
         this.Stop.addActionListener(this::actionStop);
         this.timeVisible.addActionListener(this::timerVisible);
+        this.timeHidden.addActionListener(this::timerHidden);
+    }
+
+    private void timerHidden(ActionEvent e){
+        if(timeHidden.isSelected()) {
+            timerLabel.setVisible(false);
+        }
     }
 
     private void timerVisible(ActionEvent e) {
         if(timeVisible.isSelected()){
-            timerToggle();
+            timerLabel.setVisible(true);
         }
-
     }
 
     public void actionStart(ActionEvent e) {
@@ -113,11 +112,13 @@ public class AntExample extends JFrame implements KeyListener {
         switch (e.getKeyCode()){
             case KeyEvent.VK_T:{
                 if(timeVisible.isSelected()){
-                    timeVisible.setSelected(false);
+                    timeHidden.setSelected(true);
+                    timerLabel.setVisible(false);
+
                 } else {
                     timeVisible.setSelected(true);
+                    timerLabel.setVisible(true);
                 }
-                timerToggle();
 
             break;}
             case KeyEvent.VK_B:{start();
