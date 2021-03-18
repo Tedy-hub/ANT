@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class AntExample extends JFrame {
@@ -21,13 +20,14 @@ public class AntExample extends JFrame {
     private JButton Start;
     private JPanel SecondPanel;
     private JPanel ControlPanel;
-    private JCheckBox IsVisiable;
+    private JCheckBox IsVisible;
     private JRadioButton timeVisible;
     private JRadioButton timeHidden;
-    private JComboBox WarrioeChans;
+    private JComboBox WarriorChance;
     private JTextField WarriorTimeSpawn;
-    private JTextField WorckerTimeSpawn;
-    private JComboBox WorckerChans;
+    private JTextField WorkerTimeSpawn;
+    private JComboBox WorkerChance;
+    private CustomMenu MyMenu;
     private ArrayList<Ant> list;
     boolean isRunning = false;
     Habitat habitat = new Habitat(this.SecondPanel);
@@ -39,8 +39,9 @@ public class AntExample extends JFrame {
 
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-            timerLabel.setText("Таймер: " + seconds);
             seconds++;
+            if(timeVisible.isSelected())
+                timerLabel.setText("Таймер: " + seconds);
             }
     };
     Timer timer = new Timer(1000,taskPerformer);
@@ -48,36 +49,44 @@ public class AntExample extends JFrame {
     public AntExample(String title){
         super(title);
 
+        MyMenu = new CustomMenu();
+        configureMenu();
+
         ControlPanel.setFocusable(true);
         this.setContentPane(mainPanel);
-        timerLabel.setVisible(false);
+
         timerLabel.setFont(new Font("Comic Sans", Font.PLAIN, 20));
-        timerLabel.setText("Таймер: " + seconds);
+        timerLabel.setText("\u200E");
+
         Color clr = Color.getHSBColor(204, (float)0.07, (float)0.25);
         ControlPanel.setBackground(clr);
+
         this.Start.addActionListener(this::actionStart);
         this.Stop.addActionListener(this::actionStop);
         this.timeVisible.addActionListener(this::timerVisible);
         this.timeHidden.addActionListener(this::timerHidden);
+        this.IsVisible.addActionListener(this::toggleInfoShown);
+
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
 
         int i = 10;
         while(i<=100) {
-            this.WarrioeChans.addItem(i);
-            this.WorckerChans.addItem(i);
+            this.WarriorChance.addItem(i);
+            this.WorkerChance.addItem(i);
             i+=10;
         }
-        this.WarrioeChans.addActionListener(this::ChansWarrior);
-        this.WorckerChans.addActionListener(this::ChansWorcker);
+        this.WarriorChance.addActionListener(this::ChanceWarrior);
+        this.WorkerChance.addActionListener(this::ChanceWorker);
 
         this.WarriorTimeSpawn.addActionListener(this::CheckTimeSpawnWarrior);
-        this.WorckerTimeSpawn.addActionListener(this::CheckTimeSpawnWorcker);
+        this.WorkerTimeSpawn.addActionListener(this::CheckTimeSpawnWorker);
     }
 
-    private void ChansWarrior(ActionEvent e){
-        this.P2 = Double.parseDouble(this.WarrioeChans.getSelectedItem().toString())/100;
+    private void ChanceWarrior(ActionEvent e){
+        this.P2 = Double.parseDouble(this.WarriorChance.getSelectedItem().toString())/100;
         System.out.println(this.P2+"");
     }
+
     private void CheckTimeSpawnWarrior(ActionEvent e){
         try{
             this.N2 = Integer.parseInt(this.WarriorTimeSpawn.getText().toString());
@@ -90,13 +99,14 @@ public class AntExample extends JFrame {
     }
 
 
-    private void ChansWorcker(ActionEvent e){
-        this.P1 = Double.parseDouble(this.WorckerChans.getSelectedItem().toString())/100;
+    private void ChanceWorker(ActionEvent e){
+        this.P1 = Double.parseDouble(this.WorkerChance.getSelectedItem().toString())/100;
         System.out.println(this.P1+"");
     }
-    private void CheckTimeSpawnWorcker(ActionEvent e){
+
+    private void CheckTimeSpawnWorker(ActionEvent e){
         try{
-            this.N1 = Integer.parseInt(this.WorckerTimeSpawn.getText().toString());
+            this.N1 = Integer.parseInt(this.WorkerTimeSpawn.getText().toString());
         }catch (Exception exception){
             this.N1 = 1000;
         }
@@ -105,18 +115,16 @@ public class AntExample extends JFrame {
 
     }
 
-
-
-    private void timerHidden(ActionEvent e){
-        if(timeHidden.isSelected()) {
-            timerLabel.setVisible(false);
-        }
+    public void timerHidden(ActionEvent e){
+        timerLabel.setText("\u200E");
+        MyMenu.timerOptionHide.setSelected(true);
+        timeHidden.setSelected(true);
     }
 
-    private void timerVisible(ActionEvent e) {
-        if(timeVisible.isSelected()){
-            timerLabel.setVisible(true);
-        }
+    public void timerVisible(ActionEvent e) {
+        timerLabel.setText("Таймер: " + seconds);
+        MyMenu.timerOptionShow.setSelected(true);
+        timeVisible.setSelected(true);
     }
 
     public void actionStart(ActionEvent e) {
@@ -125,10 +133,11 @@ public class AntExample extends JFrame {
 
     public void start(){
         if(!isRunning) {
-            timerLabel.setVisible(true);
-            habitat.ChangePropertys(this.P1, this.N1, this.P2, this.N2);
-            habitat.start();
+            timerLabel.setText("Таймер: " + seconds);
+            timeVisible.setSelected(true);
+            habitat.ChangeProperties(this.P1, this.N1, this.P2, this.N2);
             timer.start();
+            habitat.start();
             isRunning = true;
             Start.setEnabled(false);
             Stop.setEnabled(true);
@@ -139,11 +148,16 @@ public class AntExample extends JFrame {
         stop();
     }
 
+    public void toggleInfoShown(ActionEvent e){
+        MyMenu.infoOptionShow.setSelected(IsVisible.isSelected());
+        //IsVisible.setSelected(!IsVisible.isSelected());
+    }
+
     public void stop(){
         int quantityWorkers = WorkerAnt.quantity_ant;
         int quantityWarriors = WarriorAnt.quantity_ant;
 
-        if(IsVisiable.isSelected()) {
+        if(IsVisible.isSelected()) {
             paintResult(quantityWarriors, quantityWorkers);
         } else {
             StopOperations();
@@ -167,6 +181,7 @@ public class AntExample extends JFrame {
             }
         }
     }
+
     public void StopOperations(){
         if(isRunning) {
             timer.stop();
@@ -176,9 +191,6 @@ public class AntExample extends JFrame {
             Start.setEnabled(true);
         }
     }
-
-
-
 
 
     KeyEventDispatcher keyEventDispatcher = new KeyEventDispatcher() {
@@ -194,13 +206,12 @@ public class AntExample extends JFrame {
                     break;
                 }
                 case KeyEvent.VK_T:{
-                    if(timeVisible.isSelected()){
-                        timeHidden.setSelected(true);
-                        timerLabel.setVisible(false);
-
-                    } else {
-                        timeVisible.setSelected(true);
-                        timerLabel.setVisible(true);
+                    System.out.println("Pressed T!\n");
+                    if(timeVisible.isSelected()) {
+                        timeHidden.doClick();
+                    }
+                    else if (timeHidden.isSelected()){
+                        timeVisible.doClick();
                     }
                     break;
                 }
@@ -213,11 +224,27 @@ public class AntExample extends JFrame {
         }
     };
 
-
-
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         habitat.respawn();
+    }
+
+
+    public void configureMenu(){
+        MyMenu.simOptionStart.addActionListener(this::actionStart);
+        MyMenu.simOptionStop.addActionListener(this::actionStop);
+
+        MyMenu.infoOptionShow.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                IsVisible.setSelected(!IsVisible.isSelected());
+            }
+        });
+
+        MyMenu.timerOptionShow.addActionListener(this::timerVisible);
+        MyMenu.timerOptionHide.addActionListener(this::timerHidden);
+
+        this.setJMenuBar(MyMenu.menuBar);
     }
 }

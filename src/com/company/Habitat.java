@@ -86,7 +86,7 @@ public class Habitat {
         }
     }
 
-    public void ChangePropertys( double P1, int N1, double P2, int N2){
+    public void ChangeProperties(double P1, int N1, double P2, int N2){
         if(N1 == 0)N1 = 1000;
         if(N2 == 0)N2 = 1000;
 
