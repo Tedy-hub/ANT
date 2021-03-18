@@ -21,13 +21,14 @@ public class AntExample extends JFrame implements KeyListener {
     private JButton Stop;
     private JButton Start;
     private JPanel SecondPanel;
+    private JPanel ControlPanel;
     private ArrayList<Ant> list;
 
     Habitat habitat = new Habitat(this.SecondPanel);
     int seconds = 0;
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-            timerLabel.setText("Секундомер: " + seconds);
+            timerLabel.setText("Таймер: " + seconds);
             seconds++;
             }
     };
@@ -40,7 +41,9 @@ public class AntExample extends JFrame implements KeyListener {
         this.setContentPane(mainPanel);
         timerLabel.setVisible(false);
         timerLabel.setFont(new Font("Comic Sans", Font.PLAIN, 20));
-        timerLabel.setText("Секундомер: " + seconds);
+        timerLabel.setText("Таймер: " + seconds);
+        Color clr = Color.getHSBColor(204, (float)0.07, (float)0.25);
+        ControlPanel.setBackground(clr);
         seconds++;
         this.Start.addActionListener(this::actionStart);
         this.Stop.addActionListener(this::actionStop);
@@ -61,9 +64,14 @@ public class AntExample extends JFrame implements KeyListener {
     //клавиша нажата и отпущена
 
     public void actionStart(ActionEvent e) {
-        timer.start();
-        habitat.start();
-        isRunning = true;
+        if(!isRunning) {
+            timerLabel.setVisible(true);
+            habitat.start();
+            timer.start();
+            isRunning = true;
+            Start.setEnabled(false);
+            Stop.setEnabled(true);
+        }
     }
 
     public void actionStop(ActionEvent e) {
@@ -72,10 +80,14 @@ public class AntExample extends JFrame implements KeyListener {
         int quantityWorkers = WorkerAnt.quantity_ant;
         int quantityWarriors = WarriorAnt.quantity_ant;
 
-        habitat.stop();
-        timer.stop();
-        isRunning = false;
+        if(isRunning) {
+            timer.stop();
+            habitat.stop();
+            isRunning = false;
+            Stop.setEnabled(false);
+            Start.setEnabled(true);
 
+        }
         JOptionPane.showMessageDialog(this, "Warrior ants quantity: " + quantityWarriors  +
                 "\nWorker ants quantity: " + quantityWorkers +
                 "\nTime passed: " + seconds);
