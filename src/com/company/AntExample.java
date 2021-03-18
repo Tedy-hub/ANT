@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-public class AntExample extends JFrame implements KeyListener {
+public class AntExample extends JFrame {
 
     private JPanel mainPanel;
     private JLabel timerLabel;
@@ -39,7 +39,7 @@ public class AntExample extends JFrame implements KeyListener {
 
     public AntExample(String title){
         super(title);
-        ControlPanel.addKeyListener(this);
+
         ControlPanel.setFocusable(true);
         this.setContentPane(mainPanel);
         timerLabel.setVisible(false);
@@ -51,6 +51,7 @@ public class AntExample extends JFrame implements KeyListener {
         this.Stop.addActionListener(this::actionStop);
         this.timeVisible.addActionListener(this::timerVisible);
         this.timeHidden.addActionListener(this::timerHidden);
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
     }
 
     private void timerHidden(ActionEvent e){
@@ -107,35 +108,40 @@ public class AntExample extends JFrame implements KeyListener {
                 "\nTime passed: " + seconds);
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()){
-            case KeyEvent.VK_T:{
-                if(timeVisible.isSelected()){
-                    timeHidden.setSelected(true);
-                    timerLabel.setVisible(false);
-
-                } else {
-                    timeVisible.setSelected(true);
-                    timerLabel.setVisible(true);
+    KeyEventDispatcher keyEventDispatcher = new KeyEventDispatcher() {
+        @Override
+        public boolean dispatchKeyEvent(final KeyEvent e) {
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_B:{
+                    start();
+                    break;
                 }
+                case KeyEvent.VK_E:{
+                    stop();
+                    break;
+                }
+                case KeyEvent.VK_T:{
+                    if(timeVisible.isSelected()){
+                        timeHidden.setSelected(true);
+                        timerLabel.setVisible(false);
 
-            break;}
-            case KeyEvent.VK_B:{start();
-            break;}
-            case KeyEvent.VK_E:{stop();
-            break;}
-            case KeyEvent.VK_I:{paintResult(WarriorAnt.quantity_ant,WorkerAnt.quantity_ant);
-            break;}
+                    } else {
+                        timeVisible.setSelected(true);
+                        timerLabel.setVisible(true);
+                    }
+                    break;
+                }
+                case KeyEvent.VK_I:{
+                    paintResult(WarriorAnt.quantity_ant,WorkerAnt.quantity_ant);
+                    break;
+                }
+            }
+            return false;
         }
-    }
+    };
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-    }
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
+
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
