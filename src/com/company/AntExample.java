@@ -24,10 +24,18 @@ public class AntExample extends JFrame {
     private JCheckBox IsVisiable;
     private JRadioButton timeVisible;
     private JRadioButton timeHidden;
+    private JComboBox WarrioeChans;
+    private JTextField WarriorTimeSpawn;
+    private JTextField WorckerTimeSpawn;
+    private JComboBox WorckerChans;
     private ArrayList<Ant> list;
     boolean isRunning = false;
     Habitat habitat = new Habitat(this.SecondPanel);
     int seconds = 1;
+    private int N1;
+    private int N2;
+    private double P1;
+    private double P2;
 
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -52,7 +60,52 @@ public class AntExample extends JFrame {
         this.timeVisible.addActionListener(this::timerVisible);
         this.timeHidden.addActionListener(this::timerHidden);
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
+
+        int i = 10;
+        while(i<=100) {
+            this.WarrioeChans.addItem(i);
+            this.WorckerChans.addItem(i);
+            i+=10;
+        }
+        this.WarrioeChans.addActionListener(this::ChansWarrior);
+        this.WorckerChans.addActionListener(this::ChansWorcker);
+
+        this.WarriorTimeSpawn.addActionListener(this::CheckTimeSpawnWarrior);
+        this.WorckerTimeSpawn.addActionListener(this::CheckTimeSpawnWorcker);
     }
+
+    private void ChansWarrior(ActionEvent e){
+        this.P2 = Double.parseDouble(this.WarrioeChans.getSelectedItem().toString())/100;
+        System.out.println(this.P2+"");
+    }
+    private void CheckTimeSpawnWarrior(ActionEvent e){
+        try{
+            this.N2 = Integer.parseInt(this.WarriorTimeSpawn.getText().toString());
+        }catch (Exception exception){
+            this.N2 = 1000;
+        }
+
+        System.out.println(this.N2+"");
+
+    }
+
+
+    private void ChansWorcker(ActionEvent e){
+        this.P1 = Double.parseDouble(this.WorckerChans.getSelectedItem().toString())/100;
+        System.out.println(this.P1+"");
+    }
+    private void CheckTimeSpawnWorcker(ActionEvent e){
+        try{
+            this.N1 = Integer.parseInt(this.WorckerTimeSpawn.getText().toString());
+        }catch (Exception exception){
+            this.N1 = 1000;
+        }
+
+        System.out.println(this.N1+"");
+
+    }
+
+
 
     private void timerHidden(ActionEvent e){
         if(timeHidden.isSelected()) {
@@ -69,9 +122,11 @@ public class AntExample extends JFrame {
     public void actionStart(ActionEvent e) {
         start();
     }
+
     public void start(){
         if(!isRunning) {
             timerLabel.setVisible(true);
+            habitat.ChangePropertys(this.P1, this.N1, this.P2, this.N2);
             habitat.start();
             timer.start();
             isRunning = true;
@@ -83,6 +138,7 @@ public class AntExample extends JFrame {
     public void actionStop(ActionEvent e) {
         stop();
     }
+
     public void stop(){
         int quantityWorkers = WorkerAnt.quantity_ant;
         int quantityWarriors = WarriorAnt.quantity_ant;
