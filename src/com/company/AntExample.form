@@ -125,7 +125,7 @@
             <properties>
               <background color="-1769517"/>
               <foreground color="-1769517"/>
-              <text value="Период Война &#10;(для ввода в конце нажмите пробел):"/>
+              <text value="Период Война &#10;(для ввода в конце нажмите enter):"/>
             </properties>
           </component>
           <vspacer id="f8954">
@@ -145,7 +145,7 @@
             <properties>
               <background color="-1769517"/>
               <foreground color="-1769517"/>
-              <text value="Период Рабочего&#10;(для ввода в конце нажмите пробел):"/>
+              <text value="Период Рабочего&#10;(для ввода в конце нажмите enter):"/>
             </properties>
           </component>
           <component id="f9e2" class="javax.swing.JTextField" binding="WorckerTimeSpawn">
