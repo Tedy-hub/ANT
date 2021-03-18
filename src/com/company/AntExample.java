@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 public class AntExample extends JFrame implements KeyListener {
@@ -22,10 +21,13 @@ public class AntExample extends JFrame implements KeyListener {
     private JButton Start;
     private JPanel SecondPanel;
     private JPanel ControlPanel;
+    private JCheckBox IsVisiable;
+    private JRadioButton timeVisible;
     private ArrayList<Ant> list;
-
+    boolean isRunning = false;
     Habitat habitat = new Habitat(this.SecondPanel);
-    int seconds = 0;
+    int seconds = 1;
+
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             timerLabel.setText("Таймер: " + seconds);
@@ -34,36 +36,40 @@ public class AntExample extends JFrame implements KeyListener {
     };
     Timer timer = new Timer(1000,taskPerformer);
 
+    void timerToggle(){
+        if(timerLabel.isVisible()){
+            timerLabel.setVisible(false);
+        }else {
+            timerLabel.setVisible(true);
+        }
+    }
 
     public AntExample(String title){
         super(title);
-        this.addKeyListener(this);
+        ControlPanel.addKeyListener(this);
+        ControlPanel.setFocusable(true);
         this.setContentPane(mainPanel);
         timerLabel.setVisible(false);
         timerLabel.setFont(new Font("Comic Sans", Font.PLAIN, 20));
         timerLabel.setText("Таймер: " + seconds);
         Color clr = Color.getHSBColor(204, (float)0.07, (float)0.25);
         ControlPanel.setBackground(clr);
-        seconds++;
         this.Start.addActionListener(this::actionStart);
         this.Stop.addActionListener(this::actionStop);
-
-
-        Toolkit.getDefaultToolkit().setDynamicLayout(false);
-
+        this.timeVisible.addActionListener(this::timerVisible);
     }
 
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        habitat.respawn();
-    }
+    private void timerVisible(ActionEvent e) {
+        if(timeVisible.isSelected()){
+            timerToggle();
+        }
 
-    public void run(){
     }
-    //клавиша нажата и отпущена
 
     public void actionStart(ActionEvent e) {
+        start();
+    }
+    public void start(){
         if(!isRunning) {
             timerLabel.setVisible(true);
             habitat.start();
@@ -75,10 +81,12 @@ public class AntExample extends JFrame implements KeyListener {
     }
 
     public void actionStop(ActionEvent e) {
-        System.out.println("нажали E");
-
+        stop();
+    }
+    public void stop(){
         int quantityWorkers = WorkerAnt.quantity_ant;
         int quantityWarriors = WarriorAnt.quantity_ant;
+
 
         if(isRunning) {
             timer.stop();
@@ -88,69 +96,48 @@ public class AntExample extends JFrame implements KeyListener {
             Start.setEnabled(true);
 
         }
-        JOptionPane.showMessageDialog(this, "Warrior ants quantity: " + quantityWarriors  +
-                "\nWorker ants quantity: " + quantityWorkers +
-                "\nTime passed: " + seconds);
+        if(IsVisiable.isSelected()) {
+            paintResult(quantityWarriors, quantityWorkers);
+        }
         repaint();
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
+    public void paintResult(int quantityWarriors ,int quantityWorkers){
+        JOptionPane.showMessageDialog(this, "Warrior ants quantity: " + quantityWarriors  +
+                "\nWorker ants quantity: " + quantityWorkers +
+                "\nTime passed: " + seconds);
     }
-    //клавиша нажата, но не отпущена
 
-    boolean isRunning = false;
     @Override
     public void keyPressed(KeyEvent e) {
-        //T
-        if(e.getKeyCode()==KeyEvent.VK_T){
-            System.out.println("нажали T");
-            if(timerLabel.isVisible()){
-                timerLabel.setVisible(false);
-            }else {
-                timerLabel.setVisible(true);
-            }
+        switch (e.getKeyCode()){
+            case KeyEvent.VK_T:{
+                if(timeVisible.isSelected()){
+                    timeVisible.setSelected(false);
+                } else {
+                    timeVisible.setSelected(true);
+                }
+                timerToggle();
+
+            break;}
+            case KeyEvent.VK_B:{start();
+            break;}
+            case KeyEvent.VK_E:{stop();
+            break;}
+            case KeyEvent.VK_I:{paintResult(WarriorAnt.quantity_ant,WorkerAnt.quantity_ant);
+            break;}
         }
-        //B
-        if(e.getKeyCode()==KeyEvent.VK_B){
-            if(!isRunning) {
-                timer.start();
-                habitat.start();
-                isRunning = true;
-            }
-        }
-        //E
-        if(e.getKeyCode()==KeyEvent.VK_E){
-            System.out.println("нажали E");
-
-            int quantityWorkers = WorkerAnt.quantity_ant;
-            int quantityWarriors = WarriorAnt.quantity_ant;
-
-            habitat.stop();
-            timer.stop();
-            isRunning = false;
-
-            JOptionPane.showMessageDialog(this, "Warrior ants quantity: " + quantityWarriors  +
-                    "\nWorker ants quantity: " + quantityWorkers +
-                    "\nTime passed: " + seconds);
-            repaint();
-        }
-
-        if(e.getKeyCode()==KeyEvent.VK_I){
-            System.out.println("нажали I");
-            int quantityWorkers = WorkerAnt.quantity_ant;
-            int quantityWarriors = WarriorAnt.quantity_ant;
-            JOptionPane.showMessageDialog(this, "Warrior ants quantity: " + quantityWarriors  +
-                    "\nWorker ants quantity: " + quantityWorkers +
-                    "\nTime passed: " + seconds);
-        }
-
     }
 
-    //клавиша отпущена
     @Override
     public void keyReleased(KeyEvent e) {
     }
-
-
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        habitat.respawn();
+    }
 }

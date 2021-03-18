@@ -1,7 +1,5 @@
 package com.company;
 
-//import static com.company.ControlFrame.createGUI;
-
 import com.company.ant.WorkerAnt;
 
 import javax.imageio.ImageIO;
@@ -18,13 +16,15 @@ public class Main {
         AntExample window = new AntExample("ЪУЪ");
         window.setVisible(true);
         Image icon = null;
+
         try {
             icon = ImageIO.read(new File("src/com/company/Picture/logo.png"));
-        } catch (IOException e) { System.out.println("нет"); }
+        } catch (IOException e) {
+            System.out.println("нет");
+        }
+
         window.setIconImage(icon);
         window.setSize(1000,1000);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.run();
-
     }
 }
