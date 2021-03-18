@@ -1,8 +1,8 @@
 package com.company;
 
+import com.company.ant.Ant;
 import com.company.ant.WarriorAnt;
 import com.company.ant.WorkerAnt;
-import com.company.ant.Ant;
 
 import java.util.ArrayList;
 

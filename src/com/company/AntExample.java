@@ -10,10 +10,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-public class AntExample extends JFrame implements KeyListener {
+public class AntExample extends JFrame {
 
     private JPanel mainPanel;
     private JLabel timerLabel;
@@ -21,58 +20,124 @@ public class AntExample extends JFrame implements KeyListener {
     private JButton Start;
     private JPanel SecondPanel;
     private JPanel ControlPanel;
-    private JCheckBox IsVisiable;
+    private JCheckBox IsVisible;
     private JRadioButton timeVisible;
     private JRadioButton timeHidden;
+    private JComboBox WarriorChance;
+    private JTextField WarriorTimeSpawn;
+    private JTextField WorkerTimeSpawn;
+    private JComboBox WorkerChance;
+    private CustomMenu MyMenu;
     private ArrayList<Ant> list;
     boolean isRunning = false;
     Habitat habitat = new Habitat(this.SecondPanel);
     int seconds = 1;
+    private int N1;
+    private int N2;
+    private double P1;
+    private double P2;
 
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-            timerLabel.setText("Таймер: " + seconds);
             seconds++;
+            if(timeVisible.isSelected())
+                timerLabel.setText("Таймер: " + seconds);
             }
     };
     Timer timer = new Timer(1000,taskPerformer);
 
     public AntExample(String title){
         super(title);
-        ControlPanel.addKeyListener(this);
+
+        MyMenu = new CustomMenu();
+        configureMenu();
+
         ControlPanel.setFocusable(true);
         this.setContentPane(mainPanel);
-        timerLabel.setVisible(false);
+
         timerLabel.setFont(new Font("Comic Sans", Font.PLAIN, 20));
-        timerLabel.setText("Таймер: " + seconds);
+        timerLabel.setText("\u200E");
+
         Color clr = Color.getHSBColor(204, (float)0.07, (float)0.25);
         ControlPanel.setBackground(clr);
+
         this.Start.addActionListener(this::actionStart);
         this.Stop.addActionListener(this::actionStop);
         this.timeVisible.addActionListener(this::timerVisible);
         this.timeHidden.addActionListener(this::timerHidden);
+        this.IsVisible.addActionListener(this::toggleInfoShown);
+
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
+
+        int i = 10;
+        while(i<=100) {
+            this.WarriorChance.addItem(i);
+            this.WorkerChance.addItem(i);
+            i+=10;
+        }
+        this.WarriorChance.addActionListener(this::ChanceWarrior);
+        this.WorkerChance.addActionListener(this::ChanceWorker);
+
+        this.WarriorTimeSpawn.addActionListener(this::CheckTimeSpawnWarrior);
+        this.WorkerTimeSpawn.addActionListener(this::CheckTimeSpawnWorker);
     }
 
-    private void timerHidden(ActionEvent e){
-        if(timeHidden.isSelected()) {
-            timerLabel.setVisible(false);
-        }
+    private void ChanceWarrior(ActionEvent e){
+        this.P2 = Double.parseDouble(this.WarriorChance.getSelectedItem().toString())/100;
+        System.out.println(this.P2+"");
     }
 
-    private void timerVisible(ActionEvent e) {
-        if(timeVisible.isSelected()){
-            timerLabel.setVisible(true);
+    private void CheckTimeSpawnWarrior(ActionEvent e){
+        try{
+            this.N2 = Integer.parseInt(this.WarriorTimeSpawn.getText().toString());
+        }catch (Exception exception){
+            this.N2 = 1000;
         }
+
+        System.out.println(this.N2+"");
+
+    }
+
+
+    private void ChanceWorker(ActionEvent e){
+        this.P1 = Double.parseDouble(this.WorkerChance.getSelectedItem().toString())/100;
+        System.out.println(this.P1+"");
+    }
+
+    private void CheckTimeSpawnWorker(ActionEvent e){
+        try{
+            this.N1 = Integer.parseInt(this.WorkerTimeSpawn.getText().toString());
+        }catch (Exception exception){
+            this.N1 = 1000;
+        }
+
+        System.out.println(this.N1+"");
+
+    }
+
+    public void timerHidden(ActionEvent e){
+        timerLabel.setText("\u200E");
+        MyMenu.timerOptionHide.setSelected(true);
+        timeHidden.setSelected(true);
+    }
+
+    public void timerVisible(ActionEvent e) {
+        timerLabel.setText("Таймер: " + seconds);
+        MyMenu.timerOptionShow.setSelected(true);
+        timeVisible.setSelected(true);
     }
 
     public void actionStart(ActionEvent e) {
         start();
     }
+
     public void start(){
         if(!isRunning) {
-            timerLabel.setVisible(true);
-            habitat.start();
+            timerLabel.setText("Таймер: " + seconds);
+            timeVisible.setSelected(true);
+            habitat.ChangeProperties(this.P1, this.N1, this.P2, this.N2);
             timer.start();
+            habitat.start();
             isRunning = true;
             Start.setEnabled(false);
             Stop.setEnabled(true);
@@ -82,63 +147,104 @@ public class AntExample extends JFrame implements KeyListener {
     public void actionStop(ActionEvent e) {
         stop();
     }
+
+    public void toggleInfoShown(ActionEvent e){
+        MyMenu.infoOptionShow.setSelected(IsVisible.isSelected());
+        //IsVisible.setSelected(!IsVisible.isSelected());
+    }
+
     public void stop(){
         int quantityWorkers = WorkerAnt.quantity_ant;
         int quantityWarriors = WarriorAnt.quantity_ant;
 
+        if(IsVisible.isSelected()) {
+            paintResult(quantityWarriors, quantityWorkers);
+        } else {
+            StopOperations();
+        }
+        repaint();
+    }
 
+    public void paintResult(int quantityWarriors ,int quantityWorkers){
+        int response  = JOptionPane.showConfirmDialog(this,"Warrior ants quantity: " + quantityWarriors  +
+                "\nWorker ants quantity: " + quantityWorkers +
+                "\nTime passed: " + seconds,"Хотите продолжить?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        switch (response){
+
+            case JOptionPane.NO_OPTION:{
+                StopOperations();
+                break;
+            }
+            case JOptionPane.CLOSED_OPTION:{
+                StopOperations();
+                break;
+            }
+        }
+    }
+
+    public void StopOperations(){
         if(isRunning) {
             timer.stop();
             habitat.stop();
             isRunning = false;
             Stop.setEnabled(false);
             Start.setEnabled(true);
-
         }
-        if(IsVisiable.isSelected()) {
-            paintResult(quantityWarriors, quantityWorkers);
-        }
-        repaint();
     }
 
-    public void paintResult(int quantityWarriors ,int quantityWorkers){
-        JOptionPane.showMessageDialog(this, "Warrior ants quantity: " + quantityWarriors  +
-                "\nWorker ants quantity: " + quantityWorkers +
-                "\nTime passed: " + seconds);
-    }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()){
-            case KeyEvent.VK_T:{
-                if(timeVisible.isSelected()){
-                    timeHidden.setSelected(true);
-                    timerLabel.setVisible(false);
-
-                } else {
-                    timeVisible.setSelected(true);
-                    timerLabel.setVisible(true);
+    KeyEventDispatcher keyEventDispatcher = new KeyEventDispatcher() {
+        @Override
+        public boolean dispatchKeyEvent(final KeyEvent e) {
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_B:{
+                    start();
+                    break;
                 }
-
-            break;}
-            case KeyEvent.VK_B:{start();
-            break;}
-            case KeyEvent.VK_E:{stop();
-            break;}
-            case KeyEvent.VK_I:{paintResult(WarriorAnt.quantity_ant,WorkerAnt.quantity_ant);
-            break;}
+                case KeyEvent.VK_E:{
+                    stop();
+                    break;
+                }
+                case KeyEvent.VK_T:{
+                    System.out.println("Pressed T!\n");
+                    if(timeVisible.isSelected()) {
+                        timeHidden.doClick();
+                    }
+                    else if (timeHidden.isSelected()){
+                        timeVisible.doClick();
+                    }
+                    break;
+                }
+                case KeyEvent.VK_I:{
+                    paintResult(WarriorAnt.quantity_ant,WorkerAnt.quantity_ant);
+                    break;
+                }
+            }
+            return false;
         }
-    }
+    };
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-    }
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         habitat.respawn();
+    }
+
+
+    public void configureMenu(){
+        MyMenu.simOptionStart.addActionListener(this::actionStart);
+        MyMenu.simOptionStop.addActionListener(this::actionStop);
+
+        MyMenu.infoOptionShow.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                IsVisible.setSelected(!IsVisible.isSelected());
+            }
+        });
+
+        MyMenu.timerOptionShow.addActionListener(this::timerVisible);
+        MyMenu.timerOptionHide.addActionListener(this::timerHidden);
+
+        this.setJMenuBar(MyMenu.menuBar);
     }
 }
