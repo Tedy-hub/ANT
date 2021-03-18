@@ -1,13 +1,12 @@
 package com.company;
 
+import com.company.ant.Ant;
 import com.company.ant.WarriorAnt;
 import com.company.ant.WorkerAnt;
-import com.company.ant.Ant;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,6 +25,7 @@ public class Habitat {
 
     Habitat(JPanel window){
         this.window = window;
+
 
 
    }
@@ -84,5 +84,15 @@ public class Habitat {
             list.get(i).RespawnAnt(window);
             i++;
         }
+    }
+
+    public void ChangePropertys( double P1, int N1, double P2, int N2){
+        if(N1 == 0)N1 = 1000;
+        if(N2 == 0)N2 = 1000;
+
+        Habitat.N1 = N1;
+        Habitat.P1 = P1;
+        Habitat.N2 = N2;
+        Habitat.P2 = P2;
     }
 }
