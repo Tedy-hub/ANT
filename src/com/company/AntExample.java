@@ -143,26 +143,43 @@ public class AntExample extends JFrame {
         int quantityWorkers = WorkerAnt.quantity_ant;
         int quantityWarriors = WarriorAnt.quantity_ant;
 
+        if(IsVisiable.isSelected()) {
+            paintResult(quantityWarriors, quantityWorkers);
+        } else {
+            StopOperations();
+        }
+        repaint();
+    }
 
+    public void paintResult(int quantityWarriors ,int quantityWorkers){
+        int response  = JOptionPane.showConfirmDialog(this,"Warrior ants quantity: " + quantityWarriors  +
+                "\nWorker ants quantity: " + quantityWorkers +
+                "\nTime passed: " + seconds,"Хотите продолжить?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        switch (response){
+
+            case JOptionPane.NO_OPTION:{
+                StopOperations();
+                break;
+            }
+            case JOptionPane.CLOSED_OPTION:{
+                StopOperations();
+                break;
+            }
+        }
+    }
+    public void StopOperations(){
         if(isRunning) {
             timer.stop();
             habitat.stop();
             isRunning = false;
             Stop.setEnabled(false);
             Start.setEnabled(true);
-
         }
-        if(IsVisiable.isSelected()) {
-            paintResult(quantityWarriors, quantityWorkers);
-        }
-        repaint();
     }
 
-    public void paintResult(int quantityWarriors ,int quantityWorkers){
-        JOptionPane.showMessageDialog(this, "Warrior ants quantity: " + quantityWarriors  +
-                "\nWorker ants quantity: " + quantityWorkers +
-                "\nTime passed: " + seconds);
-    }
+
+
+
 
     KeyEventDispatcher keyEventDispatcher = new KeyEventDispatcher() {
         @Override
