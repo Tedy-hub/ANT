@@ -2,6 +2,7 @@ package com.company.ant;
 
 import com.company.AntExample;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -29,19 +30,19 @@ public class WarriorAnt extends Ant {
     public static String getStaticName(){ return staticName; }
 
     @Override
-    public void draw(AntExample window) {
+    public void draw(JPanel window) {
         // Рисует в 0, 0 если окно недостаточно большого размера
 
         int x = 0, y = 0;
         try {
             x = ThreadLocalRandom.current().nextInt(0, window.getWidth() - this.getSize() * 100);
-            y = ThreadLocalRandom.current().nextInt(window.getHeight() - window.getContentPane().getHeight(),
+            y = ThreadLocalRandom.current().nextInt(window.getHeight() - window.getHeight(),
                     window.getHeight() - this.getSize() * 100);
         }
         catch(IllegalArgumentException ia){
            // ia.printStackTrace();
             x = 0;
-            y = window.getHeight() - window.getContentPane().getHeight();;
+            y = window.getHeight() - window.getHeight();;
         }
         this.setPosX(x);
         this.setPosY(y);
@@ -53,7 +54,7 @@ public class WarriorAnt extends Ant {
     }
 
     @Override
-    public void RespawnAnt(AntExample window){
+    public void RespawnAnt(JPanel window){
 
         window.getGraphics().drawImage(warrior_ant, this.getPosX(), this.getPosY(), getSize() * 100, getSize() * 100, null);
 

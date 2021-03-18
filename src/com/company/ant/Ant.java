@@ -2,6 +2,7 @@ package com.company.ant;
 
 import com.company.AntExample;
 
+import javax.swing.*;
 import java.awt.*;
 
 public abstract class Ant implements IBehaviour {
@@ -51,7 +52,7 @@ public abstract class Ant implements IBehaviour {
     }
 
     @Override
-    public void draw(AntExample window) {
+    public void draw(JPanel window) {
 
     }
 }

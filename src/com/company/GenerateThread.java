@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class GenerateThread extends Thread {
-    private AntExample window;
+    private JPanel window;
     private ArrayList<Ant> antlist;
     String antName;
     Ant ant;
     private double P;
     private int N;
 
-    public GenerateThread(AntExample window, double P, int N, String ant, ArrayList<Ant> antlist) {
+    public GenerateThread(JPanel window, double P, int N, String ant, ArrayList<Ant> antlist) {
         this.window = window;
         this.P = P;
         this.N = N;

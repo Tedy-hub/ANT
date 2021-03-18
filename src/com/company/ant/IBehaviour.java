@@ -2,6 +2,7 @@ package com.company.ant;
 
 import com.company.AntExample;
 
+import javax.swing.*;
 import java.awt.*;
 
 public interface IBehaviour {
@@ -21,8 +22,8 @@ public interface IBehaviour {
 
     void setPosY(int y);
 
-    void draw(AntExample window);
+    void draw(JPanel window);
 
-    void RespawnAnt(AntExample window);
+    void RespawnAnt(JPanel window);
 
 }

@@ -5,6 +5,7 @@ import com.company.ant.WorkerAnt;
 import com.company.ant.Ant;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 import java.awt.*;
 import java.io.File;
@@ -14,16 +15,19 @@ import java.util.ArrayList;
 public class Habitat {
 
     static private ArrayList<Ant> list = new ArrayList<>();
-    static AntExample window;
+    static JPanel window;
     static private int N1 = 1000;
     static private int N2 = 1000;
     static private double P1 = 1;
     static private double P2 = 0.1;
     static GenerateThread thread1;
     static GenerateThread thread2;
+    private JPanel BottomPanel;
 
-    Habitat(AntExample window){
+    Habitat(JPanel window){
         this.window = window;
+
+
    }
 
     public static ArrayList<Ant> getList() {
@@ -68,6 +72,7 @@ public class Habitat {
         }
         list.clear();
     }
+
     public void respawn(){
         try {
             thread1.sleep(100);

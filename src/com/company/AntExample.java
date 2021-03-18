@@ -11,19 +11,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 public class AntExample extends JFrame implements KeyListener {
+
     private JPanel mainPanel;
     private JLabel timerLabel;
-    private JLabel info;
+    private JButton Stop;
+    private JButton Start;
+    private JPanel SecondPanel;
+    private JPanel ControlPanel;
     private ArrayList<Ant> list;
 
-    Habitat habitat = new Habitat(this);
+    Habitat habitat = new Habitat(this.SecondPanel);
     int seconds = 0;
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-            timerLabel.setText("Секундомер: " + seconds);
+            timerLabel.setText("Таймер: " + seconds);
             seconds++;
             }
     };
@@ -36,8 +41,13 @@ public class AntExample extends JFrame implements KeyListener {
         this.setContentPane(mainPanel);
         timerLabel.setVisible(false);
         timerLabel.setFont(new Font("Comic Sans", Font.PLAIN, 20));
-        timerLabel.setText("Секундомер: " + seconds);
+        timerLabel.setText("Таймер: " + seconds);
+        Color clr = Color.getHSBColor(204, (float)0.07, (float)0.25);
+        ControlPanel.setBackground(clr);
         seconds++;
+        this.Start.addActionListener(this::actionStart);
+        this.Stop.addActionListener(this::actionStop);
+
 
         Toolkit.getDefaultToolkit().setDynamicLayout(false);
 
@@ -52,6 +62,37 @@ public class AntExample extends JFrame implements KeyListener {
     public void run(){
     }
     //клавиша нажата и отпущена
+
+    public void actionStart(ActionEvent e) {
+        if(!isRunning) {
+            timerLabel.setVisible(true);
+            habitat.start();
+            timer.start();
+            isRunning = true;
+            Start.setEnabled(false);
+            Stop.setEnabled(true);
+        }
+    }
+
+    public void actionStop(ActionEvent e) {
+        System.out.println("нажали E");
+
+        int quantityWorkers = WorkerAnt.quantity_ant;
+        int quantityWarriors = WarriorAnt.quantity_ant;
+
+        if(isRunning) {
+            timer.stop();
+            habitat.stop();
+            isRunning = false;
+            Stop.setEnabled(false);
+            Start.setEnabled(true);
+
+        }
+        JOptionPane.showMessageDialog(this, "Warrior ants quantity: " + quantityWarriors  +
+                "\nWorker ants quantity: " + quantityWorkers +
+                "\nTime passed: " + seconds);
+        repaint();
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
