@@ -4,6 +4,7 @@ import com.company.ant.Ant;
 import com.company.ant.WarriorAnt;
 import com.company.ant.WorkerAnt;
 
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -34,8 +35,8 @@ public class AntExample extends JFrame {
     int seconds = 1;
     private int N1;
     private int N2;
-    private double P1;
-    private double P2;
+    private double P1=0.1;
+    private double P2=0.1;
 
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -80,7 +81,9 @@ public class AntExample extends JFrame {
 
         this.WarriorTimeSpawn.addActionListener(this::CheckTimeSpawnWarrior);
         this.WorkerTimeSpawn.addActionListener(this::CheckTimeSpawnWorker);
+
     }
+
 
     private void ChanceWarrior(ActionEvent e){
         this.P2 = Double.parseDouble(this.WarriorChance.getSelectedItem().toString())/100;
@@ -196,29 +199,30 @@ public class AntExample extends JFrame {
     KeyEventDispatcher keyEventDispatcher = new KeyEventDispatcher() {
         @Override
         public boolean dispatchKeyEvent(final KeyEvent e) {
-            switch (e.getKeyCode()){
-                case KeyEvent.VK_B:{
+            if(e.getID() == KeyEvent.KEY_RELEASED){
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_B: {
                     start();
                     break;
                 }
-                case KeyEvent.VK_E:{
+                case KeyEvent.VK_E: {
                     stop();
                     break;
                 }
-                case KeyEvent.VK_T:{
+                case KeyEvent.VK_T: {
                     System.out.println("Pressed T!\n");
-                    if(timeVisible.isSelected()) {
+                    if (timeVisible.isSelected()) {
                         timeHidden.doClick();
-                    }
-                    else if (timeHidden.isSelected()){
+                    } else if (timeHidden.isSelected()) {
                         timeVisible.doClick();
                     }
                     break;
                 }
-                case KeyEvent.VK_I:{
-                    paintResult(WarriorAnt.quantity_ant,WorkerAnt.quantity_ant);
+                case KeyEvent.VK_I: {
+                    paintResult(WarriorAnt.quantity_ant, WorkerAnt.quantity_ant);
                     break;
                 }
+            }
             }
             return false;
         }

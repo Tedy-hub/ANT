@@ -50,6 +50,20 @@ public class CustomMenu {
         menu.add(menuInner2);
         menu.add(menuInner3);
 
+        menu.setSize(60, 23);
+        menuBar.setSize(100, 23);
+        simOptionStart.setSize(60, 23);
+        simOptionStop.setSize(60, 23);
+        timerOptionHide.setSize(60,23);
+        timerOptionShow.setSize(60, 23);
+        infoOptionShow.setSize(60, 23);
+        menuInner1.setSize(60, 23);
+        menuInner2.setSize(60,23);
+        menuInner3.setSize(60,23);
+
         menuBar.add(menu);
+
+
+
     }
 }
