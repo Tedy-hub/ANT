@@ -12,7 +12,7 @@
     </properties>
     <border type="none"/>
     <children>
-      <grid id="512d5" binding="ControlPanel" layout-manager="GridLayoutManager" row-count="12" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="0">
+      <grid id="512d5" binding="ControlPanel" layout-manager="GridLayoutManager" row-count="12" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="0">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
@@ -105,16 +105,6 @@
               </grid>
             </constraints>
           </vspacer>
-          <component id="8cf88" class="javax.swing.JButton" binding="Stop">
-            <constraints>
-              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <minimum-size width="-1" height="30"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value="Stop"/>
-            </properties>
-          </component>
           <component id="3e93a" class="javax.swing.JRadioButton" binding="timeVisible">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
@@ -193,9 +183,64 @@
               <text value="Показывать информацию"/>
             </properties>
           </component>
-          <hspacer id="98b68">
+          <component id="a05f8" class="javax.swing.JTextField" binding="TimeLiveWarrior">
+            <constraints>
+              <grid row="8" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="74" height="30"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="176d" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="7" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="74" height="16"/>
+              </grid>
+            </constraints>
+            <properties>
+              <foreground color="-1769517"/>
+              <text value="Время жизни войны"/>
+            </properties>
+          </component>
+          <component id="529f7" class="javax.swing.JTextField" binding="TimeLiveWorker">
+            <constraints>
+              <grid row="11" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="74" height="30"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="be0f2" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="10" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="74" height="16"/>
+              </grid>
+            </constraints>
+            <properties>
+              <foreground color="-1769517"/>
+              <text value="Время жизни рабочего"/>
+            </properties>
+          </component>
+          <component id="8cf88" class="javax.swing.JButton" binding="Stop">
+            <constraints>
+              <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="-1" height="30"/>
+              </grid>
+            </constraints>
+            <properties>
+              <text value="Stop"/>
+            </properties>
+          </component>
+          <hspacer id="21c66">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="10" height="10"/>
+              </grid>
+            </constraints>
+          </hspacer>
+          <hspacer id="42463">
+            <constraints>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="10" height="10"/>
               </grid>
             </constraints>

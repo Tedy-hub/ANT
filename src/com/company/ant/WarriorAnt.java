@@ -21,6 +21,9 @@ public class WarriorAnt extends Ant {
        int size = rand.nextInt(2);
        setSize(size + 2);
 
+       this.SetTimeBorn(AntExample.TimeSimulation);
+       this.setId(rand.nextInt());
+
        quantity_ant++;
    }
     public static int GetQuantityAntThisGroup(){
@@ -49,7 +52,7 @@ public class WarriorAnt extends Ant {
 
         window.getGraphics().drawImage(warrior_ant, x, y, getSize() * 100, getSize() * 100, null);
 
-        System.out.println("Warrior X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
+        //System.out.println("Warrior X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
 
     }
 

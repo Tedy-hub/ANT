@@ -6,13 +6,26 @@ import javax.swing.*;
 import java.awt.*;
 
 public interface IBehaviour {
+
+    int getId();
+
     int getSize();
+
+    int getTimeLive();
+
+    int getTimeBorn();
+
+    void SetTimeLive(int TimeLive);
+
+    void SetTimeBorn(int TimeBorn);
 
     String getName();
 
     int getPosX();
 
     int getPosY();
+
+    void setId(int id);
 
     void setName(String name);
 

@@ -21,6 +21,9 @@ public class WorkerAnt extends Ant {
         int size = rand.nextInt(2);
         setSize(size + 1);
 
+        this.SetTimeBorn(AntExample.TimeSimulation);
+        this.setId(rand.nextInt());
+
         quantity_ant++;
     }
 
@@ -49,7 +52,7 @@ public class WorkerAnt extends Ant {
 
         window.getGraphics().drawImage(worker_ant, x, y, getSize() * 65, getSize() * 100, null);
 
-        System.out.println("Worker X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
+        //System.out.println("Worker X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
     }
 
     @Override
