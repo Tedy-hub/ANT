@@ -45,9 +45,9 @@ public class AntExample extends JFrame {
     private JTextField TimeLiveWarrior;
     private CustomMenu MyMenu;
 
-    static public ArrayList<Ant> list;
-    static public HashSet<Integer> idList;
-    static public TreeMap<Integer,Integer> BornList;
+    static public ArrayList<Ant> list = new ArrayList();
+    static public HashSet<Integer> idList = new HashSet();
+    static public TreeMap<Integer,Integer> BornList = new TreeMap();
 
     boolean isRunning = false;
     Habitat habitat = new Habitat(this.SecondPanel);
@@ -117,7 +117,7 @@ public class AntExample extends JFrame {
         try{
             this.TimeLivingWorker = Integer.parseInt(this.TimeLiveWorker.getText().toString());
         }catch (Exception exception){
-            this.TimeLivingWorker = 5000;
+            this.TimeLivingWorker = 5;
         }
     }
 
@@ -125,7 +125,7 @@ public class AntExample extends JFrame {
         try{
             this.TimeLivingWarrior = Integer.parseInt(this.TimeLiveWarrior.getText().toString());
         }catch (Exception exception){
-            this.TimeLivingWarrior = 5000;
+            this.TimeLivingWarrior = 5;
         }
     }
 
@@ -136,7 +136,7 @@ public class AntExample extends JFrame {
 
     private void CheckTimeSpawnWarrior(ActionEvent e){
         try{
-            this.N2 = Integer.parseInt(this.WarriorTimeSpawn.getText().toString());
+            this.N2 = Integer.parseInt(this.WarriorTimeSpawn.getText().toString())*1000;
         }catch (Exception exception){
             this.N2 = 1000;
         }
@@ -153,7 +153,7 @@ public class AntExample extends JFrame {
 
     private void CheckTimeSpawnWorker(ActionEvent e){
         try{
-            this.N1 = Integer.parseInt(this.WorkerTimeSpawn.getText().toString());
+            this.N1 = Integer.parseInt(this.WorkerTimeSpawn.getText().toString())*1000;
         }catch (Exception exception){
             this.N1 = 1000;
         }
