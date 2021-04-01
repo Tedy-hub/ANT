@@ -12,14 +12,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.TreeMap;
+
+enum TypeAnt{
+
+    Worcker,Warrior
+
+}
 
 public class AntExample extends JFrame {
 
     private JPanel mainPanel;
     private JLabel timerLabel;
+
+    public static int TimeLivingWarrior = 5000;
+    public static int TimeLivingWorker = 5000;
+    public static int TimeSimulation = 1; // чтобы можно было обратиться из других классов
+
+    private MyPanel canvas;
     private JButton Stop;
     private JButton Start;
-    private JPanel SecondPanel;
+    private JPanel SecondPanel; //= new MyPanel();
     private JPanel ControlPanel;
     private JCheckBox IsVisible;
     private JRadioButton timeVisible;
@@ -28,21 +42,61 @@ public class AntExample extends JFrame {
     private JTextField WarriorTimeSpawn;
     private JTextField WorkerTimeSpawn;
     private JComboBox WorkerChance;
+    private JTextField TimeLiveWorker;
+    private JTextField TimeLiveWarrior;
     private CustomMenu MyMenu;
-    private ArrayList<Ant> list;
+
+    Image dbimg;
+
+    static public ArrayList<Ant> list = new ArrayList();
+    static public HashSet<Integer> idList = new HashSet();
+    static public TreeMap<Integer,Integer> BornList = new TreeMap();
+
     boolean isRunning = false;
-    Habitat habitat = new Habitat(this.SecondPanel);
-    int seconds = 1;
+    Habitat habitat;
     private int N1;
     private int N2;
     private double P1=0.1;
     private double P2=0.1;
 
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+       // SecondPanel.repaint();
+    }
+
+    //    @Override
+//    public void paint(Graphics g) {
+//        Graphics dbg;
+//        SecondPanel.repaint();
+//        paint(g);
+//        dbimg = createImage(SecondPanel.getWidth(), SecondPanel.getHeight());
+//        dbg = dbimg.getGraphics();
+//        paintComponent(dbg);
+//        SecondPanel.getGraphics().drawImage(dbimg, 0, 0, this);
+//       dbg.dispose();
+//    }
+
+//     @Override
+//     protected void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//        habitat.respawn(typeAnt, g);
+//     }
+
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-            seconds++;
+            TimeSimulation++;
             if(timeVisible.isSelected())
-                timerLabel.setText("Таймер: " + seconds);
+                timerLabel.setText("Таймер: " + TimeSimulation);
+
+            if(CheckTimeRespawn(TimeLivingWarrior)){
+                RespawnAnt(TypeAnt.Warrior);
+                System.out.println("Работает");
+            }
+            if(CheckTimeRespawn(TimeLivingWorker)){
+                RespawnAnt(TypeAnt.Worcker);
+                System.out.println("Работает");
+            }
             }
     };
     Timer timer = new Timer(1000,taskPerformer);
@@ -53,7 +107,16 @@ public class AntExample extends JFrame {
         MyMenu = new CustomMenu();
         configureMenu();
 
+        canvas = new MyPanel();
+        canvas.setPreferredSize(SecondPanel.getPreferredSize());
+        canvas.setBackground(new Color(140, 0,190));
+        mainPanel.add(canvas);
+
+        habitat = new Habitat(canvas);
+
+      //((MyPanel)SecondPanel).setHabitat(habitat);
         ControlPanel.setFocusable(true);
+
         this.setContentPane(mainPanel);
 
         timerLabel.setFont(new Font("Comic Sans", Font.PLAIN, 20));
@@ -67,6 +130,8 @@ public class AntExample extends JFrame {
         this.timeVisible.addActionListener(this::timerVisible);
         this.timeHidden.addActionListener(this::timerHidden);
         this.IsVisible.addActionListener(this::toggleInfoShown);
+        this.TimeLiveWorker.addActionListener(this::TimeLiveWorker);
+        this.TimeLiveWarrior.addActionListener(this::TimeLiveWarrior);
 
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
 
@@ -82,8 +147,25 @@ public class AntExample extends JFrame {
         this.WarriorTimeSpawn.addActionListener(this::CheckTimeSpawnWarrior);
         this.WorkerTimeSpawn.addActionListener(this::CheckTimeSpawnWorker);
 
+
+
     }
 
+    private void TimeLiveWorker(ActionEvent e){
+        try{
+            this.TimeLivingWorker = Integer.parseInt(this.TimeLiveWorker.getText().toString());
+        }catch (Exception exception){
+            this.TimeLivingWorker = 5;
+        }
+    }
+
+    private void TimeLiveWarrior(ActionEvent e){
+        try{
+            this.TimeLivingWarrior = Integer.parseInt(this.TimeLiveWarrior.getText().toString());
+        }catch (Exception exception){
+            this.TimeLivingWarrior = 5;
+        }
+    }
 
     private void ChanceWarrior(ActionEvent e){
         this.P2 = Double.parseDouble(this.WarriorChance.getSelectedItem().toString())/100;
@@ -92,7 +174,7 @@ public class AntExample extends JFrame {
 
     private void CheckTimeSpawnWarrior(ActionEvent e){
         try{
-            this.N2 = Integer.parseInt(this.WarriorTimeSpawn.getText().toString());
+            this.N2 = Integer.parseInt(this.WarriorTimeSpawn.getText().toString())*1000;
         }catch (Exception exception){
             this.N2 = 1000;
         }
@@ -109,7 +191,7 @@ public class AntExample extends JFrame {
 
     private void CheckTimeSpawnWorker(ActionEvent e){
         try{
-            this.N1 = Integer.parseInt(this.WorkerTimeSpawn.getText().toString());
+            this.N1 = Integer.parseInt(this.WorkerTimeSpawn.getText().toString())*1000;
         }catch (Exception exception){
             this.N1 = 1000;
         }
@@ -125,7 +207,7 @@ public class AntExample extends JFrame {
     }
 
     public void timerVisible(ActionEvent e) {
-        timerLabel.setText("Таймер: " + seconds);
+        timerLabel.setText("Таймер: " + TimeSimulation);
         MyMenu.timerOptionShow.setSelected(true);
         timeVisible.setSelected(true);
     }
@@ -136,7 +218,7 @@ public class AntExample extends JFrame {
 
     public void start(){
         if(!isRunning) {
-            timerLabel.setText("Таймер: " + seconds);
+            timerLabel.setText("Таймер: " + TimeSimulation);
             timeVisible.setSelected(true);
             habitat.ChangeProperties(this.P1, this.N1, this.P2, this.N2);
             timer.start();
@@ -171,7 +253,7 @@ public class AntExample extends JFrame {
     public void paintResult(int quantityWarriors ,int quantityWorkers){
         int response  = JOptionPane.showConfirmDialog(this,"Warrior ants quantity: " + quantityWarriors  +
                 "\nWorker ants quantity: " + quantityWorkers +
-                "\nTime passed: " + seconds,"Хотите продолжить?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                "\nTime passed: " + TimeSimulation,"Хотите продолжить?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         switch (response){
 
             case JOptionPane.NO_OPTION:{
@@ -228,10 +310,11 @@ public class AntExample extends JFrame {
         }
     };
 
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        habitat.respawn();
+    public void RespawnAnt(TypeAnt typeAnt){
+
+     //   this.paint(this.getGraphics());
+        habitat.respawn(typeAnt);
+
     }
 
 
@@ -250,5 +333,11 @@ public class AntExample extends JFrame {
         MyMenu.timerOptionHide.addActionListener(this::timerHidden);
 
         this.setJMenuBar(MyMenu.menuBar);
+    }
+
+    private boolean CheckTimeRespawn(int TimeLiving){
+        if(AntExample.TimeSimulation % TimeLiving == 0) return true;
+        else return false;
+
     }
 }

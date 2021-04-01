@@ -1,6 +1,7 @@
 package com.company.ant;
 
 import com.company.AntExample;
+import com.company.MyPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,9 @@ public class WorkerAnt extends Ant {
         Random rand = new Random();
         int size = rand.nextInt(2);
         setSize(size + 1);
+
+        this.SetTimeBorn(AntExample.TimeSimulation);
+        this.setId(rand.nextInt());
 
         quantity_ant++;
     }
@@ -49,13 +53,15 @@ public class WorkerAnt extends Ant {
 
         window.getGraphics().drawImage(worker_ant, x, y, getSize() * 65, getSize() * 100, null);
 
-        System.out.println("Worker X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
+        //System.out.println("Worker X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
     }
 
     @Override
-    public void RespawnAnt(JPanel window){
+    public void RespawnAnt(MyPanel window){
+        //window.setAntInfo(this);
+        window.repaint();
 
-        window.getGraphics().drawImage(worker_ant, this.getPosX(), this.getPosY(), getSize() * 65, getSize() * 100, null);
+        //window.getGraphics().drawImage(worker_ant, this.getPosX(), this.getPosY(), getSize() * 65, getSize() * 100, null);
 
     }
 }
