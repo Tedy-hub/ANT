@@ -43,6 +43,7 @@ public class AntExample extends JFrame {
     private JComboBox WorkerChance;
     private JTextField TimeLiveWorker;
     private JTextField TimeLiveWarrior;
+    private JButton currentObjects;
     private CustomMenu MyMenu;
 
     static public ArrayList<Ant> list = new ArrayList();
@@ -110,6 +111,18 @@ public class AntExample extends JFrame {
 
         this.WarriorTimeSpawn.addActionListener(this::CheckTimeSpawnWarrior);
         this.WorkerTimeSpawn.addActionListener(this::CheckTimeSpawnWorker);
+        this.currentObjects.addActionListener(this::startCurrentInfoDialog);
+    }
+
+    private void startCurrentInfoDialog(ActionEvent actionEvent) {
+        currentObjects co = new currentObjects(this);
+        //co.setSize(500,500);
+        co.setBounds(500,500, 250,250);
+        co.setVisible(true);
+        //te.pack();
+        //te.setVisible(true);
+
+
 
     }
 

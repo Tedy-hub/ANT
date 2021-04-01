@@ -51,7 +51,7 @@ public class GenerateThread extends Thread {
                 } else {
                     ant = new WorkerAnt();
                     ant.SetTimeLive(AntExample.TimeLivingWorker);
-                    this.BornList.put(ant.getId(), AntExample.TimeLivingWarrior);//добавление времени жизни
+                    this.BornList.put(ant.getId(), AntExample.TimeLivingWorker);//добавление времени жизни
                 }
                 // вроде работает но какой-то костыль, чтобы при нажатии E не продолжжалась отрисовка
                 if(!this.isInterrupted()) {
