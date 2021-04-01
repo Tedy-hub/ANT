@@ -56,12 +56,12 @@ public class WorkerAnt extends Ant {
         //System.out.println("Worker X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
     }
 
-    @Override
-    public void RespawnAnt(MyPanel window){
-        //window.setAntInfo(this);
-        window.repaint();
-
-        //window.getGraphics().drawImage(worker_ant, this.getPosX(), this.getPosY(), getSize() * 65, getSize() * 100, null);
-
-    }
+//    @Override
+//    public void RespawnAnt(MyPanel window){
+//        //window.setAntInfo(this);
+//        window.repaint();
+//
+//        //window.getGraphics().drawImage(worker_ant, this.getPosX(), this.getPosY(), getSize() * 65, getSize() * 100, null);
+//
+//    }
 }

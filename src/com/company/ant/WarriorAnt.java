@@ -57,14 +57,14 @@ public class WarriorAnt extends Ant {
 
     }
 
-    @Override
-    public void RespawnAnt(MyPanel window){
-        //window.setAntInfo(this);
-        window.repaint();
-        //window.setAntInfo(this.getPosX(), this.getPosY(), getSize() * 100, getSize() * 100);
-
-       // window.getGraphics().drawImage(warrior_ant, this.getPosX(), this.getPosY(), getSize() * 100, getSize() * 100, null);
-
-    }
-
+//    @Override
+//    public void RespawnAnt(MyPanel window){
+//        //window.setAntInfo(this);
+//        window.repaint();
+//        //window.setAntInfo(this.getPosX(), this.getPosY(), getSize() * 100, getSize() * 100);
+//
+//       // window.getGraphics().drawImage(warrior_ant, this.getPosX(), this.getPosY(), getSize() * 100, getSize() * 100, null);
+//
+//    }
+//
 }

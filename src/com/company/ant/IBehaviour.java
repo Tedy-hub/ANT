@@ -38,6 +38,6 @@ public interface IBehaviour {
 
     void draw(JPanel window);
 
-    public void RespawnAnt(MyPanel window);
+   // public void RespawnAnt(MyPanel window);
 
 }

@@ -38,11 +38,6 @@ public class MyPanel extends JPanel{
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-       // dbimg = createImage(getWidth(), getHeight());
-        //dbg = dbimg.getGraphics();
-        //paintComponent(dbg);
-        //getGraphics().drawImage(dbimg, 0, 0, this);
-        //dbg.dispose();
   }
 
     @Override
@@ -60,20 +55,6 @@ public class MyPanel extends JPanel{
             }
             i++;
         }
-
-
-//        if(ant == null) return;
-//        System.out.println(ant.getName());
-//        if(ant.getName() == WarriorAnt.getStaticName()){
-//            g.drawImage(WarriorAnt.warrior_ant, ant.getPosX(), ant.getPosY(), ant.getSize()*100, ant.getSize()*100, this);
-//        }
-//        if(ant.getName() == WorkerAnt.getStaticName()){
-//            g.drawImage(WorkerAnt.worker_ant, ant.getPosX(), ant.getPosY(), ant.getSize()*65, ant.getSize()*100, this);
-//
-//        }
-
-        //habitat.respawn(typeAnt, g);
-        //repaint();
     }
 
 }

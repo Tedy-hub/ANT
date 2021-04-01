@@ -33,18 +33,10 @@ public class Habitat {
     public static void start() {
         try {
             WorkerAnt.worker_ant = ImageIO.read(new File("src/com/company/Picture/SpawnWorcker/B (16).png"));
-
-
-        } catch (IOException e) {
-
-        }
+        } catch (IOException e) { }
         try {
             WarriorAnt.warrior_ant =ImageIO.read(new File("src/com/company/Picture/SpawnWarrior/W (16).png"));
-
-
-        } catch (IOException e) {
-
-        }
+        } catch (IOException e) { }
         thread1 = new GenerateThread(window, P1, N1, WorkerAnt.getStaticName(), AntExample.list, AntExample.idList, AntExample.BornList);
         thread2= new GenerateThread(window, P2, N2, WarriorAnt.getStaticName(), AntExample.list, AntExample.idList, AntExample.BornList);
         thread1.start();
@@ -68,13 +60,6 @@ public class Habitat {
 
 
     public void respawn(TypeAnt typeAnt){
-
-//        try {
-//            thread1.sleep(50);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
         if(typeAnt == TypeAnt.Warrior){//удалает первый элемент переданного типа и отрисовывает все остальные объекты и всех вспомагательных данных
             int i = 0;
             while(AntExample.list.get(i).getName() != WarriorAnt.getStaticName()){
@@ -83,6 +68,7 @@ public class Habitat {
             AntExample.idList.remove(AntExample.list.get(i));
             AntExample.BornList.remove(AntExample.list.get(i).getId());
             AntExample.list.remove(i);
+            WarriorAnt.quantity_ant--;
             window.repaint();
         }
         else{
@@ -93,6 +79,7 @@ public class Habitat {
             AntExample.idList.remove(AntExample.list.get(i));
             AntExample.BornList.remove(AntExample.list.get(i).getId());
             AntExample.list.remove(i);
+            WorkerAnt.quantity_ant--;
             window.repaint();
         }
     }

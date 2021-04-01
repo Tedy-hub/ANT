@@ -73,7 +73,5 @@ public abstract class Ant implements IBehaviour {
     public void SetTimeBorn(int TimeBorn) { this.TimeBorn = TimeBorn; }
 
     @Override
-    public void draw(JPanel window) {
-
-    }
+    public void draw(JPanel window) { }
 }

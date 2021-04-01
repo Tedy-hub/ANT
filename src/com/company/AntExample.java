@@ -17,7 +17,7 @@ import java.util.TreeMap;
 
 enum TypeAnt{
 
-    Worcker,Warrior
+    Worker,Warrior
 
 }
 
@@ -46,8 +46,6 @@ public class AntExample extends JFrame {
     private JTextField TimeLiveWarrior;
     private CustomMenu MyMenu;
 
-    Image dbimg;
-
     static public ArrayList<Ant> list = new ArrayList();
     static public HashSet<Integer> idList = new HashSet();
     static public TreeMap<Integer,Integer> BornList = new TreeMap();
@@ -62,26 +60,7 @@ public class AntExample extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-       // SecondPanel.repaint();
     }
-
-    //    @Override
-//    public void paint(Graphics g) {
-//        Graphics dbg;
-//        SecondPanel.repaint();
-//        paint(g);
-//        dbimg = createImage(SecondPanel.getWidth(), SecondPanel.getHeight());
-//        dbg = dbimg.getGraphics();
-//        paintComponent(dbg);
-//        SecondPanel.getGraphics().drawImage(dbimg, 0, 0, this);
-//       dbg.dispose();
-//    }
-
-//     @Override
-//     protected void paintComponent(Graphics g) {
-//        super.paintComponent(g);
-//        habitat.respawn(typeAnt, g);
-//     }
 
     ActionListener taskPerformer = new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -94,7 +73,7 @@ public class AntExample extends JFrame {
                 System.out.println("Работает");
             }
             if(CheckTimeRespawn(TimeLivingWorker)){
-                RespawnAnt(TypeAnt.Worcker);
+                RespawnAnt(TypeAnt.Worker);
                 System.out.println("Работает");
             }
             }
@@ -108,13 +87,12 @@ public class AntExample extends JFrame {
         configureMenu();
 
         canvas = new MyPanel();
-        canvas.setPreferredSize(SecondPanel.getPreferredSize());
+        canvas.setPreferredSize(new Dimension(500, -1));
         canvas.setBackground(new Color(140, 0,190));
         mainPanel.add(canvas);
 
         habitat = new Habitat(canvas);
 
-      //((MyPanel)SecondPanel).setHabitat(habitat);
         ControlPanel.setFocusable(true);
 
         this.setContentPane(mainPanel);
