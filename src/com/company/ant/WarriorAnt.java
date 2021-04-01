@@ -22,7 +22,7 @@ public class WarriorAnt extends Ant {
        setSize(size + 2);
 
        this.SetTimeBorn(AntExample.TimeSimulation);
-       this.setId(rand.nextInt());
+       this.setId(rand.nextInt() & Integer.MAX_VALUE);
 
        quantity_ant++;
    }
