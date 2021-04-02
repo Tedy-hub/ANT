@@ -7,12 +7,13 @@ import com.company.ant.WorkerAnt;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.TreeMap;
+import java.util.Vector;
 
 import javax.swing.*;
 
 public class GenerateThread extends Thread {
     private JPanel window;
-    private ArrayList<Ant> antlist;
+    private Vector<Ant> antlist;
     private HashSet<Integer> idList;
     private TreeMap<Integer,Integer> BornList;
 
@@ -21,7 +22,7 @@ public class GenerateThread extends Thread {
     private double P;
     private int N;
 
-    public GenerateThread(JPanel window, double P, int N, String ant, ArrayList<Ant> antlist, HashSet<Integer> idList, TreeMap<Integer,Integer> BornList) {
+    public GenerateThread(JPanel window, double P, int N, String ant, Vector<Ant> antlist, HashSet<Integer> idList, TreeMap<Integer,Integer> BornList) {
         this.window = window;
         this.P = P;
         this.N = N;
@@ -47,11 +48,11 @@ public class GenerateThread extends Thread {
                 if (antName == WarriorAnt.getStaticName()) {
                     ant = new WarriorAnt();
                     ant.SetTimeLive(AntExample.TimeLivingWarrior);
-                    this.BornList.put(ant.getId(), AntExample.TimeLivingWarrior);//добавление времени жизни
+                    this.BornList.put(ant.getId(), AntExample.TimeSimulation);//добавление времени жизни
                 } else {
                     ant = new WorkerAnt();
                     ant.SetTimeLive(AntExample.TimeLivingWorker);
-                    this.BornList.put(ant.getId(), AntExample.TimeLivingWarrior);//добавление времени жизни
+                    this.BornList.put(ant.getId(), AntExample.TimeSimulation);//добавление времени жизни
                 }
                 // вроде работает но какой-то костыль, чтобы при нажатии E не продолжжалась отрисовка
                 if(!this.isInterrupted()) {

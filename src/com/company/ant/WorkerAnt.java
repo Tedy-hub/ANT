@@ -23,7 +23,7 @@ public class WorkerAnt extends Ant {
         setSize(size + 1);
 
         this.SetTimeBorn(AntExample.TimeSimulation);
-        this.setId(rand.nextInt());
+        this.setId(rand.nextInt() & Integer.MAX_VALUE);
 
         quantity_ant++;
     }

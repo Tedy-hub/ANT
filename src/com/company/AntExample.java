@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.TreeMap;
+import java.util.Vector;
 
 enum TypeAnt{
 
@@ -26,8 +27,8 @@ public class AntExample extends JFrame {
     private JPanel mainPanel;
     private JLabel timerLabel;
 
-    public static int TimeLivingWarrior = 5000;
-    public static int TimeLivingWorker = 5000;
+    public static int TimeLivingWarrior = 5;
+    public static int TimeLivingWorker = 5;
     public static int TimeSimulation = 1; // чтобы можно было обратиться из других классов
 
     private MyPanel canvas;
@@ -45,8 +46,9 @@ public class AntExample extends JFrame {
     private JTextField TimeLiveWorker;
     private JTextField TimeLiveWarrior;
     private CustomMenu MyMenu;
+    private JButton currentObjects;
 
-    static public ArrayList<Ant> list = new ArrayList();
+    static public Vector<Ant> list = new Vector<>();
     static public HashSet<Integer> idList = new HashSet();
     static public TreeMap<Integer,Integer> BornList = new TreeMap();
 
@@ -110,7 +112,6 @@ public class AntExample extends JFrame {
         this.IsVisible.addActionListener(this::toggleInfoShown);
         this.TimeLiveWorker.addActionListener(this::TimeLiveWorker);
         this.TimeLiveWarrior.addActionListener(this::TimeLiveWarrior);
-
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
 
         int i = 10;
@@ -125,9 +126,22 @@ public class AntExample extends JFrame {
         this.WarriorTimeSpawn.addActionListener(this::CheckTimeSpawnWarrior);
         this.WorkerTimeSpawn.addActionListener(this::CheckTimeSpawnWorker);
 
+        this.currentObjects.addActionListener(this::startCurrentInfoDialog);
+    }
+
+    private void startCurrentInfoDialog(ActionEvent actionEvent) {
+        currentObjects co = new currentObjects(this);
+        //co.setSize(500,500);
+        co.setBounds(500,500, 250,250);
+        co.setVisible(true);
+        //te.pack();
+        //te.setVisible(true);
+
 
 
     }
+
+
 
     private void TimeLiveWorker(ActionEvent e){
         try{
