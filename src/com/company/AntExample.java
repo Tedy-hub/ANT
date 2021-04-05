@@ -309,6 +309,7 @@ public class AntExample extends JFrame {
 
         MyMenu.timerOptionShow.addActionListener(this::timerVisible);
 
+
         MyMenu.timerOptionHide.addActionListener(this::timerHidden);
 
         this.setJMenuBar(MyMenu.menuBar);
