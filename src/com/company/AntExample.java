@@ -298,9 +298,7 @@ public class AntExample extends JFrame {
 
     public void configureMenu(){
         MyMenu.simOptionStart.addActionListener(this::actionStart);
-
         MyMenu.simOptionStop.addActionListener(this::actionStop);
-
         MyMenu.infoOptionShow.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
