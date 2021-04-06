@@ -1,35 +1,252 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.company.AntExample">
-  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="42" y="20" width="478" height="500"/>
     </constraints>
     <properties>
-      <background color="-14860015"/>
+      <background color="-12828863"/>
+      <maximumSize width="50" height="50"/>
+      <minimumSize width="50" height="50"/>
     </properties>
     <border type="none"/>
     <children>
-      <component id="22032" class="javax.swing.JTextField" binding="ANTTextField" default-binding="true">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
+      <grid id="512d5" binding="ControlPanel" layout-manager="GridLayoutManager" row-count="12" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="0">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints border-constraint="North"/>
         <properties>
-          <text value="ANT"/>
+          <foreground color="-12828863"/>
         </properties>
-      </component>
-      <hspacer id="b3e24">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </hspacer>
-      <vspacer id="d6404">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
+        <border type="none">
+          <font/>
+          <title-color color="-1458910"/>
+          <color color="-1458910"/>
+        </border>
+        <children>
+          <component id="fbdf1" class="javax.swing.JButton" binding="Start">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="224" height="30"/>
+              </grid>
+            </constraints>
+            <properties>
+              <text value="Start"/>
+            </properties>
+          </component>
+          <component id="72097" class="javax.swing.JLabel" binding="timerLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="224" height="26"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-517"/>
+              <enabled value="true"/>
+              <font name="Comic Sans MS" size="18" style="0"/>
+              <foreground color="-10000407"/>
+              <opaque value="false"/>
+              <text value="Секундомер: "/>
+            </properties>
+          </component>
+          <vspacer id="9e7e6">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <component id="4fa6c" class="javax.swing.JTextField" binding="WarriorTimeSpawn">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="100" height="30"/>
+              </grid>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <vspacer id="f8954">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <preferred-size width="224" height="14"/>
+              </grid>
+            </constraints>
+          </vspacer>
+          <component id="cc98e" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="10" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="224" height="16"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-1769517"/>
+              <foreground color="-1769517"/>
+              <text value="Период Рабочего&#10;(для ввода в конце нажмите enter):"/>
+            </properties>
+          </component>
+          <component id="f9e2" class="javax.swing.JTextField" binding="WorkerTimeSpawn">
+            <constraints>
+              <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="100" height="30"/>
+              </grid>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <vspacer id="973f3">
+            <constraints>
+              <grid row="9" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <preferred-size width="224" height="14"/>
+              </grid>
+            </constraints>
+          </vspacer>
+          <component id="3e93a" class="javax.swing.JRadioButton" binding="timeVisible">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="224" height="20"/>
+              </grid>
+            </constraints>
+            <properties>
+              <opaque value="true"/>
+              <text value="Показывать время симуляции"/>
+            </properties>
+          </component>
+          <component id="b404e" class="javax.swing.JRadioButton" binding="timeHidden">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="224" height="20"/>
+              </grid>
+            </constraints>
+            <properties>
+              <doubleBuffered value="false"/>
+              <selected value="true"/>
+              <text value="Скрыть время симуляции"/>
+            </properties>
+          </component>
+          <component id="c66bc" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="224" height="16"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-1769517"/>
+              <foreground color="-1769517"/>
+              <text value="Период Война &#10;(для ввода в конце нажмите enter):"/>
+            </properties>
+          </component>
+          <component id="1ced5" class="javax.swing.JComboBox" binding="WarriorChance">
+            <constraints>
+              <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="e67dc" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <foreground color="-1769517"/>
+              <text value="Шанс Война:"/>
+            </properties>
+          </component>
+          <component id="c6e17" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <foreground color="-1769517"/>
+              <text value="Шанс Рабочего:"/>
+            </properties>
+          </component>
+          <component id="10150" class="javax.swing.JComboBox" binding="WorkerChance">
+            <constraints>
+              <grid row="11" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
+          <vspacer id="fc124">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <component id="8d835" class="javax.swing.JCheckBox" binding="IsVisible">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Показывать информацию"/>
+            </properties>
+          </component>
+          <component id="a05f8" class="javax.swing.JTextField" binding="TimeLiveWarrior">
+            <constraints>
+              <grid row="8" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="74" height="30"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="176d" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="7" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="74" height="16"/>
+              </grid>
+            </constraints>
+            <properties>
+              <foreground color="-1769517"/>
+              <text value="Время жизни войны"/>
+            </properties>
+          </component>
+          <component id="529f7" class="javax.swing.JTextField" binding="TimeLiveWorker">
+            <constraints>
+              <grid row="11" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="74" height="30"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="be0f2" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="10" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="74" height="16"/>
+              </grid>
+            </constraints>
+            <properties>
+              <foreground color="-1769517"/>
+              <text value="Время жизни рабочего"/>
+            </properties>
+          </component>
+          <component id="8cf88" class="javax.swing.JButton" binding="Stop">
+            <constraints>
+              <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="-1" height="30"/>
+              </grid>
+            </constraints>
+            <properties>
+              <text value="Stop"/>
+            </properties>
+          </component>
+          <hspacer id="21c66">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="10" height="10"/>
+              </grid>
+            </constraints>
+          </hspacer>
+          <hspacer id="42463">
+            <constraints>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="10" height="10"/>
+              </grid>
+            </constraints>
+          </hspacer>
+        </children>
+      </grid>
     </children>
   </grid>
+  <buttonGroups>
+    <group name="ShowTimer">
+      <member id="3e93a"/>
+      <member id="b404e"/>
+    </group>
+  </buttonGroups>
 </form>
