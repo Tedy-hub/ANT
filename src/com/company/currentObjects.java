@@ -20,6 +20,7 @@ public class currentObjects extends JDialog {
 
         for (int i = 0; i < AntExample.list.size(); i++) {
             textArea.append(i + 1 + ". " + AntExample.list.get(i).getName() + " - ");
+
             textArea.append(AntExample.BornList.get(AntExample.list.get(i).getId()) + "\n");
         }
 
