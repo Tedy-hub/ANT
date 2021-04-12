@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.company.AntExample">
   <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="42" y="20" width="478" height="500"/>
+      <xy x="42" y="20" width="789" height="500"/>
     </constraints>
     <properties>
       <background color="-12828863"/>
@@ -131,7 +131,7 @@
             <properties>
               <background color="-1769517"/>
               <foreground color="-1769517"/>
-              <text value="Период Война &#10;(для ввода в конце нажмите enter):"/>
+              <text value="Период Воина  (для ввода в конце нажмите enter):"/>
             </properties>
           </component>
           <component id="1ced5" class="javax.swing.JComboBox" binding="WarriorChance">
@@ -146,7 +146,7 @@
             </constraints>
             <properties>
               <foreground color="-1769517"/>
-              <text value="Шанс Война:"/>
+              <text value="Шанс Воина:"/>
             </properties>
           </component>
           <component id="c6e17" class="javax.swing.JLabel">
@@ -193,7 +193,7 @@
             </constraints>
             <properties>
               <foreground color="-1769517"/>
-              <text value="Время жизни войны"/>
+              <text value="Время жизни воина"/>
             </properties>
           </component>
           <component id="529f7" class="javax.swing.JTextField" binding="TimeLiveWorker">
@@ -245,6 +245,32 @@
             </constraints>
             <properties>
               <text value="Текущие объекты"/>
+            </properties>
+          </component>
+          <vspacer id="207ad">
+            <constraints>
+              <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <component id="79276" class="javax.swing.JButton" binding="WarriorIntellect">
+            <constraints>
+              <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <actionCommand value="Остановка воина"/>
+              <label value="Остановка воина"/>
+              <text value="Остановка воина"/>
+            </properties>
+          </component>
+          <component id="7a971" class="javax.swing.JButton" binding="WorkerIntellect">
+            <constraints>
+              <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <actionCommand value="Остановка рабочего"/>
+              <label value="Остановка рабочего"/>
+              <text value="Остановка рабочего"/>
+              <verifyInputWhenFocusTarget value="false"/>
             </properties>
           </component>
         </children>

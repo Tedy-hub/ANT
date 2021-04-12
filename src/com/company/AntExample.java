@@ -47,6 +47,8 @@ public class AntExample extends JFrame {
     private JTextField TimeLiveWarrior;
     private CustomMenu MyMenu;
     private JButton currentObjects;
+    private JButton WarriorIntellect;
+    private JButton WorkerIntellect;
 
     static public Vector<Ant> list = new Vector<>();
     static public HashSet<Integer> idList = new HashSet();
@@ -112,6 +114,8 @@ public class AntExample extends JFrame {
         this.IsVisible.addActionListener(this::toggleInfoShown);
         this.TimeLiveWorker.addActionListener(this::TimeLiveWorker);
         this.TimeLiveWarrior.addActionListener(this::TimeLiveWarrior);
+        this.WorkerIntellect.addActionListener(this::ControlWorkerIntellect);
+        this.WarriorIntellect.addActionListener(this::ControlWarriorIntellect);
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
 
         int i = 10;
@@ -127,6 +131,26 @@ public class AntExample extends JFrame {
         this.WorkerTimeSpawn.addActionListener(this::CheckTimeSpawnWorker);
 
         this.currentObjects.addActionListener(this::startCurrentInfoDialog);
+    }
+
+    private void ControlWarriorIntellect(ActionEvent actionEvent) {
+        if (WarriorIntellect.getText()=="Остановка воина"){
+            WarriorIntellect.setText("Начать движение воина");
+            //тут код с остановкой потока
+        } else {
+            WarriorIntellect.setText("Остановка воина");
+            //тут код с возобновлением потока
+        }
+    }
+
+    private void ControlWorkerIntellect(ActionEvent actionEvent) {
+        if (WorkerIntellect.getText()=="Остановка рабочего"){
+            WorkerIntellect.setText("Начать движение рабочего");
+            //тут код с остановкой потока
+        } else {
+            WorkerIntellect.setText("Остановка рабочего");
+            //тут код с возобновлением потока
+        }
     }
 
     private void startCurrentInfoDialog(ActionEvent actionEvent) {
@@ -331,5 +355,9 @@ public class AntExample extends JFrame {
         if(AntExample.TimeSimulation % TimeLiving == 0) return true;
         else return false;
 
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }
