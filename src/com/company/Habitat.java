@@ -37,8 +37,8 @@ public class Habitat {
         try {
             WarriorAnt.warrior_ant =ImageIO.read(new File("src/com/company/Picture/SpawnWarrior/W (16).png"));
         } catch (IOException e) { }
-        thread1 = new GenerateThread(window, P1, N1, WorkerAnt.getStaticName(), AntExample.list, AntExample.idList, AntExample.BornList);
-        thread2= new GenerateThread(window, P2, N2, WarriorAnt.getStaticName(), AntExample.list, AntExample.idList, AntExample.BornList);
+        thread1 = new GenerateThread(window, P1, N1, WorkerAnt.getStaticName());
+        thread2= new GenerateThread(window, P2, N2, WarriorAnt.getStaticName());
         thread1.start();
         thread2.start();
     }
@@ -60,27 +60,34 @@ public class Habitat {
 
 
     public void respawn(TypeAnt typeAnt){
-        if(typeAnt == TypeAnt.Warrior){//удалает первый элемент переданного типа и отрисовывает все остальные объекты и всех вспомагательных данных
+        if(AntExample.list.size()!=0) {
+            boolean OBJFound = false;
             int i = 0;
-            while(AntExample.list.get(i).getName() != WarriorAnt.getStaticName()){
-                i++;
+            if (typeAnt == TypeAnt.Warrior) {//удалает первый элемент переданного типа и отрисовывает все остальные объекты и всех вспомагательных данных
+                while (i < AntExample.list.size()) {
+                    if(AntExample.list.get(i).getName() != WarriorAnt.getStaticName()){
+                        OBJFound = true;
+                        break;
+                    }
+                    i++;
+                }
+                WarriorAnt.quantity_ant--;
+            } else {
+                while (i < AntExample.list.size()) {
+                    if(AntExample.list.get(i).getName() != WorkerAnt.getStaticName()){
+                        OBJFound = true;
+                        break;
+                    }
+                    i++;
+                }
+                WorkerAnt.quantity_ant--;
             }
-            AntExample.idList.remove(AntExample.list.get(i));
-            AntExample.BornList.remove(AntExample.list.get(i).getId());
-            AntExample.list.remove(i);
-            WarriorAnt.quantity_ant--;
-            window.repaint();
-        }
-        else{
-            int i = 0;
-            while(AntExample.list.get(i).getName() != WorkerAnt.getStaticName()){
-                i++;
+            if(OBJFound == true) {
+                AntExample.idList.remove(AntExample.list.get(i).getId());
+                AntExample.BornList.remove(AntExample.list.get(i).getId());
+                AntExample.list.remove(i);
+                window.repaint();
             }
-            AntExample.idList.remove(AntExample.list.get(i));
-            AntExample.BornList.remove(AntExample.list.get(i).getId());
-            AntExample.list.remove(i);
-            WorkerAnt.quantity_ant--;
-            window.repaint();
         }
     }
 
