@@ -11,6 +11,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.QuadCurve2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.TreeMap;
@@ -64,6 +68,10 @@ public class AntExample extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.WHITE);
+        Ellipse2D circle = new Ellipse2D.Float(10,320,20,20);
+        g2.fill(circle);
     }
 
     ActionListener taskPerformer = new ActionListener() {
@@ -94,7 +102,6 @@ public class AntExample extends JFrame {
         canvas.setPreferredSize(new Dimension(500, -1));
         canvas.setBackground(new Color(140, 0,190));
         mainPanel.add(canvas);
-
         habitat = new Habitat(canvas);
 
         ControlPanel.setFocusable(true);
@@ -124,6 +131,8 @@ public class AntExample extends JFrame {
             this.WorkerChance.addItem(i);
             i+=10;
         }
+        this.WarriorChance.setSelectedItem(100);
+        this.WorkerChance.setSelectedItem(100);
         this.WarriorChance.addActionListener(this::ChanceWarrior);
         this.WorkerChance.addActionListener(this::ChanceWorker);
 
