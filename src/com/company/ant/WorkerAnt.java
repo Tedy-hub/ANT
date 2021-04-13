@@ -56,6 +56,23 @@ public class WorkerAnt extends Ant {
         //System.out.println("Worker X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
     }
 
+    @Override
+    public void run(int speed) {
+        int posX = getPosX();
+        int posY = getPosY();
+
+        int Y = posY-320;
+        int X = posX-10;
+
+        double xdelY = X/Y;
+
+        int deltaY = (int) Math.sqrt(Math.pow(speed,2)/(Math.pow(xdelY,2)+1));
+        int deltaX = (int) xdelY*deltaY;
+
+        this.setPosX(posX+deltaX);
+        this.setPosY(posY+deltaY);
+    }
+
 //    @Override
 //    public void RespawnAnt(MyPanel window){
 //        //window.setAntInfo(this);
