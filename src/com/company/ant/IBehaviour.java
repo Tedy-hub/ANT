@@ -38,6 +38,7 @@ public interface IBehaviour {
 
     void draw(JPanel window);
 
+    void run(int speed);
    // public void RespawnAnt(MyPanel window);
 
 }

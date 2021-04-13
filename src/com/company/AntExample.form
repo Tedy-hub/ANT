@@ -60,8 +60,11 @@
               </grid>
             </constraints>
             <properties>
-              <text value=""/>
+              <text value="5"/>
             </properties>
+            <clientProperties>
+              <html.disable class="java.lang.Boolean" value="false"/>
+            </clientProperties>
           </component>
           <vspacer id="f8954">
             <constraints>
@@ -89,7 +92,7 @@
               </grid>
             </constraints>
             <properties>
-              <text value=""/>
+              <text value="5"/>
             </properties>
           </component>
           <vspacer id="973f3">
@@ -183,7 +186,9 @@
                 <preferred-size width="74" height="30"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <text value="10"/>
+            </properties>
           </component>
           <component id="176d" class="javax.swing.JLabel">
             <constraints>
@@ -202,7 +207,9 @@
                 <preferred-size width="74" height="30"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <text value="10"/>
+            </properties>
           </component>
           <component id="be0f2" class="javax.swing.JLabel">
             <constraints>
