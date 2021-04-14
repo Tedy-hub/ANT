@@ -18,6 +18,7 @@ public class GenerateThread extends Thread {
     Ant ant;
     private double P;
     private int N;
+    private boolean isWorked = true;
 
     public GenerateThread(JPanel window, double P, int N, String ant) {
         this.window = window;
@@ -34,7 +35,7 @@ public class GenerateThread extends Thread {
 
     public void run() {
 
-        while (!this.isInterrupted()){
+        while (isWorked){
 
             if(Math.random()<P) {
                 System.out.println(Math.random());
@@ -48,7 +49,7 @@ public class GenerateThread extends Thread {
                     AntExample.BornList.put(ant.getId(), AntExample.TimeSimulation);//добавление времени жизни
                 }
                 // вроде работает но какой-то костыль, чтобы при нажатии E не продолжжалась отрисовка
-                if(!this.isInterrupted()) {
+                if(isWorked) {
                     ant.draw(window);
                     AntExample.list.add(ant);//добавление объекта
                     AntExample.idList.add(ant.getId());//добавление id
@@ -62,6 +63,10 @@ public class GenerateThread extends Thread {
                 this.interrupt();
             }
         }
+    }
+
+    public void stopThread() {
+        isWorked = false;
     }
 }
 

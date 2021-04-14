@@ -44,8 +44,8 @@ public class Habitat {
     }
 
     public static void stop(){
-        if(thread1 != null) thread1.interrupt();
-        if(thread2 != null) thread2.interrupt();
+        if(thread1 != null) thread1.stopThread();
+        if(thread2 != null) thread2.stopThread();
         for(int i = 0; i < AntExample.list.size(); i++){
             if(AntExample.list.get(i).getName() == "Warrior Ant")
                 WarriorAnt.quantity_ant--;
