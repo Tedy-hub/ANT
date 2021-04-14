@@ -74,20 +74,18 @@ public class AntExample extends JFrame {
         g2.fill(circle);
     }
 
-    ActionListener taskPerformer = new ActionListener() {
+    ActionListener taskPerformer = new ActionListener() {// Таймер
         public void actionPerformed(ActionEvent evt) {
             TimeSimulation++;
             if(timeVisible.isSelected())
                 timerLabel.setText("Таймер: " + TimeSimulation);
 
-            if(CheckTimeRespawn(TimeLivingWarrior)){
-                RespawnAnt(TypeAnt.Warrior);
-                System.out.println("Работает");
-            }
-            if(CheckTimeRespawn(TimeLivingWorker)){
-                RespawnAnt(TypeAnt.Worker);
-                System.out.println("Работает");
-            }
+            if(CheckTimeRespawn(TimeLivingWarrior)){// проверка окончания времени жизни Война
+                RespawnAnt(TypeAnt.Warrior); }
+
+            if(CheckTimeRespawn(TimeLivingWorker)){// проверка окончания времени жизни Рабого
+                RespawnAnt(TypeAnt.Worker); }
+
             }
     };
     Timer timer = new Timer(1000,taskPerformer);
@@ -102,6 +100,7 @@ public class AntExample extends JFrame {
         canvas.setPreferredSize(new Dimension(500, -1));
         canvas.setBackground(new Color(140, 0,190));
         mainPanel.add(canvas);
+
         habitat = new Habitat(canvas);
 
         ControlPanel.setFocusable(true);
@@ -125,7 +124,7 @@ public class AntExample extends JFrame {
         this.WarriorIntellect.addActionListener(this::ControlWarriorIntellect);
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
 
-        int i = 10;
+        int i = 10;//Заполнение шансов муравьев
         while(i<=100) {
             this.WarriorChance.addItem(i);
             this.WorkerChance.addItem(i);
@@ -135,10 +134,8 @@ public class AntExample extends JFrame {
         this.WorkerChance.setSelectedItem(100);
         this.WarriorChance.addActionListener(this::ChanceWarrior);
         this.WorkerChance.addActionListener(this::ChanceWorker);
-
         this.WarriorTimeSpawn.addActionListener(this::CheckTimeSpawnWarrior);
         this.WorkerTimeSpawn.addActionListener(this::CheckTimeSpawnWorker);
-
         this.currentObjects.addActionListener(this::startCurrentInfoDialog);
     }
 

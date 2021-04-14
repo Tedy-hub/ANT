@@ -13,23 +13,16 @@ import javax.swing.*;
 
 public class GenerateThread extends Thread {
     private JPanel window;
-    private Vector<Ant> antlist;
-    private HashSet<Integer> idList;
-    private TreeMap<Integer,Integer> BornList;
 
     String antName;
     Ant ant;
     private double P;
     private int N;
 
-    public GenerateThread(JPanel window, double P, int N, String ant, Vector<Ant> antlist, HashSet<Integer> idList, TreeMap<Integer,Integer> BornList) {
+    public GenerateThread(JPanel window, double P, int N, String ant) {
         this.window = window;
         this.P = P;
         this.N = N;
-
-        this.antlist = antlist;
-        this.idList = idList;
-        this.BornList = BornList;
 
         antName = ant;
     }
@@ -48,17 +41,17 @@ public class GenerateThread extends Thread {
                 if (antName == WarriorAnt.getStaticName()) {
                     ant = new WarriorAnt();
                     ant.SetTimeLive(AntExample.TimeLivingWarrior);
-                    this.BornList.put(ant.getId(), AntExample.TimeSimulation);//добавление времени жизни
+                    AntExample.BornList.put(ant.getId(), AntExample.TimeSimulation);//добавление времени жизни
                 } else {
                     ant = new WorkerAnt();
                     ant.SetTimeLive(AntExample.TimeLivingWorker);
-                    this.BornList.put(ant.getId(), AntExample.TimeSimulation);//добавление времени жизни
+                    AntExample.BornList.put(ant.getId(), AntExample.TimeSimulation);//добавление времени жизни
                 }
                 // вроде работает но какой-то костыль, чтобы при нажатии E не продолжжалась отрисовка
                 if(!this.isInterrupted()) {
                     ant.draw(window);
-                    antlist.add(ant);//добавление объекта
-                    idList.add(ant.getId());//добавление id
+                    AntExample.list.add(ant);//добавление объекта
+                    AntExample.idList.add(ant.getId());//добавление id
                 }
             }
 
