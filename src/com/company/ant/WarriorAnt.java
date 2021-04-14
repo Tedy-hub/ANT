@@ -13,8 +13,12 @@ public class WarriorAnt extends Ant {
     private static String staticName = "Warrior Ant";
     static public int quantity_ant = 0;//для отслеживания кол-ва объектов
     static public Image warrior_ant;
+    private int center_x = getPosX();
+    private int center_y = getPosY();
+    private int radius = 30;
+    double angle_rad = 0;
 
-   public WarriorAnt(){
+    public WarriorAnt(){
        setName("Warrior Ant");
 
        // случайный размер от 2 до 4 ед.
@@ -55,6 +59,22 @@ public class WarriorAnt extends Ant {
 
         //System.out.println("Warrior X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
 
+    }
+
+    @Override
+    public void run(int speed) {
+
+        int omega = (int) ((int) 2*Math.PI*speed);//в данном случае speed это частота
+
+        int Y = (int) (center_y + radius * Math.cos(angle_rad));
+        int X = (int) (center_x + radius * Math.cos(angle_rad));
+
+        int fps_avg = 30;//число обновлений в секунду
+        int ang_inc = omega/fps_avg;
+        angle_rad +=ang_inc;
+
+        this.setPosX(Y);
+        this.setPosY(X);
     }
 
 //    @Override
