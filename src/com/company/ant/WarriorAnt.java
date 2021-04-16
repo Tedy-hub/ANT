@@ -45,7 +45,7 @@ public class WarriorAnt extends Ant {
         int x = 0, y = 0;
         try {
             x = ThreadLocalRandom.current().nextInt(0, window.getWidth() - this.getSize() * 100);
-            y = ThreadLocalRandom.current().nextInt(window.getHeight() - window.getHeight(),
+            y = ThreadLocalRandom.current().nextInt(0,
                     window.getHeight() - this.getSize() * 100);
         }
         catch(IllegalArgumentException ia){
@@ -55,8 +55,8 @@ public class WarriorAnt extends Ant {
         }
         this.setPosX(x);
         this.setPosY(y);
-        center_y = x;
-        center_x = y;
+        center_y = y;
+        center_x = x;
 
 
         window.getGraphics().drawImage(warrior_ant, getPosX(), getPosY(), getSize() * 100, getSize() * 100, null);
@@ -75,7 +75,7 @@ public class WarriorAnt extends Ant {
 
         int fps_avg = 1;//число обновлений в секунду
         double ang_inc = omega/fps_avg;
-        ang_inc = Math.PI/24;
+        //ang_inc = Math.PI/24;
         angle_rad +=ang_inc;
 
         this.setPosX(Y);

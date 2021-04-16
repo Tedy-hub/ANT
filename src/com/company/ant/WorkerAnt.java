@@ -13,8 +13,6 @@ public class WorkerAnt extends Ant {
         goToGoal, goToBornPlace, onBornPlace
     }
 
-
-
     public static String staticName = "Worker Ant";
     static public int quantity_ant = 0;//для отслеживания кол-ва объектов
     static public Image worker_ant;
@@ -31,7 +29,7 @@ public class WorkerAnt extends Ant {
         setSize(size + 1);
         antStatus = status.goToGoal;
 
-        deltaX = 0;
+        deltaX = -1000;
         deltaY = 0;
         this.SetTimeBorn(AntExample.TimeSimulation);
         this.setId(rand.nextInt() & Integer.MAX_VALUE);
@@ -74,8 +72,8 @@ public class WorkerAnt extends Ant {
         int posX = getPosX();
         int posY = getPosY();
 
-        if(deltaX==0){
-            int Y = Math.abs(posY-5);
+        //if(deltaX==-1000){
+            int Y = Math.abs(posY-10);
             int X = Math.abs(posX-10);
             if(Y==0){
                 deltaX = speed;
@@ -83,9 +81,9 @@ public class WorkerAnt extends Ant {
             } else {
                 double xdelY = X/Y;
                 deltaY = (int) Math.sqrt(Math.pow(speed,2)/(Math.pow(xdelY,2)+1));
-                deltaX = (int) xdelY*deltaY;
+                deltaX =  (int) xdelY*deltaY;
             }
-        }
+        //}
 
         if(antStatus==status.goToGoal){
             if((posX<20)&&(posY<20)){
@@ -98,12 +96,13 @@ public class WorkerAnt extends Ant {
             }
         }
         if(antStatus==status.goToBornPlace){
-            if((Math.abs(posX-getPositionBornX())<20)&&(Math.abs(posY-getPositionBornY())<20)){
+            if((Math.abs(posX-getPositionBornX())<50)&&(Math.abs(posY-getPositionBornY())<50)){
                 //вернулись в свое место рождения
                 antStatus = status.onBornPlace;
             } else {
-                this.setPosX(posX+deltaX);
-                this.setPosY(posY+deltaY);
+                runRevert(speed);
+            //    this.setPosX(posX+deltaX);
+              //  this.setPosY(posY+deltaY);
             }
         }
         if(antStatus==status.onBornPlace){
@@ -119,7 +118,26 @@ public class WorkerAnt extends Ant {
             this.setPosY(posY-deltaY);
         }*/
     }
+    public void runRevert(int speed){
+        int posX = getPositionBornX();
+        int posY = getPositionBornY();
 
+        //if(deltaX==-1000){
+        int Y = Math.abs(posY-getPosY());
+        int X = Math.abs(posX-getPosX());
+
+        if(Y==0){
+            deltaX = speed;
+            deltaY = 0;
+        } else {
+            double xdelY = X/Y;
+            deltaY = (int) Math.sqrt(Math.pow(speed,2)/(Math.pow(xdelY,2)+1));
+            deltaX =  (int) xdelY*deltaY;
+        }
+
+        this.setPosX(getPosX()+deltaX);
+        this.setPosY(getPosY()+deltaY);
+    }
 
 //    @Override
 //    public void RespawnAnt(MyPanel window){

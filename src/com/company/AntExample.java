@@ -163,11 +163,7 @@ public class AntExample extends JFrame {
         //te.pack();
         //te.setVisible(true);
 
-
-
     }
-
-
 
     private void TimeLiveWorker(ActionEvent e){
         try{
