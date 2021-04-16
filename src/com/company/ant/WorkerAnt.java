@@ -1,7 +1,6 @@
 package com.company.ant;
 
 import com.company.AntExample;
-import com.company.MyPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,9 +9,18 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class WorkerAnt extends Ant {
 
+    enum status {
+        goToGoal, goToBornPlace, onBornPlace
+    }
+
+
+
     public static String staticName = "Worker Ant";
     static public int quantity_ant = 0;//для отслеживания кол-ва объектов
     static public Image worker_ant;
+    status antStatus;
+    int deltaY;
+    int deltaX;
 
     public WorkerAnt(){
         setName("Worker Ant");
@@ -21,7 +29,10 @@ public class WorkerAnt extends Ant {
         Random rand = new Random();
         int size = rand.nextInt(2);
         setSize(size + 1);
+        antStatus = status.goToGoal;
 
+        deltaX = 0;
+        deltaY = 0;
         this.SetTimeBorn(AntExample.TimeSimulation);
         this.setId(rand.nextInt() & Integer.MAX_VALUE);
 
@@ -50,6 +61,8 @@ public class WorkerAnt extends Ant {
         }
         this.setPosX(x);
         this.setPosY(y);
+        this.setPositionBornX(x);
+        this.setPositionBornY(y);
 
         window.getGraphics().drawImage(worker_ant, x, y, getSize() * 65, getSize() * 100, null);
 
@@ -61,17 +74,52 @@ public class WorkerAnt extends Ant {
         int posX = getPosX();
         int posY = getPosY();
 
-        int Y = posY-320;
-        int X = posX-10;
+        if(deltaX==0){
+            int Y = Math.abs(posY-5);
+            int X = Math.abs(posX-10);
+            if(Y==0){
+                deltaX = speed;
+                deltaY = 0;
+            } else {
+                double xdelY = X/Y;
+                deltaY = (int) Math.sqrt(Math.pow(speed,2)/(Math.pow(xdelY,2)+1));
+                deltaX = (int) xdelY*deltaY;
+            }
+        }
 
-        double xdelY = X/Y;
+        if(antStatus==status.goToGoal){
+            if((posX<20)&&(posY<20)){
+                //дошли, теперь идем домой
+                antStatus = status.goToBornPlace;
+            } else {
+                //еще идем к цели
+                this.setPosX(posX-deltaX);
+                this.setPosY(posY-deltaY);
+            }
+        }
+        if(antStatus==status.goToBornPlace){
+            if((Math.abs(posX-getPositionBornX())<20)&&(Math.abs(posY-getPositionBornY())<20)){
+                //вернулись в свое место рождения
+                antStatus = status.onBornPlace;
+            } else {
+                this.setPosX(posX+deltaX);
+                this.setPosY(posY+deltaY);
+            }
+        }
+        if(antStatus==status.onBornPlace){
 
-        int deltaY = (int) Math.sqrt(Math.pow(speed,2)/(Math.pow(xdelY,2)+1));
-        int deltaX = (int) xdelY*deltaY;
-
-        this.setPosX(posX+deltaX);
-        this.setPosY(posY+deltaY);
+        }
+        //проверяем дошли ли они до места назначения
+        /*if((posX<20)&&(posY<20)){
+            System.out.println("дошли");
+            this.setPosX(posX+deltaX);
+            this.setPosY(posY+deltaY);
+        } else {
+            this.setPosX(posX-deltaX);
+            this.setPosY(posY-deltaY);
+        }*/
     }
+
 
 //    @Override
 //    public void RespawnAnt(MyPanel window){
