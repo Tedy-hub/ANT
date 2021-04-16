@@ -31,9 +31,9 @@ public class AntExample extends JFrame {
     private JPanel mainPanel;
     private JLabel timerLabel;
 
-    public static int TimeLivingWarrior = 5;
-    public static int TimeLivingWorker = 5;
-    public static int TimeSimulation = 1; // чтобы можно было обратиться из других классов
+    public static int TimeLivingWarrior = 100;
+    public static int TimeLivingWorker = 100;
+    public static int TimeSimulation = 10; // чтобы можно было обратиться из других классов
 
     private MyPanel canvas;
     private JButton Stop;
@@ -68,10 +68,6 @@ public class AntExample extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.WHITE);
-        Ellipse2D circle = new Ellipse2D.Float(10,320,20,20);
-        g2.fill(circle);
     }
 
     ActionListener taskPerformer = new ActionListener() {// Таймер
