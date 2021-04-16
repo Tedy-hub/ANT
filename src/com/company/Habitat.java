@@ -66,36 +66,19 @@ public class Habitat {
         AntExample.list.clear();
     }
 
-    public void respawn(TypeAnt typeAnt) {
-        if (AntExample.list.size() != 0) {
-            boolean OBJFound = false;
-            int i = 0;
-            if (typeAnt == TypeAnt.Warrior) {//удалает первый элемент переданного типа и отрисовывает все остальные объекты и всех вспомагательных данных
-                while (i < AntExample.list.size()) {
-                    if (AntExample.list.get(i).getName() != WarriorAnt.getStaticName()) {
-                        OBJFound = true;
-                        break;
-                    }
-                    i++;
-                }
-                WarriorAnt.quantity_ant--;
-            } else {
-                while (i < AntExample.list.size()) {
-                    if (AntExample.list.get(i).getName() != WorkerAnt.getStaticName()) {
-                        OBJFound = true;
-                        break;
-                    }
-                    i++;
-                }
-                WorkerAnt.quantity_ant--;
-            }
-            if (OBJFound == true) {
-                AntExample.idList.remove(AntExample.list.get(i).getId());
-                AntExample.BornList.remove(AntExample.list.get(i).getId());
-                AntExample.list.remove(i);
-                window.repaint();
-            }
-        }
+
+
+    public void respawn(int indexDead, TypeAnt typeAnt){
+
+        if (typeAnt == TypeAnt.Warrior) WarriorAnt.quantity_ant--;
+
+        else WorkerAnt.quantity_ant--;
+
+        AntExample.idList.remove(AntExample.list.get(indexDead).getId());
+        AntExample.BornList.remove(AntExample.list.get(indexDead).getId());
+        AntExample.list.remove(indexDead);
+        window.repaint();
+
     }
 
     public void ChangeProperties(double P1, int N1, double P2, int N2) {

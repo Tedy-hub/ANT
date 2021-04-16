@@ -53,6 +53,8 @@ public class AntExample extends JFrame {
     private JButton currentObjects;
     private JButton WarriorIntellect;
     private JButton WorkerIntellect;
+    private JComboBox priorityThread;
+    private JLabel Приоритет;
 
     static public Vector<Ant> list = new Vector<>();
     static public HashSet<Integer> idList = new HashSet();
@@ -62,8 +64,8 @@ public class AntExample extends JFrame {
     Habitat habitat;
     private int N1;
     private int N2;
-    private double P1=0.1;
-    private double P2=0.1;
+    private double P1=1.0;
+    private double P2=1.0;
 
     @Override
     public void paint(Graphics g) {
@@ -76,11 +78,9 @@ public class AntExample extends JFrame {
             if(timeVisible.isSelected())
                 timerLabel.setText("Таймер: " + TimeSimulation);
 
-            if(CheckTimeRespawn(TimeLivingWarrior)){// проверка окончания времени жизни Война
-                RespawnAnt(TypeAnt.Warrior); }
+            CheckTimeRespawn(TimeLivingWarrior, TypeAnt.Warrior);// проверка окончания времени жизни Война
 
-            if(CheckTimeRespawn(TimeLivingWorker)){// проверка окончания времени жизни Рабого
-                RespawnAnt(TypeAnt.Worker); }
+            CheckTimeRespawn(TimeLivingWorker, TypeAnt.Worker);// проверка окончания времени жизни Рабого
 
             }
     };
@@ -126,6 +126,11 @@ public class AntExample extends JFrame {
             this.WorkerChance.addItem(i);
             i+=10;
         }
+
+        this.priorityThread.addItem(1);//Выпадающий список заполение
+        this.priorityThread.addItem(2);
+        this.priorityThread.setSelectedItem(1);//установки списка на первый элемент
+
         this.WarriorChance.setSelectedItem(100);
         this.WorkerChance.setSelectedItem(100);
         this.WarriorChance.addActionListener(this::ChanceWarrior);
@@ -170,7 +175,9 @@ public class AntExample extends JFrame {
             this.TimeLivingWorker = Integer.parseInt(this.TimeLiveWorker.getText().toString());
         }catch (Exception exception){
             this.TimeLivingWorker = 5;
+
         }
+        System.out.println(this.TimeLivingWorker+"");
     }
 
     private void TimeLiveWarrior(ActionEvent e){
@@ -178,7 +185,9 @@ public class AntExample extends JFrame {
             this.TimeLivingWarrior = Integer.parseInt(this.TimeLiveWarrior.getText().toString());
         }catch (Exception exception){
             this.TimeLivingWarrior = 5;
+
         }
+        System.out.println(this.TimeLivingWarrior+"");
     }
 
     private void ChanceWarrior(ActionEvent e){
@@ -324,14 +333,6 @@ public class AntExample extends JFrame {
         }
     };
 
-    public void RespawnAnt(TypeAnt typeAnt){
-
-     //   this.paint(this.getGraphics());
-        habitat.respawn(typeAnt);
-
-    }
-
-
     public void configureMenu(){
         MyMenu.simOptionStart.addActionListener(this::actionStart);
         MyMenu.simOptionStop.addActionListener(this::actionStop);
@@ -349,9 +350,37 @@ public class AntExample extends JFrame {
         this.setJMenuBar(MyMenu.menuBar);
     }
 
-    private boolean CheckTimeRespawn(int TimeLiving){
-        if(AntExample.TimeSimulation % TimeLiving == 0) return true;
-        else return false;
+    private void CheckTimeRespawn(int TimeLiving, TypeAnt typeAnt){
+
+        if(AntExample.list.size()!=0) {
+            boolean OBJFound = false;
+            int i = 0;
+            if (typeAnt == TypeAnt.Warrior && WarriorAnt.quantity_ant != 0) {//удалает первый элемент переданного типа и отрисовывает все остальные объекты и всех вспомагательных данных
+                while (i < AntExample.list.size()) {
+                    if(AntExample.list.get(i).getName() != WarriorAnt.getStaticName()){
+                        OBJFound = true;
+                        break;
+                    }
+                    i++;
+                }
+
+            }
+            if(typeAnt == TypeAnt.Worker && WorkerAnt.quantity_ant != 0){
+                while (i < AntExample.list.size()) {
+                    if(AntExample.list.get(i).getName() != WorkerAnt.getStaticName()){
+                        OBJFound = true;
+                        break;
+                    }
+                    i++;
+                }
+
+            }
+            if(OBJFound == true) {
+                if(AntExample.list.get(i).getTimeBorn() + AntExample.list.get(i).getTimeLive() == AntExample.TimeSimulation) //каждый следующий элемент будет удален спустя время спавна
+                    habitat.respawn(i, typeAnt);
+
+            }
+        }
 
     }
 
