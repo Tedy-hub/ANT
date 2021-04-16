@@ -19,6 +19,7 @@ public class WorkerAnt extends Ant {
     status antStatus;
     int deltaY;
     int deltaX;
+    public static int speed = 10;
 
     public WorkerAnt(){
         setName("Worker Ant");

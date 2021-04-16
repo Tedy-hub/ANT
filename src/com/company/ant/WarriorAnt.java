@@ -17,6 +17,7 @@ public class WarriorAnt extends Ant {
     private int center_y;
     private int radius = 30;
     double angle_rad;
+    public static int speed = 1;
 
     public WarriorAnt(){
        setName("Warrior Ant");

@@ -24,17 +24,25 @@ public class RunningAntThread extends Thread {
         this.speed = speed;
     }
 
+    public void rise(){
+        synchronized (this) {
+            this.notify();
+        }
+    }
+
+
     public void stopThread() {
         isWorked = false;
     }
 
     public void run() {
+
         isWorked = true;
-        while (isWorked) {
-            checkAndRunAnt();
-            window.repaint();
-            sleeping(10);
-        }
+            while (isWorked) {
+                checkAndRunAnt();
+                window.repaint();
+                sleeping(10);
+            }
     }
 
     public void sleeping(int millsec){

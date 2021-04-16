@@ -43,8 +43,8 @@ public class Habitat {
         }
         thread1 = new GenerateThread(window, P1, N1, WorkerAnt.getStaticName());
         thread2 = new GenerateThread(window, P2, N2, WarriorAnt.getStaticName());
-        runningWorkerAntThread = new RunningAntThread(window, WorkerAnt.getStaticName(), 10);
-        runningWarriorAntThread = new RunningAntThread(window, WarriorAnt.getStaticName(), 1);
+        runningWorkerAntThread = new RunningAntThread(window, WorkerAnt.getStaticName(), WorkerAnt.speed);
+        runningWarriorAntThread = new RunningAntThread(window, WarriorAnt.getStaticName(), WarriorAnt.speed);
         thread1.start();
         thread2.start();
         runningWorkerAntThread.start();
