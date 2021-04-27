@@ -3,7 +3,7 @@ package com.company;
 import com.company.ant.Ant;
 import com.company.ant.WarriorAnt;
 import com.company.ant.WorkerAnt;
-
+import com.company.MyConsole;
 
 import javax.swing.*;
 
@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.Console;
 import java.util.HashSet;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -51,6 +52,7 @@ public class AntExample extends JFrame {
     private JComboBox priorityThreadWorker;
     private JLabel Приоритет;
     private JComboBox priorityThreadWarrior;
+    private JButton dialogConsole;
 
     static public Vector<Ant> list = new Vector<>();
     static public HashSet<Integer> idList = new HashSet();
@@ -114,6 +116,7 @@ public class AntExample extends JFrame {
         this.TimeLiveWarrior.addActionListener(this::TimeLiveWarrior);
         this.WorkerIntellect.addActionListener(this::ControlWorkerIntellect);
         this.WarriorIntellect.addActionListener(this::ControlWarriorIntellect);
+        this.dialogConsole.addActionListener(this::StartConsole);
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
 
         int i = 10;//Заполнение шансов муравьев
@@ -138,6 +141,12 @@ public class AntExample extends JFrame {
         this.priorityThreadWorker.addActionListener(this::PriorityWorker);
         this.priorityThreadWarrior.addActionListener(this::PriorityWarrior);
 
+    }
+
+    private void StartConsole(ActionEvent actionEvent) {
+        MyConsole t = new MyConsole(this);
+        t.setBounds(500,500, 250,250);
+        t.setVisible(true);
     }
 
     private void PriorityWarrior(ActionEvent actionEvent) {
