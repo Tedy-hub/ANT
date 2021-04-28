@@ -4,8 +4,9 @@ import com.company.AntExample;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 
-public abstract class Ant implements IBehaviour {
+public abstract class Ant implements IBehaviour, Serializable {
     private int id;
     private String name;
     private int Size;

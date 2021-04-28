@@ -4,10 +4,11 @@ import com.company.AntExample;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class WorkerAnt extends Ant {
+public class WorkerAnt extends Ant implements Serializable {
 
     enum status {
         goToGoal, goToBornPlace, onBornPlace

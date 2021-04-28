@@ -2,13 +2,15 @@ package com.company.ant;
 
 import com.company.AntExample;
 import com.company.MyPanel;
+import com.company.Serializate;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class WarriorAnt extends Ant {
+public class WarriorAnt extends Ant implements Serializable {
 
     private static String staticName = "Warrior Ant";
     static public int quantity_ant = 0;//для отслеживания кол-ва объектов
