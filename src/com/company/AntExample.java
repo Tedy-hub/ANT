@@ -5,13 +5,15 @@ import com.company.ant.WarriorAnt;
 import com.company.ant.WorkerAnt;
 import com.company.MyConsole;
 
+import javax.print.Doc;
+import javax.sound.sampled.BooleanControl;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.io.Console;
+import java.awt.event.*;
+import java.io.*;
 import java.util.HashSet;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -29,7 +31,7 @@ public class AntExample extends JFrame {
 
     public static int TimeLivingWarrior = 100;
     public static int TimeLivingWorker = 100;
-    public static int TimeSimulation = 10; // чтобы можно было обратиться из других классов
+    public static int TimeSimulation = 1; // чтобы можно было обратиться из других классов
 
     private MyPanel canvas;
     private JButton Stop;
@@ -40,9 +42,9 @@ public class AntExample extends JFrame {
     private JRadioButton timeVisible;
     private JRadioButton timeHidden;
     private JComboBox WarriorChance;
+    private JComboBox WorkerChance;
     private JTextField WarriorTimeSpawn;
     private JTextField WorkerTimeSpawn;
-    private JComboBox WorkerChance;
     private JTextField TimeLiveWorker;
     private JTextField TimeLiveWarrior;
     private CustomMenu MyMenu;
@@ -106,18 +108,6 @@ public class AntExample extends JFrame {
         Color clr = Color.getHSBColor(204, (float)0.07, (float)0.25);
         ControlPanel.setBackground(clr);
 
-        this.Start.addActionListener(this::actionStart);
-        this.Stop.addActionListener(this::actionStop);
-        this.timeVisible.addActionListener(this::timerVisible);
-        this.timeHidden.addActionListener(this::timerHidden);
-        this.IsVisible.addActionListener(this::toggleInfoShown);
-        this.TimeLiveWorker.addActionListener(this::TimeLiveWorker);
-        this.TimeLiveWarrior.addActionListener(this::TimeLiveWarrior);
-        this.WorkerIntellect.addActionListener(this::ControlWorkerIntellect);
-        this.WarriorIntellect.addActionListener(this::ControlWarriorIntellect);
-        this.dialogConsole.addActionListener(this::StartConsole);
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
-
         int i = 10;//Заполнение шансов муравьев
         while(i<=100) {
             this.WarriorChance.addItem(i);
@@ -128,17 +118,101 @@ public class AntExample extends JFrame {
         }
 
         this.priorityThreadWorker.setSelectedItem(1);//установки списка на первый элемент
+        this.priorityThreadWarrior.setSelectedItem(1);
 
-        this.WarriorChance.setSelectedItem(100);
-        this.WorkerChance.setSelectedItem(100);
-        this.WarriorChance.addActionListener(this::ChanceWarrior);
-        this.WorkerChance.addActionListener(this::ChanceWorker);
-        this.WarriorTimeSpawn.addActionListener(this::CheckTimeSpawnWarrior);
-        this.WorkerTimeSpawn.addActionListener(this::CheckTimeSpawnWorker);
+        this.Start.addActionListener(this::actionStart);
+        this.Stop.addActionListener(this::actionStop);
+        this.timeVisible.addActionListener(this::timerVisible);
+        this.timeHidden.addActionListener(this::timerHidden);
+        this.IsVisible.addActionListener(this::toggleInfoShown);
+        this.TimeLiveWarrior.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                TimeLiveWarrior();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                TimeLiveWarrior();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                TimeLiveWarrior();
+            }
+        });
+
+        this.TimeLiveWorker.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                TimeLiveWorker();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                TimeLiveWorker();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                TimeLiveWorker();
+
+            }
+        });
+
+        this.WorkerIntellect.addActionListener(this::ControlWorkerIntellect);
+        this.WarriorIntellect.addActionListener(this::ControlWarriorIntellect);
+        this.dialogConsole.addActionListener(this::StartConsole);
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
+
+        this.WarriorChance.addItemListener(this::ChanceWarrior);
+        this.WorkerChance.addItemListener(this::ChanceWorker);
+        this.WarriorTimeSpawn.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                CheckTimeSpawnWarrior();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                CheckTimeSpawnWarrior();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                CheckTimeSpawnWarrior();
+            }
+        });
+        this.WorkerTimeSpawn.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                CheckTimeSpawnWorker();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                CheckTimeSpawnWorker();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                CheckTimeSpawnWorker();
+            }
+        });
+
+        readConfig();
+
         this.currentObjects.addActionListener(this::startCurrentInfoDialog);
+        this.priorityThreadWorker.addItemListener(this::PriorityWorker);
+        this.priorityThreadWarrior.addItemListener(this::PriorityWarrior);
 
-        this.priorityThreadWorker.addActionListener(this::PriorityWorker);
-        this.priorityThreadWarrior.addActionListener(this::PriorityWarrior);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosed(e);
+                writeConfig();
+            }
+        });
 
     }
 
@@ -148,11 +222,11 @@ public class AntExample extends JFrame {
         t.setVisible(true);
     }
 
-    private void PriorityWarrior(ActionEvent actionEvent) {
+    private void PriorityWarrior(ItemEvent actionEvent) {
         Habitat.runningWarriorAntThread.setPriority(Integer.parseInt(this.priorityThreadWarrior.getSelectedItem().toString()));
     }
 
-    private void PriorityWorker(ActionEvent actionEvent) {
+    private void PriorityWorker(ItemEvent actionEvent) {
         Habitat.runningWorkerAntThread.setPriority(Integer.parseInt(this.priorityThreadWorker.getSelectedItem().toString()));
 
     }
@@ -199,7 +273,7 @@ public class AntExample extends JFrame {
 
     }
 
-    private void TimeLiveWorker(ActionEvent e){
+    private void TimeLiveWorker(){
         try{
             this.TimeLivingWorker = Integer.parseInt(this.TimeLiveWorker.getText().toString());
         }catch (Exception exception){
@@ -209,7 +283,7 @@ public class AntExample extends JFrame {
         System.out.println(this.TimeLivingWorker+"");
     }
 
-    private void TimeLiveWarrior(ActionEvent e){
+    private void TimeLiveWarrior(){
         try{
             this.TimeLivingWarrior = Integer.parseInt(this.TimeLiveWarrior.getText().toString());
         }catch (Exception exception){
@@ -219,12 +293,12 @@ public class AntExample extends JFrame {
         System.out.println(this.TimeLivingWarrior+"");
     }
 
-    private void ChanceWarrior(ActionEvent e){
+    private void ChanceWarrior(ItemEvent e){
         this.P2 = Double.parseDouble(this.WarriorChance.getSelectedItem().toString())/100;
         System.out.println(this.P2+"");
     }
 
-    private void CheckTimeSpawnWarrior(ActionEvent e){
+    private void CheckTimeSpawnWarrior(){
         try{
             this.N2 = Integer.parseInt(this.WarriorTimeSpawn.getText().toString())*1000;
         }catch (Exception exception){
@@ -236,12 +310,12 @@ public class AntExample extends JFrame {
     }
 
 
-    private void ChanceWorker(ActionEvent e){
+    private void ChanceWorker(ItemEvent e){
         this.P1 = Double.parseDouble(this.WorkerChance.getSelectedItem().toString())/100;
         System.out.println(this.P1+"");
     }
 
-    private void CheckTimeSpawnWorker(ActionEvent e){
+    private void CheckTimeSpawnWorker(){
         try{
             this.N1 = Integer.parseInt(this.WorkerTimeSpawn.getText().toString())*1000;
         }catch (Exception exception){
@@ -250,6 +324,19 @@ public class AntExample extends JFrame {
 
         System.out.println(this.N1+"");
 
+    }
+
+    private void toggleTimer(boolean isShown){
+        if(isShown){
+            timerLabel.setText("Таймер: " + TimeSimulation);
+            MyMenu.timerOptionShow.setSelected(true);
+            timeVisible.setSelected(true);
+        }
+        else{
+            timerLabel.setText("\u200E");
+            MyMenu.timerOptionHide.setSelected(true);
+            timeHidden.setSelected(true);
+        }
     }
 
     public void timerHidden(ActionEvent e){
@@ -411,6 +498,64 @@ public class AntExample extends JFrame {
             }
         }
 
+    }
+
+    private void writeConfig(){
+        File file = new File("config.txt");
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("config.txt"));
+            String dataWarrior = WarriorTimeSpawn.getText() + ' ' + WarriorChance.getSelectedItem().toString() + ' '
+                    + TimeLiveWarrior.getText() + ' ';
+            String dataWorker = WorkerTimeSpawn.getText() + ' ' + WorkerChance.getSelectedItem().toString() + ' '
+                    + TimeLiveWorker.getText() + ' ';
+
+            int isTimerShown = timeVisible.isSelected() ? 1 : 0;
+            int isInfoShown = IsVisible.isSelected() ? 1 : 0;
+            String options = String.valueOf(isTimerShown) + ' ' + String.valueOf(isInfoShown) + ' ' +
+                    String.valueOf(priorityThreadWarrior.getSelectedIndex()) + ' ' +
+                    String.valueOf(priorityThreadWorker.getSelectedIndex());
+
+            writer.write(dataWarrior);
+            writer.write(dataWorker);
+            writer.write(options);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readConfig(){
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("config.txt"));
+
+            String config = reader.readLine();
+            String[] params = config.split(" ");
+
+            WarriorTimeSpawn.setText(params[0]);
+            WarriorChance.setSelectedIndex(Integer.parseInt(params[1]) / 10 - 1);
+            TimeLiveWarrior.setText(params[2]);
+
+            WorkerTimeSpawn.setText(params[3]);
+            WorkerChance.setSelectedIndex(Integer.parseInt(params[4]) / 10 - 1);
+            TimeLiveWorker.setText(params[5]);
+
+            boolean b = params[6].equals("1");
+            timeVisible.setSelected(b);
+            toggleTimer(b);
+
+            b = params[7].equals("1");
+            IsVisible.setSelected(b);
+            MyMenu.infoOptionShow.setSelected(b);
+
+            priorityThreadWarrior.setSelectedIndex(Integer.parseInt(params[8]));
+            priorityThreadWorker.setSelectedIndex(Integer.parseInt(params[9]));
+
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createUIComponents() {
