@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.HashSet;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -51,6 +52,8 @@ public class AntExample extends JFrame {
     private JComboBox priorityThreadWorker;
     private JLabel Приоритет;
     private JComboBox priorityThreadWarrior;
+    private JButton Download;
+    private JButton Save;
 
     static public Vector<Ant> list = new Vector<>();
     static public HashSet<Integer> idList = new HashSet();
@@ -58,6 +61,7 @@ public class AntExample extends JFrame {
 
     boolean isRunning = false;
     Habitat habitat;
+    Serializate serializate;
     private int N1;
     private int N2;
     private double P1=1.0;
@@ -94,6 +98,7 @@ public class AntExample extends JFrame {
         mainPanel.add(canvas);
 
         habitat = new Habitat(canvas);
+        serializate = new Serializate(this);
 
         ControlPanel.setFocusable(true);
 
@@ -134,10 +139,26 @@ public class AntExample extends JFrame {
         this.WarriorTimeSpawn.addActionListener(this::CheckTimeSpawnWarrior);
         this.WorkerTimeSpawn.addActionListener(this::CheckTimeSpawnWorker);
         this.currentObjects.addActionListener(this::startCurrentInfoDialog);
-
         this.priorityThreadWorker.addActionListener(this::PriorityWorker);
         this.priorityThreadWarrior.addActionListener(this::PriorityWarrior);
+        this.Save.addActionListener(this::saveObjects);
+        this.Download.addActionListener(this::downloadObjects);
+    }
 
+    private void downloadObjects(ActionEvent actionEvent) {
+        JFileChooser fc = new JFileChooser();
+        fc.showOpenDialog(this);
+        File file = fc.getSelectedFile();
+        stop();
+        serializate.download(file);
+    }
+
+    private void saveObjects(ActionEvent actionEvent) {
+        JFileChooser fc = new JFileChooser();
+        fc.showSaveDialog(this);
+        File file = fc.getSelectedFile();
+
+        serializate.save(file);
     }
 
     private void PriorityWarrior(ActionEvent actionEvent) {
