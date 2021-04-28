@@ -13,6 +13,9 @@ public abstract class Ant implements IBehaviour {
     private int posY;
     private int TimeLive;
     private int TimeBorn;
+    private int positionBornX;
+    private int positionBornY;
+    //состояние муравья
 
     @Override
     public int getId(){ return id; }
@@ -74,4 +77,20 @@ public abstract class Ant implements IBehaviour {
 
     @Override
     public void draw(JPanel window) { }
+
+    public int getPositionBornX() {
+        return positionBornX;
+    }
+
+    public int getPositionBornY() {
+        return positionBornY;
+    }
+
+    public void setPositionBornY(int positionBornY) {
+        this.positionBornY = positionBornY;
+    }
+
+    public void setPositionBornX(int positionBornX) {
+        this.positionBornX = positionBornX;
+    }
 }

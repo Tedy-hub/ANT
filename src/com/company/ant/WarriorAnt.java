@@ -13,10 +13,11 @@ public class WarriorAnt extends Ant {
     private static String staticName = "Warrior Ant";
     static public int quantity_ant = 0;//для отслеживания кол-ва объектов
     static public Image warrior_ant;
-    private int center_x = getPosX();
-    private int center_y = getPosY();
+    private int center_x;
+    private int center_y;
     private int radius = 30;
-    double angle_rad = 0;
+    double angle_rad;
+    public static int speed = 1;
 
     public WarriorAnt(){
        setName("Warrior Ant");
@@ -26,6 +27,7 @@ public class WarriorAnt extends Ant {
        int size = rand.nextInt(2);
        setSize(size + 2);
 
+       angle_rad = 0;
        this.SetTimeBorn(AntExample.TimeSimulation);
        this.setId(rand.nextInt() & Integer.MAX_VALUE);
 
@@ -44,7 +46,7 @@ public class WarriorAnt extends Ant {
         int x = 0, y = 0;
         try {
             x = ThreadLocalRandom.current().nextInt(0, window.getWidth() - this.getSize() * 100);
-            y = ThreadLocalRandom.current().nextInt(window.getHeight() - window.getHeight(),
+            y = ThreadLocalRandom.current().nextInt(0,
                     window.getHeight() - this.getSize() * 100);
         }
         catch(IllegalArgumentException ia){
@@ -54,8 +56,11 @@ public class WarriorAnt extends Ant {
         }
         this.setPosX(x);
         this.setPosY(y);
+        center_y = y;
+        center_x = x;
 
-        window.getGraphics().drawImage(warrior_ant, x, y, getSize() * 100, getSize() * 100, null);
+
+        window.getGraphics().drawImage(warrior_ant, getPosX(), getPosY(), getSize() * 100, getSize() * 100, null);
 
         //System.out.println("Warrior X: " + x + " Y: " + y + " Quantity: " + quantity_ant);
 
@@ -66,11 +71,12 @@ public class WarriorAnt extends Ant {
 
         int omega = (int) ((int) 2*Math.PI*speed);//в данном случае speed это частота
 
-        int Y = (int) (center_y + radius * Math.cos(angle_rad));
-        int X = (int) (center_x + radius * Math.cos(angle_rad));
+        int Y = (int) (center_x+radius * Math.sin(angle_rad));
+        int X = (int) (center_y+radius * Math.cos(angle_rad));
 
-        int fps_avg = 30;//число обновлений в секунду
-        int ang_inc = omega/fps_avg;
+        int fps_avg = 1;//число обновлений в секунду
+        double ang_inc = omega/fps_avg;
+        //ang_inc = Math.PI/24;
         angle_rad +=ang_inc;
 
         this.setPosX(Y);

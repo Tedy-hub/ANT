@@ -3,7 +3,7 @@ package com.company;
 import com.company.ant.Ant;
 import com.company.ant.WarriorAnt;
 import com.company.ant.WorkerAnt;
-
+import com.company.MyConsole;
 
 import javax.swing.*;
 
@@ -11,11 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.QuadCurve2D;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
+import java.io.Console;
 import java.util.HashSet;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -31,9 +27,9 @@ public class AntExample extends JFrame {
     private JPanel mainPanel;
     private JLabel timerLabel;
 
-    public static int TimeLivingWarrior = 5;
-    public static int TimeLivingWorker = 5;
-    public static int TimeSimulation = 1; // чтобы можно было обратиться из других классов
+    public static int TimeLivingWarrior = 100;
+    public static int TimeLivingWorker = 100;
+    public static int TimeSimulation = 10; // чтобы можно было обратиться из других классов
 
     private MyPanel canvas;
     private JButton Stop;
@@ -53,8 +49,9 @@ public class AntExample extends JFrame {
     private JButton currentObjects;
     private JButton WarriorIntellect;
     private JButton WorkerIntellect;
-    private JComboBox priorityThread;
-    private JLabel Приоритет;
+    private JComboBox priorityThreadWorker;
+    private JComboBox priorityThreadWarrior;
+    private JButton dialogConsole;
 
     static public Vector<Ant> list = new Vector<>();
     static public HashSet<Integer> idList = new HashSet();
@@ -70,10 +67,6 @@ public class AntExample extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.WHITE);
-        Ellipse2D circle = new Ellipse2D.Float(10,320,20,20);
-        g2.fill(circle);
     }
 
     ActionListener taskPerformer = new ActionListener() {// Таймер
@@ -122,18 +115,19 @@ public class AntExample extends JFrame {
         this.TimeLiveWarrior.addActionListener(this::TimeLiveWarrior);
         this.WorkerIntellect.addActionListener(this::ControlWorkerIntellect);
         this.WarriorIntellect.addActionListener(this::ControlWarriorIntellect);
+        this.dialogConsole.addActionListener(this::StartConsole);
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
 
         int i = 10;//Заполнение шансов муравьев
         while(i<=100) {
             this.WarriorChance.addItem(i);
             this.WorkerChance.addItem(i);
+            this.priorityThreadWorker.addItem(i/10);
+            this.priorityThreadWarrior.addItem(i/10);
             i+=10;
         }
 
-        this.priorityThread.addItem(1);//Выпадающий список заполение
-        this.priorityThread.addItem(2);
-        this.priorityThread.setSelectedItem(1);//установки списка на первый элемент
+        this.priorityThreadWorker.setSelectedItem(1);//установки списка на первый элемент
 
         this.WarriorChance.setSelectedItem(100);
         this.WorkerChance.setSelectedItem(100);
@@ -142,15 +136,41 @@ public class AntExample extends JFrame {
         this.WarriorTimeSpawn.addActionListener(this::CheckTimeSpawnWarrior);
         this.WorkerTimeSpawn.addActionListener(this::CheckTimeSpawnWorker);
         this.currentObjects.addActionListener(this::startCurrentInfoDialog);
+
+        this.priorityThreadWorker.addActionListener(this::PriorityWorker);
+        this.priorityThreadWarrior.addActionListener(this::PriorityWarrior);
+
+    }
+
+    private void StartConsole(ActionEvent actionEvent) {
+        MyConsole t = new MyConsole(this);
+        t.setBounds(500,500, 250,250);
+        t.setVisible(true);
+    }
+
+    private void PriorityWarrior(ActionEvent actionEvent) {
+        Habitat.runningWarriorAntThread.setPriority(Integer.parseInt(this.priorityThreadWarrior.getSelectedItem().toString()));
+    }
+
+    private void PriorityWorker(ActionEvent actionEvent) {
+        Habitat.runningWorkerAntThread.setPriority(Integer.parseInt(this.priorityThreadWorker.getSelectedItem().toString()));
+
     }
 
     private void ControlWarriorIntellect(ActionEvent actionEvent) {
         if (WarriorIntellect.getText()=="Остановка воина"){
             WarriorIntellect.setText("Начать движение воина");
             //тут код с остановкой потока
+            Habitat.runningWarriorAntThread.stopThread();
+
         } else {
             WarriorIntellect.setText("Остановка воина");
             //тут код с возобновлением потока
+            if(!Habitat.runningWarriorAntThread.isAlive()) {
+                Habitat.runningWarriorAntThread = new RunningAntThread(this.canvas, WarriorAnt.getStaticName(), WarriorAnt.speed);
+                Habitat.runningWarriorAntThread.start();
+            }
+
         }
     }
 
@@ -158,22 +178,26 @@ public class AntExample extends JFrame {
         if (WorkerIntellect.getText()=="Остановка рабочего"){
             WorkerIntellect.setText("Начать движение рабочего");
             //тут код с остановкой потока
+            Habitat.runningWorkerAntThread.stopThread();
         } else {
             WorkerIntellect.setText("Остановка рабочего");
             //тут код с возобновлением потока
+            if(!Habitat.runningWorkerAntThread.isAlive()) {
+                Habitat.runningWorkerAntThread = new RunningAntThread(this.canvas, WorkerAnt.getStaticName(), WorkerAnt.speed);
+                Habitat.runningWorkerAntThread.start();
+            }
         }
     }
 
     private void startCurrentInfoDialog(ActionEvent actionEvent) {
         currentObjects co = new currentObjects(this);
         //co.setSize(500,500);
-        co.setBounds(500,500, 250,250);
+        //co.setBounds(500,500, 250,250);
         co.setVisible(true);
         //te.pack();
         //te.setVisible(true);
+
     }
-
-
 
     private void TimeLiveWorker(ActionEvent e){
         try{
