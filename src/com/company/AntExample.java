@@ -54,6 +54,8 @@ public class AntExample extends JFrame {
     private JComboBox priorityThreadWorker;
     private JComboBox priorityThreadWarrior;
     private JButton dialogConsole;
+    private Config cfg;
+
 
     static public Vector<Ant> list = new Vector<>();
     static public HashSet<Integer> idList = new HashSet();
@@ -200,7 +202,8 @@ public class AntExample extends JFrame {
             }
         });
 
-        readConfig();
+        cfg = new Config(this);
+        cfg.readConfig();
 
         this.currentObjects.addActionListener(this::startCurrentInfoDialog);
         this.priorityThreadWorker.addItemListener(this::PriorityWorker);
@@ -210,7 +213,7 @@ public class AntExample extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosed(e);
-                writeConfig();
+                cfg.writeConfig();
             }
         });
 
@@ -265,12 +268,7 @@ public class AntExample extends JFrame {
 
     private void startCurrentInfoDialog(ActionEvent actionEvent) {
         currentObjects co = new currentObjects(this);
-        //co.setSize(500,500);
-        //co.setBounds(500,500, 250,250);
         co.setVisible(true);
-        //te.pack();
-        //te.setVisible(true);
-
     }
 
     private void TimeLiveWorker(){
@@ -326,7 +324,7 @@ public class AntExample extends JFrame {
 
     }
 
-    private void toggleTimer(boolean isShown){
+    public void toggleTimer(boolean isShown){
         if(isShown){
             timerLabel.setText("Таймер: " + TimeSimulation);
             MyMenu.timerOptionShow.setSelected(true);
@@ -500,62 +498,8 @@ public class AntExample extends JFrame {
 
     }
 
-    private void writeConfig(){
-        File file = new File("config.txt");
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("config.txt"));
-            String dataWarrior = WarriorTimeSpawn.getText() + ' ' + WarriorChance.getSelectedItem().toString() + ' '
-                    + TimeLiveWarrior.getText() + ' ';
-            String dataWorker = WorkerTimeSpawn.getText() + ' ' + WorkerChance.getSelectedItem().toString() + ' '
-                    + TimeLiveWorker.getText() + ' ';
-
-            int isTimerShown = timeVisible.isSelected() ? 1 : 0;
-            int isInfoShown = IsVisible.isSelected() ? 1 : 0;
-            String options = String.valueOf(isTimerShown) + ' ' + String.valueOf(isInfoShown) + ' ' +
-                    String.valueOf(priorityThreadWarrior.getSelectedIndex()) + ' ' +
-                    String.valueOf(priorityThreadWorker.getSelectedIndex());
-
-            writer.write(dataWarrior);
-            writer.write(dataWorker);
-            writer.write(options);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void readConfig(){
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("config.txt"));
-
-            String config = reader.readLine();
-            String[] params = config.split(" ");
-
-            WarriorTimeSpawn.setText(params[0]);
-            WarriorChance.setSelectedIndex(Integer.parseInt(params[1]) / 10 - 1);
-            TimeLiveWarrior.setText(params[2]);
-
-            WorkerTimeSpawn.setText(params[3]);
-            WorkerChance.setSelectedIndex(Integer.parseInt(params[4]) / 10 - 1);
-            TimeLiveWorker.setText(params[5]);
-
-            boolean b = params[6].equals("1");
-            timeVisible.setSelected(b);
-            toggleTimer(b);
-
-            b = params[7].equals("1");
-            IsVisible.setSelected(b);
-            MyMenu.infoOptionShow.setSelected(b);
-
-            priorityThreadWarrior.setSelectedIndex(Integer.parseInt(params[8]));
-            priorityThreadWorker.setSelectedIndex(Integer.parseInt(params[9]));
-
-            reader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public CustomMenu getMyMenu(){
+        return MyMenu;
     }
 
     private void createUIComponents() {
