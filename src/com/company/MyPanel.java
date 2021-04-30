@@ -51,7 +51,7 @@ public class MyPanel extends JPanel {
         int i = 0;
         while (i < AntExample.list.size()) {
             Ant ant = AntExample.list.get(i);
-            if (AntExample.list.get(i).getName() == WarriorAnt.getStaticName()) {
+            if (AntExample.list.get(i).getName().equals(WarriorAnt.getStaticName()) ) {
                 g.drawImage(WarriorAnt.warrior_ant, ant.getPosX(), ant.getPosY(),
                         ant.getSize() * 100, ant.getSize() * 100, this);
             } else {

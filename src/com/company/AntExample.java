@@ -14,6 +14,10 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.HashSet;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -56,6 +60,8 @@ public class AntExample extends JFrame {
     private JButton dialogConsole;
     private Config cfg;
 
+    private JButton Download;
+    private JButton Save;
 
     static public Vector<Ant> list = new Vector<>();
     static public HashSet<Integer> idList = new HashSet();
@@ -63,6 +69,7 @@ public class AntExample extends JFrame {
 
     boolean isRunning = false;
     Habitat habitat;
+    Serializate serializate;
     private int N1;
     private int N2;
     private double P1=1.0;
@@ -87,7 +94,7 @@ public class AntExample extends JFrame {
     };
     Timer timer = new Timer(1000,taskPerformer);
 
-    public AntExample(String title){
+    public AntExample(String title) {
         super(title);
 
         MyMenu = new CustomMenu();
@@ -95,10 +102,11 @@ public class AntExample extends JFrame {
 
         canvas = new MyPanel();
         canvas.setPreferredSize(new Dimension(500, -1));
-        canvas.setBackground(new Color(140, 0,190));
+        canvas.setBackground(new Color(140, 0, 190));
         mainPanel.add(canvas);
 
         habitat = new Habitat(canvas);
+        serializate = new Serializate(this);
 
         ControlPanel.setFocusable(true);
 
@@ -107,16 +115,16 @@ public class AntExample extends JFrame {
         timerLabel.setFont(new Font("Comic Sans", Font.PLAIN, 20));
         timerLabel.setText("\u200E");
 
-        Color clr = Color.getHSBColor(204, (float)0.07, (float)0.25);
+        Color clr = Color.getHSBColor(204, (float) 0.07, (float) 0.25);
         ControlPanel.setBackground(clr);
 
         int i = 10;//Заполнение шансов муравьев
-        while(i<=100) {
+        while (i <= 100) {
             this.WarriorChance.addItem(i);
             this.WorkerChance.addItem(i);
-            this.priorityThreadWorker.addItem(i/10);
-            this.priorityThreadWarrior.addItem(i/10);
-            i+=10;
+            this.priorityThreadWorker.addItem(i / 10);
+            this.priorityThreadWarrior.addItem(i / 10);
+            i += 10;
         }
 
         this.priorityThreadWorker.setSelectedItem(1);//установки списка на первый элемент
@@ -208,6 +216,8 @@ public class AntExample extends JFrame {
         this.currentObjects.addActionListener(this::startCurrentInfoDialog);
         this.priorityThreadWorker.addItemListener(this::PriorityWorker);
         this.priorityThreadWarrior.addItemListener(this::PriorityWarrior);
+        this.Save.addActionListener(this::saveObjects);
+        this.Download.addActionListener(this::downloadObjects);
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -216,7 +226,21 @@ public class AntExample extends JFrame {
                 cfg.writeConfig();
             }
         });
+    }
+    private void saveObjects(ActionEvent actionEvent) {
+        JFileChooser fc = new JFileChooser();
+        fc.showSaveDialog(this);
+        File file = fc.getSelectedFile();
 
+        serializate.save(file);
+    }
+
+    private void downloadObjects(ActionEvent actionEvent) {
+        JFileChooser fc = new JFileChooser();
+        fc.showOpenDialog(this);
+        File file = fc.getSelectedFile();
+        stop(true);
+        serializate.download(file);
     }
 
     private void StartConsole(ActionEvent actionEvent) {
@@ -386,6 +410,16 @@ public class AntExample extends JFrame {
         }
         repaint();
     }
+
+    public void stop(boolean a){
+        int quantityWorkers = WorkerAnt.quantity_ant;
+        int quantityWarriors = WarriorAnt.quantity_ant;
+
+        StopOperations();
+        repaint();
+    }
+
+
 
     public void paintResult(int quantityWarriors ,int quantityWorkers){
         int response  = JOptionPane.showConfirmDialog(this,"Warrior ants quantity: " + quantityWarriors  +
