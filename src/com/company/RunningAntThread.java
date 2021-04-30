@@ -55,7 +55,7 @@ public class RunningAntThread extends Thread {
     //проходит по вектору, проверяет есть ли тут муравьи данного типа и запускают его
     public void checkAndRunAnt(){
         for (Ant antObject : vector) {
-            if (antObject.getName() == type)
+            if (antObject.getName().equals(type))
                 antObject.run(speed);
         }
     }
