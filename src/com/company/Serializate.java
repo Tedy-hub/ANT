@@ -1,6 +1,8 @@
 package com.company;
 
 import com.company.ant.Ant;
+import com.company.ant.WarriorAnt;
+import com.company.ant.WorkerAnt;
 
 import javax.swing.*;
 
@@ -27,6 +29,16 @@ public class Serializate implements Serializable {
         Vector<Ant> antlist;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             AntExample.list = (Vector<Ant>) ois.readObject();
+            for(int i = 0; i < AntExample.list.size(); i++){
+                if(AntExample.list.get(i).getName().equals(WarriorAnt.getStaticName())) {
+                    WarriorAnt.quantity_ant++;
+
+                }
+                else WorkerAnt.quantity_ant++;
+
+                AntExample.BornList.put(AntExample.list.get(i).getId(), AntExample.TimeSimulation);
+                AntExample.idList.add(AntExample.list.get(i).getId());
+            }
             System.out.println("прочитали");
             antExample.start();
             Toast toast = new Toast(antExample,"считали из файла",2000);

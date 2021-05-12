@@ -246,7 +246,7 @@
               </grid>
             </constraints>
           </hspacer>
-          <component id="c3cc3" class="javax.swing.JButton" binding="currentObjects">
+          <component id="c3cc3" class="javax.swing.JButton" binding="currentObject">
             <constraints>
               <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -313,7 +313,7 @@
           </component>
           <component id="ebf30" class="javax.swing.JButton" binding="dialogConsole">
             <constraints>
-              <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Консоль"/>

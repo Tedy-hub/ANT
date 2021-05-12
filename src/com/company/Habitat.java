@@ -56,14 +56,11 @@ public class Habitat {
         if (thread2 != null) thread2.stopThread();
         if (runningWarriorAntThread != null) runningWarriorAntThread.stopThread();
         if (runningWorkerAntThread != null) runningWorkerAntThread.stopThread();
-        for (int i = 0; i < AntExample.list.size(); i++) {
-            if (AntExample.list.get(i).getName() == "Warrior Ant")
-                WarriorAnt.quantity_ant--;
-            else {
-                WorkerAnt.quantity_ant--;
-            }
-        }
+        WorkerAnt.quantity_ant = 0;
+        WarriorAnt.quantity_ant =0;
         AntExample.list.clear();
+        AntExample.BornList.clear();
+        AntExample.idList.clear();
     }
 
 

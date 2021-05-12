@@ -52,7 +52,7 @@ public class AntExample extends JFrame {
     private JTextField TimeLiveWorker;
     private JTextField TimeLiveWarrior;
     private CustomMenu MyMenu;
-    private JButton currentObjects;
+    private JButton currentObject;
     private JButton WarriorIntellect;
     private JButton WorkerIntellect;
     private JComboBox priorityThreadWorker;
@@ -213,7 +213,7 @@ public class AntExample extends JFrame {
         cfg = new Config(this);
         cfg.readConfig();
 
-        this.currentObjects.addActionListener(this::startCurrentInfoDialog);
+        this.currentObject.addActionListener(this::startCurrentInfoDialog);
         this.priorityThreadWorker.addItemListener(this::PriorityWorker);
         this.priorityThreadWarrior.addItemListener(this::PriorityWarrior);
         this.Save.addActionListener(this::saveObjects);
@@ -292,6 +292,7 @@ public class AntExample extends JFrame {
 
     private void startCurrentInfoDialog(ActionEvent actionEvent) {
         currentObjects co = new currentObjects(this);
+        co.setBounds(500, 500, 250, 250);
         co.setVisible(true);
     }
 
@@ -400,11 +401,9 @@ public class AntExample extends JFrame {
     }
 
     public void stop(){
-        int quantityWorkers = WorkerAnt.quantity_ant;
-        int quantityWarriors = WarriorAnt.quantity_ant;
 
         if(IsVisible.isSelected()) {
-            paintResult(quantityWarriors, quantityWorkers);
+            paintResult();
         } else {
             StopOperations();
         }
@@ -412,8 +411,6 @@ public class AntExample extends JFrame {
     }
 
     public void stop(boolean a){
-        int quantityWorkers = WorkerAnt.quantity_ant;
-        int quantityWarriors = WarriorAnt.quantity_ant;
 
         StopOperations();
         repaint();
@@ -421,13 +418,13 @@ public class AntExample extends JFrame {
 
 
 
-    public void paintResult(int quantityWarriors ,int quantityWorkers){
-        int response  = JOptionPane.showConfirmDialog(this,"Warrior ants quantity: " + quantityWarriors  +
-                "\nWorker ants quantity: " + quantityWorkers +
-                "\nTime passed: " + TimeSimulation,"Хотите продолжить?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+    public void paintResult(){
+        int response  = JOptionPane.showConfirmDialog(this,"Warrior ants quantity: " + WarriorAnt.quantity_ant  +
+                "\nWorker ants quantity: " + WorkerAnt.quantity_ant +
+                "\nTime passed: " + TimeSimulation,"Завершить симуляцию?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         switch (response){
 
-            case JOptionPane.NO_OPTION:{
+            case JOptionPane.YES_OPTION:{
                 StopOperations();
                 break;
             }
@@ -472,7 +469,7 @@ public class AntExample extends JFrame {
                     break;
                 }
                 case KeyEvent.VK_I: {
-                    paintResult(WarriorAnt.quantity_ant, WorkerAnt.quantity_ant);
+                    paintResult();
                     break;
                 }
             }
