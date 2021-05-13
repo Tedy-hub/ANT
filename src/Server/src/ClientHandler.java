@@ -31,7 +31,7 @@ public class ClientHandler extends Thread {
             try {
                 String request = reader.readLine();
                 if(request.equals("Exit")){
-                    System.out.println("Socket exits...");
+                    System.out.println("Socket " + socket.getPort() + " exits...");
                     clients.remove(socket);
                     writer.close();
                     reader.close();
@@ -40,9 +40,9 @@ public class ClientHandler extends Thread {
                 }
 
                 writer.write(clients.size());
-                System.out.println("Sent! " + socket.getInetAddress().getHostAddress());
+                System.out.println("Sent! " + socket.getInetAddress().getHostAddress() + ' ' + socket.getPort());
                 for (int i = 0; i < clients.size(); i++) {
-                    writer.write(clients.get(i).getInetAddress().getHostAddress() + '\n');
+                    writer.write(clients.get(i).getInetAddress().getHostAddress() + ' ' + clients.get(i).getPort() + '\n');
                 }
 
                 writer.flush();
