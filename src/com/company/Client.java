@@ -37,22 +37,15 @@ public class Client {
 
     public void close(){
         try {
-            writer.write("Exit\n");
-            writer.flush();
-            socket.close();
-            reader.close();
-            writer.close();
-        } catch (IOException e) { e.printStackTrace(); }
-    }
-
-    public void shutdown(){
-        try {
-            socket.close();
-            reader.close();
-            writer.close();
+            if(writer != null) {
+                writer.write("Exit\n");
+                writer.flush();
+                socket.close();
+                reader.close();
+                writer.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
