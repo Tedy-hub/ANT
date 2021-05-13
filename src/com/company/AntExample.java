@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -59,6 +60,7 @@ public class AntExample extends JFrame {
     private JComboBox priorityThreadWarrior;
     private JButton dialogConsole;
     private Config cfg;
+    private Client connect = new Client();
 
     private JButton Download;
     private JButton Save;
@@ -66,6 +68,7 @@ public class AntExample extends JFrame {
     static public Vector<Ant> list = new Vector<>();
     static public HashSet<Integer> idList = new HashSet();
     static public TreeMap<Integer,Integer> BornList = new TreeMap();
+    public ArrayList<String> serverClients;
 
     boolean isRunning = false;
     Habitat habitat;
@@ -224,8 +227,12 @@ public class AntExample extends JFrame {
             public void windowClosing(WindowEvent e) {
                 super.windowClosed(e);
                 cfg.writeConfig();
+                connect.close();
             }
         });
+
+        serverConnect();
+
     }
     private void saveObjects(ActionEvent actionEvent) {
         JFileChooser fc = new JFileChooser();
@@ -527,6 +534,34 @@ public class AntExample extends JFrame {
             }
         }
 
+    }
+
+    private void serverConnect(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        serverClients = connect.getClients();
+                    }
+                    catch(IOException e){
+                        connect.close();
+                    }
+
+                    int i = 0;
+                    while (i < serverClients.size()) {
+                        System.out.println("#" + i + ": " + serverClients.get(i));
+                        i++;
+                    }
+                }
+            }
+        });
+        thread.start();
     }
 
     public CustomMenu getMyMenu(){
