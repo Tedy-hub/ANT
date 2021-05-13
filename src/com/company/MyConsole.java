@@ -82,12 +82,12 @@ public class MyConsole extends JDialog {
 
         String[] t = str.split("\n");
 
-        if (start.toLowerCase().equals(t[t.length-1])){
+        if (start.equals(t[t.length-1].toLowerCase())){
             jFrame.start();
             textArea1.setText(str+"\n"+"началась симуляция");
         }
-        if(stop.equals(t[t.length-1])){
-            jFrame.stop();
+        if(stop.equals(t[t.length-1].toLowerCase())){
+            jFrame.stop(true);
             textArea1.setText(str+"\n"+"симуляция закончилась");
         }
     }
