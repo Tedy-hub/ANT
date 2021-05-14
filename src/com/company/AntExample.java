@@ -64,6 +64,7 @@ public class AntExample extends JFrame {
 
     private JButton Download;
     private JButton Save;
+    private JLabel CurrentClients;
 
     static public Vector<Ant> list = new Vector<>();
     static public HashSet<Integer> idList = new HashSet();
@@ -548,6 +549,7 @@ public class AntExample extends JFrame {
                     }
                     try {
                         serverClients = connect.getClients();
+                        setText(serverClients);
                     }
                     catch(IOException e){
                         connect.close();
@@ -562,6 +564,16 @@ public class AntExample extends JFrame {
             }
         });
         thread.start();
+    }
+
+    private void setText(ArrayList<String> serverClients) {
+        String r = "<html>";
+        for(int i=0;i<serverClients.size();i++){
+            String num = Integer.toString(i+1);
+            r = r + num + ". " + serverClients.get(i)+"<br><br>";
+        }
+        r = r + "</html>";
+        CurrentClients.setText(r);
     }
 
     public CustomMenu getMyMenu(){
