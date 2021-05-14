@@ -3,10 +3,7 @@ package com.company;
 import com.company.ant.Ant;
 import com.company.ant.WarriorAnt;
 import com.company.ant.WorkerAnt;
-import com.company.MyConsole;
 
-import javax.print.Doc;
-import javax.sound.sampled.BooleanControl;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -60,11 +57,12 @@ public class AntExample extends JFrame {
     private JComboBox priorityThreadWarrior;
     private JButton dialogConsole;
     private Config cfg;
-    private Client connect = new Client();
+    private Client client = new Client();
 
     private JButton Download;
     private JButton Save;
     private JLabel CurrentClients;
+    private JButton GetObject;
 
     static public Vector<Ant> list = new Vector<>();
     static public HashSet<Integer> idList = new HashSet();
@@ -139,6 +137,7 @@ public class AntExample extends JFrame {
         this.timeVisible.addActionListener(this::timerVisible);
         this.timeHidden.addActionListener(this::timerHidden);
         this.IsVisible.addActionListener(this::toggleInfoShown);
+        this.GetObject.addActionListener(this::GetObjectFromServer);
         this.TimeLiveWarrior.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -228,13 +227,18 @@ public class AntExample extends JFrame {
             public void windowClosing(WindowEvent e) {
                 super.windowClosed(e);
                 cfg.writeConfig();
-                connect.close();
+                client.close();
             }
         });
 
         serverConnect();
 
     }
+
+    private void GetObjectFromServer(ActionEvent actionEvent) {
+        client.getObject();
+    }
+
     private void saveObjects(ActionEvent actionEvent) {
         JFileChooser fc = new JFileChooser();
         fc.showSaveDialog(this);
@@ -548,11 +552,12 @@ public class AntExample extends JFrame {
                         e.printStackTrace();
                     }
                     try {
-                        serverClients = connect.getClients();
+                        client.readMessage();
+                        serverClients = client.getClients();
                         setText(serverClients);
                     }
                     catch(IOException e){
-                        connect.close();
+                        client.close();
                     }
 
                     int i = 0;
@@ -574,6 +579,7 @@ public class AntExample extends JFrame {
         }
         r = r + "</html>";
         CurrentClients.setText(r);
+        System.out.println(serverClients.toString());
     }
 
     public CustomMenu getMyMenu(){
