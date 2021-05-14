@@ -34,7 +34,8 @@ public class Client {
                 System.out.println("hhhhhhh");
                 System.out.println("Клиент получил запрос на отправку рандомных муровьев");
                 Vector<Ant> ants = AntExample.list;
-                writer.write("wantToSend");
+                writer.write("wantToSend\n");
+                writer.flush();
                 writeObj.writeObject(ants);
                 System.out.println("Клиент отправил рандомных муровьев");
             }
@@ -57,7 +58,7 @@ public class Client {
     }
     public boolean getObject(){
         try {
-            writer.write("getObjects");
+            writer.write("getObjects\n");
             writer.flush();
             System.out.println("отправили запрос на сервер");
             return true;

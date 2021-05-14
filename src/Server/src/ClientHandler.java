@@ -37,7 +37,8 @@ public class ClientHandler extends Thread {
 
         public void sendMessage(){
             try {
-                writer.write("giveMeAnObject");
+                writer.write("giveMeAnObject\n");
+                writer.flush();
                 System.out.println("Шлем команду следующему рандомному клиенту");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -49,7 +50,7 @@ public class ClientHandler extends Thread {
         while(true) {
             try {
                 String request = reader.readLine();
-                System.out.println("got + " + request);
+                //System.out.println("got + " + request);
 
                 if(request.equals("Exit")){
                     System.out.println("Socket " + socket.getPort() + " exits...");
