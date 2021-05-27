@@ -585,6 +585,10 @@ public class AntExample extends JFrame {
         return MyMenu;
     }
 
+    public MyPanel getCanvas() {
+        return canvas;
+    }
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }

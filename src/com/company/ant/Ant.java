@@ -13,6 +13,7 @@ public abstract class Ant implements IBehaviour, Serializable {
     private int posX;
     private int posY;
     private int TimeLive;
+    static int t;
     private int TimeBorn;
     private int positionBornX;
     private int positionBornY;
@@ -71,13 +72,15 @@ public abstract class Ant implements IBehaviour, Serializable {
     }
 
     @Override
-    public void SetTimeLive(int TimeLive) { this.TimeLive = TimeLive; }
+    public void setTimeLive(int TimeLive) { this.TimeLive = TimeLive; }
 
     @Override
-    public void SetTimeBorn(int TimeBorn) { this.TimeBorn = TimeBorn; }
+    public void setTimeBorn(int TimeBorn) { this.TimeBorn = TimeBorn; }
 
     @Override
     public void draw(JPanel window) { }
+
+    public abstract Image getImg();
 
     public int getPositionBornX() {
         return positionBornX;

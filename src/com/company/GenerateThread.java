@@ -42,11 +42,11 @@ public class GenerateThread extends Thread {
                 System.out.println(Math.random());
                 if (antName == WarriorAnt.getStaticName()) {
                     ant = new WarriorAnt();
-                    ant.SetTimeLive(AntExample.TimeLivingWarrior);
+                    ant.setTimeLive(AntExample.TimeLivingWarrior);
                     AntExample.BornList.put(ant.getId(), AntExample.TimeSimulation);//добавление времени жизни
                 } else {
                     ant = new WorkerAnt();
-                    ant.SetTimeLive(AntExample.TimeLivingWorker);
+                    ant.setTimeLive(AntExample.TimeLivingWorker);
                     AntExample.BornList.put(ant.getId(), AntExample.TimeSimulation);//добавление времени жизни
                 }
 

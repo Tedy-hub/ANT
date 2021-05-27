@@ -33,7 +33,7 @@ public class WorkerAnt extends Ant implements Serializable {
 
         deltaX = -1000;
         deltaY = 0;
-        this.SetTimeBorn(AntExample.TimeSimulation);
+        this.setTimeBorn(AntExample.TimeSimulation);
         this.setId(rand.nextInt() & Integer.MAX_VALUE);
 
         quantity_ant++;
@@ -155,6 +155,11 @@ public class WorkerAnt extends Ant implements Serializable {
 
     public void setDeltaY(int deltaY) {
         this.deltaY = deltaY;
+    }
+
+    @Override
+    public Image getImg() {
+        return worker_ant;
     }
 
     //    @Override

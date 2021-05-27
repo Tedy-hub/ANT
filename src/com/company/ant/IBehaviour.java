@@ -16,9 +16,9 @@ public interface IBehaviour {
 
     int getTimeBorn();
 
-    void SetTimeLive(int TimeLive);
+    void setTimeLive(int TimeLive);
 
-    void SetTimeBorn(int TimeBorn);
+    void setTimeBorn(int TimeBorn);
 
     String getName();
 

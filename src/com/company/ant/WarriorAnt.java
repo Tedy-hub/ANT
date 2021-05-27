@@ -31,7 +31,7 @@ public class WarriorAnt extends Ant implements Serializable {
        setSize(size + 2);
 
        angle_rad = 0;
-       this.SetTimeBorn(AntExample.TimeSimulation);
+       this.setTimeBorn(AntExample.TimeSimulation);
        this.setId(rand.nextInt() & Integer.MAX_VALUE);
 
        quantity_ant++;
@@ -109,6 +109,12 @@ public class WarriorAnt extends Ant implements Serializable {
     public void setAngle_rad(double angle_rad) {
         this.angle_rad = angle_rad;
     }
+
+    @Override
+    public Image getImg() {
+        return warrior_ant;
+    }
+
 
     //    @Override
 //    public void RespawnAnt(MyPanel window){

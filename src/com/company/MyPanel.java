@@ -49,15 +49,18 @@ public class MyPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         int i = 0;
+        Ant ant;
         while (i < AntExample.list.size()) {
-            Ant ant = AntExample.list.get(i);
-            if (AntExample.list.get(i).getName().equals(WarriorAnt.getStaticName()) ) {
-                g.drawImage(WarriorAnt.warrior_ant, ant.getPosX(), ant.getPosY(),
-                        ant.getSize() * 100, ant.getSize() * 100, this);
-            } else {
-                g.drawImage(WorkerAnt.worker_ant, AntExample.list.get(i).getPosX(), AntExample.list.get(i).getPosY(),
-                        AntExample.list.get(i).getSize() * 65, AntExample.list.get(i).getSize() * 100, this);
-            }
+            ant = AntExample.list.get(i);
+            g.drawImage(ant.getImg(), ant.getPosX(), ant.getPosY(),
+                    ant.getSize() * 80, ant.getSize() * 100, this);
+//            if (AntExample.list.get(i).getName().equals(WarriorAnt.getStaticName()) ) {
+//                g.drawImage(WarriorAnt.warrior_ant, ant.getPosX(), ant.getPosY(),
+//                        ant.getSize() * 100, ant.getSize() * 100, this);
+//            } else {
+//                g.drawImage(WorkerAnt.worker_ant, ant.getPosX(), ant.getPosY(),
+//                        ant.getSize() * 65, ant.getSize() * 100, this);
+//            }
             i++;
         }
     }

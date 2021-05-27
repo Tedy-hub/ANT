@@ -40,7 +40,7 @@ public class RunningAntThread extends Thread {
         isWorked = true;
             while (isWorked) {
                 checkAndRunAnt();
-                window.repaint();
+                if(type.equals("Warrior Ant")) window.repaint();
                 sleeping(10);
             }
     }
@@ -55,8 +55,9 @@ public class RunningAntThread extends Thread {
     //проходит по вектору, проверяет есть ли тут муравьи данного типа и запускают его
     public void checkAndRunAnt(){
         for (Ant antObject : vector) {
-            if (antObject.getName().equals(type))
+            if (antObject.getName().length() == (type.length()))
                 antObject.run(speed);
+
         }
     }
 }

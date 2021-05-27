@@ -1,5 +1,6 @@
 package Server.src;
 
+import com.company.AntExample;
 import com.company.ant.*;
 
 import java.io.*;
@@ -73,7 +74,8 @@ public class ClientHandler extends Thread {
                 }
 
                 if(request.equals("wantToSend")){
-                    Vector<Ant> ants = (Vector<Ant>) readObject.readObject();
+                    Vector<Ant> ants = receiveObj();
+                    //Vector<Ant> ants = (Vector<Ant>) readObject.readObject();
                     System.out.println("на сервер пришло" + ants.toString());
                     requestor.sendAnts(ants);
                 }
@@ -114,55 +116,72 @@ public class ClientHandler extends Thread {
             writer.write(ants.size());
             writer.flush();
 
-//            private int id;
-//            private String name;
-//            private int Size;
-//            private int posX;
-//            private int posY;
-//            private int TimeLive;
-//            private int TimeBorn;
-//            private int positionBornX;
-//            private int positionBornY;
-
-//            private int center_x;
-//            private int center_y;
-//            private int radius;
-//            double angle_rad;
-
             for(int i = 0; i < ants.size(); i++){
                 Ant ant = ants.get(i);
-                String params = ant.getId() + " " + ant.getName().replaceAll("\\s+","") +
-                        " " + ant.getPosY() + " " + ant.getPositionBornX() +
-                        " " + ant.getSize() + " " + ant.getPosX() +
-                        " " + ant.getPositionBornY() + " ";
+                String params = ant.getId() + "," + ant.getName()+
+                        "," + ant.getSize() + "," + ant.getPosX() +
+                        "," + ant.getPosY() + "," + ant.getPositionBornX() +
+                        "," + ant.getPositionBornY() + ",";
+
                 if(ant.getName().equals("Warrior Ant")){
                     params += ((WarriorAnt)ant).getCenter_x() +
-                    " " + ((WarriorAnt)ant).getCenter_y() +
-                    " " + ((WarriorAnt)ant).getAngle_rad();
+                    "," + ((WarriorAnt)ant).getCenter_y() +
+                    "," + ((WarriorAnt)ant).getAngle_rad();
                 }
                 else{
                     params += ((WorkerAnt)ant).getDeltaX() +
-                            " " + ((WorkerAnt)ant).getDeltaY();
+                            "," + ((WorkerAnt)ant).getDeltaY();
                 }
+
                 writer.write(params + "\n");
                 writer.flush();
             }
-         //   writeObject = new ObjectOutputStream(socket.getOutputStream());
-           // writer.write(ants.toString() + "\n");
-            //writer.flush();
-         //   writeObject.writeObject(ants);
-           // writeObject.flush();
-
-
-            // writeObject.write(-1);
-            //writeObject.flush();
-            //writeObject.write(-1);
-
 
             System.out.println("Send objects!");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private Vector<Ant> receiveObj(){
+        int size = 0;
+        try {
+            size = reader.read();
+            Vector<Ant> ants = new Vector<>();
+            for(int i = 0; i < size; i++){
+                Ant ant;
+                String paramStr = reader.readLine();
+                String[] params = paramStr.split(",");
+
+                if(params[1].equals("Warrior Ant")) ant = new WarriorAnt();
+                else ant = new WorkerAnt();
+
+                ant.setName(params[1]);
+                ant.setSize(Integer.parseInt(params[2]));
+                ant.setPosX(Integer.parseInt(params[3]));
+                ant.setPosY(Integer.parseInt(params[4]));
+                ant.setPositionBornX(Integer.parseInt(params[5]));
+                ant.setPositionBornY(Integer.parseInt(params[6]));
+
+                if(params[1].equals("Warrior Ant")){
+                    ((WarriorAnt)ant).setCenter_x(Integer.parseInt(params[7]));
+                    ((WarriorAnt)ant).setCenter_y(Integer.parseInt(params[8]));
+                    ant.setTimeLive(AntExample.TimeLivingWarrior);
+                }
+                else{
+                    ((WorkerAnt)ant).setDeltaX(Integer.parseInt(params[7]));
+                    ((WorkerAnt)ant).setDeltaY(Integer.parseInt(params[8]));
+                    ant.setTimeLive(AntExample.TimeLivingWorker);
+                }
+                ants.add(ant);
+            }
+            System.out.println("RECEIVED!\n");
+            return ants;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 //    public void setCommand(String command){

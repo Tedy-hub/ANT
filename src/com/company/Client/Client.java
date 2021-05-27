@@ -1,10 +1,14 @@
-package com.company;
+package com.company.Client;
 
+import com.company.AntExample;
 import com.company.ant.Ant;
+import com.company.ant.WarriorAnt;
+import com.company.ant.WorkerAnt;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Vector;
 
 public class Client extends Thread {
@@ -15,6 +19,7 @@ public class Client extends Thread {
     private ObjectInputStream readObj;
     private String command = " ";
     private AntExample scr;
+    private ListUpdater clientListUpdater;
 
     public Client(AntExample scr){
         try {
@@ -24,6 +29,8 @@ public class Client extends Thread {
             writeObj = new ObjectOutputStream(socket.getOutputStream());
             readObj = new ObjectInputStream(socket.getInputStream());
             this.scr = scr;
+            clientListUpdater = new ListUpdater(scr);
+            clientListUpdater.start();
         }
         catch(IOException e) {e.printStackTrace();}
     }
@@ -32,95 +39,132 @@ public class Client extends Thread {
     public void run() {
         while(true) {
             try {
-                getClients();
 
-                if (reader != null && reader.ready()) {
-                    String request = reader.readLine();
-                    if (request.equals("giveMeAnObject")) {
-                        System.out.println("Клиент получил запрос на отправку рандомных муровьев");
-                        Vector<Ant> ants = AntExample.list;
-                        writer.write("wantToSend\n");
-                        writer.flush();
-                        writeObj.writeObject(ants);
-                        writeObj.flush();
-                        System.out.println("Клиент отправил рандомных муровьев");
-                    }
-                    if (request.equals("ants")) {
-                        System.out.println("GOT ANTS!\n");
-                        System.out.println(AntExample.list.toString());
-                        try {
-                            Vector<Ant> ants = (Vector<Ant>) readObj.readObject();
-                            System.out.println(ants.toString());
-                            AntExample.list.addAll(ants);
-                            System.out.println(AntExample.list.toString());
-
-
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
+                readMessage();
 
                 if(command.equals("getObjects")){
                     getObjects();
+                    command = " ";
+                }
+                if(command.equals("close")){
+                    close();
+                    command = " ";
+                    break;
                 }
 
                 Thread.sleep(200);
-            } catch (IOException | InterruptedException e) {
+            } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
+                close();
+                break;
             }
-
-
         }
     }
 
-    public void readMessage(){
-        try {
-            if(reader.ready()){
+    private void readMessage() throws IOException{
+            if(reader != null && reader.ready()){
                 String request = reader.readLine();
                 if (request.equals("giveMeAnObject")) {
-                    System.out.println("hhhhhhh");
                     System.out.println("Клиент получил запрос на отправку рандомных муровьев");
-                    Vector<Ant> ants = AntExample.list;
+
+                    Random rand = new Random();
+                    int max = AntExample.list.size();
+                    int amount = rand.nextInt(max+1);
+
+                    Vector<Ant> ants = new Vector<>();
+                    for(int i = 0; i < amount; i++)
+                        ants.add(AntExample.list.get(rand.nextInt(max)));
+
                     writer.write("wantToSend\n");
                     writer.flush();
-                    writeObj.writeObject(ants);
-                    System.out.println("Клиент отправил рандомных муровьев");
+                    sendObj(ants);
+                   // writeObj.writeObject(ants);
+                    //writeObj.flush();
+                    System.out.println("Клиент отправил рандомных муравьев");
                 }
+
                 if(request.equals("ants")){
                     System.out.println("GOT ANTS!\n");
-                    System.out.println(AntExample.list.toString());
-                    try {
-                        Vector<Ant> ants = (Vector<Ant>) readObj.readObject();
-                        System.out.println(ants.toString());
-                        AntExample.list.addAll(ants);
-                        System.out.println(AntExample.list.toString());
-
-
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    receiveObj();
                 }
             }
+    }
+
+    private void receiveObj(){
+        int size = 0;
+        try {
+            size = reader.read();
+            Vector<Ant> ants = new Vector<>();
+            for(int i = 0; i < size; i++){
+                Ant ant;
+                String paramStr = reader.readLine();
+                String[] params = paramStr.split(",");
+
+                if(params[1].equals("Warrior Ant")) ant = new WarriorAnt();
+                else ant = new WorkerAnt();
+
+                ant.setName(params[1]);
+                ant.setSize(Integer.parseInt(params[2]));
+                ant.setPosX(Integer.parseInt(params[3]));
+                ant.setPosY(Integer.parseInt(params[4]));
+                ant.setPositionBornX(Integer.parseInt(params[5]));
+                ant.setPositionBornY(Integer.parseInt(params[6]));
+
+                if(params[1].equals("Warrior Ant")){
+                    ((WarriorAnt)ant).setCenter_x(Integer.parseInt(params[7]));
+                    ((WarriorAnt)ant).setCenter_y(Integer.parseInt(params[8]));
+                    ant.setTimeLive(AntExample.TimeLivingWarrior);
+                }
+                else{
+                    ((WorkerAnt)ant).setDeltaX(Integer.parseInt(params[7]));
+                    ((WorkerAnt)ant).setDeltaY(Integer.parseInt(params[8]));
+                    ant.setTimeLive(AntExample.TimeLivingWorker);
+                }
+                AntExample.idList.add(ant.getId());
+                AntExample.BornList.put(ant.getId(), AntExample.TimeSimulation);
+                AntExample.list.add(ant);
+                ant.draw(scr.getCanvas());
+            }
+            System.out.println("RECEIVED!\n");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    public void getClients() throws IOException {
-
-        writer.write("userList\n");
-        writer.flush();
-        AntExample.serverClients.clear();
-        int usersAmount = reader.read();
-        for (int i = 0; i < usersAmount; i++) {
-           AntExample.serverClients.add(reader.readLine());
+    private void sendObj(Vector<Ant> ants){
+        try {
+            writer.write(ants.size());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        scr.setText(AntExample.serverClients);
+        for(int i = 0; i < ants.size(); i++){
+            Ant ant = ants.get(i);
+            String params = ant.getId() + "," + ant.getName() +
+                    "," + ant.getSize() + "," + ant.getPosX() +
+                    "," + ant.getPosY() + "," + ant.getPositionBornX() +
+                    "," + ant.getPositionBornY() + ",";
+
+            if(ant.getName().equals("Warrior Ant")){
+                params += ((WarriorAnt)ant).getCenter_x() +
+                        "," + ((WarriorAnt)ant).getCenter_y() +
+                        "," + ((WarriorAnt)ant).getAngle_rad();
+            }
+            else{
+                params += ((WorkerAnt)ant).getDeltaX() +
+                        "," + ((WorkerAnt)ant).getDeltaY();
+            }
+
+            try {
+                writer.write(params + "\n");
+                writer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public void getObjects(){
+    private void getObjects(){
         try {
             writer.write("getObjects\n");
             writer.flush();
@@ -133,13 +177,16 @@ public class Client extends Thread {
     public void close(){
         try {
             if(writer != null) {
+                clientListUpdater.close();
                 writer.write("Exit\n");
                 writer.flush();
+                Thread.sleep(80);
+
                 socket.close();
                 reader.close();
                 writer.close();
             }
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
