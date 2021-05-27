@@ -49,7 +49,7 @@ public class GenerateThread extends Thread {
                     ant.SetTimeLive(AntExample.TimeLivingWorker);
                     AntExample.BornList.put(ant.getId(), AntExample.TimeSimulation);//добавление времени жизни
                 }
-                // вроде работает но какой-то костыль, чтобы при нажатии E не продолжжалась отрисовка
+
                 if(isWorked) {
                     ant.draw(window);
                     AntExample.list.add(ant);//добавление объекта

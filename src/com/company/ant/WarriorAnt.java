@@ -17,13 +17,14 @@ public class WarriorAnt extends Ant implements Serializable {
     static public Image warrior_ant;
     private int center_x;
     private int center_y;
-    private int radius = 30;
+    private int radius;
     double angle_rad;
     public static int speed = 1;
 
     public WarriorAnt(){
        setName("Warrior Ant");
 
+       radius = 30;
        // случайный размер от 2 до 4 ед.
        Random rand = new Random();
        int size = rand.nextInt(2);
@@ -54,7 +55,7 @@ public class WarriorAnt extends Ant implements Serializable {
         catch(IllegalArgumentException ia){
            // ia.printStackTrace();
             x = 0;
-            y = window.getHeight() - window.getHeight();;
+            y = window.getHeight() - window.getHeight();
         }
         this.setPosX(x);
         this.setPosY(y);
@@ -85,7 +86,31 @@ public class WarriorAnt extends Ant implements Serializable {
         this.setPosY(X);
     }
 
-//    @Override
+    public int getCenter_x() {
+        return center_x;
+    }
+
+    public int getCenter_y() {
+        return center_y;
+    }
+
+    public double getAngle_rad() {
+        return angle_rad;
+    }
+
+    public void setCenter_x(int center_x) {
+        this.center_x = center_x;
+    }
+
+    public void setCenter_y(int center_y) {
+        this.center_y = center_y;
+    }
+
+    public void setAngle_rad(double angle_rad) {
+        this.angle_rad = angle_rad;
+    }
+
+    //    @Override
 //    public void RespawnAnt(MyPanel window){
 //        //window.setAntInfo(this);
 //        window.repaint();

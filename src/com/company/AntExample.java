@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.Client.Client;
 import com.company.ant.Ant;
 import com.company.ant.WarriorAnt;
 import com.company.ant.WorkerAnt;
@@ -10,7 +11,6 @@ import javax.swing.event.DocumentListener;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -57,7 +57,7 @@ public class AntExample extends JFrame {
     private JComboBox priorityThreadWarrior;
     private JButton dialogConsole;
     private Config cfg;
-    private Client client = new Client();
+    private Client client;
 
     private JButton Download;
     private JButton Save;
@@ -67,7 +67,7 @@ public class AntExample extends JFrame {
     static public Vector<Ant> list = new Vector<>();
     static public HashSet<Integer> idList = new HashSet();
     static public TreeMap<Integer,Integer> BornList = new TreeMap();
-    public ArrayList<String> serverClients;
+    static public ArrayList<String> serverClients = new ArrayList<>();
 
     boolean isRunning = false;
     Habitat habitat;
@@ -227,16 +227,21 @@ public class AntExample extends JFrame {
             public void windowClosing(WindowEvent e) {
                 super.windowClosed(e);
                 cfg.writeConfig();
-                client.close();
+                client.setCommand("close");
+                try {
+                    Thread.sleep(150);
+                } catch (InterruptedException ie) {
+                    ie.printStackTrace();
+                }
             }
         });
 
-        serverConnect();
-
+        client = new Client(this);
+        client.start();
     }
 
     private void GetObjectFromServer(ActionEvent actionEvent) {
-        client.getObject();
+        client.setCommand("getObjects");
     }
 
     private void saveObjects(ActionEvent actionEvent) {
@@ -541,37 +546,32 @@ public class AntExample extends JFrame {
 
     }
 
-    private void serverConnect(){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        client.readMessage();
-                        serverClients = client.getClients();
-                        setText(serverClients);
-                    }
-                    catch(IOException e){
-                        client.close();
-                    }
 
-                    int i = 0;
-                    while (i < serverClients.size()) {
-                        System.out.println("#" + i + ": " + serverClients.get(i));
-                        i++;
-                    }
-                }
-            }
-        });
-        thread.start();
+    private void serverConnect(){
+
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while(true) {
+//                    try {
+//                        Thread.sleep(1000);
+//
+//                        client.readMessage();
+//                        serverClients = client.getClients();
+//                        setText(serverClients);
+//
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    } catch(IOException e){
+//                        client.close();
+//                    }
+//                }
+//            }
+//        });
+//        thread.start();
     }
 
-    private void setText(ArrayList<String> serverClients) {
+    public void setText(ArrayList<String> serverClients) {
         String r = "<html>";
         for(int i=0;i<serverClients.size();i++){
             String num = Integer.toString(i+1);
@@ -579,7 +579,6 @@ public class AntExample extends JFrame {
         }
         r = r + "</html>";
         CurrentClients.setText(r);
-        System.out.println(serverClients.toString());
     }
 
     public CustomMenu getMyMenu(){

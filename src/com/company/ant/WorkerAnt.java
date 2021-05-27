@@ -141,7 +141,23 @@ public class WorkerAnt extends Ant implements Serializable {
         this.setPosY(getPosY()+deltaY);
     }
 
-//    @Override
+    public int getDeltaX() {
+        return deltaX;
+    }
+
+    public int getDeltaY() {
+        return deltaY;
+    }
+
+    public void setDeltaX(int deltaX) {
+        this.deltaX = deltaX;
+    }
+
+    public void setDeltaY(int deltaY) {
+        this.deltaY = deltaY;
+    }
+
+    //    @Override
 //    public void RespawnAnt(MyPanel window){
 //        //window.setAntInfo(this);
 //        window.repaint();
